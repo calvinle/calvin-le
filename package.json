@@ -1,0 +1,23 @@
+{
+  "name": "calvin-le",
+  "version": "1.0.0",
+  "description": "Portfolio",
+  "homepage": "https://github.com/calvinle/calvin-le#readme",
+  "bugs": {
+    "url": "https://github.com/calvinle/calvin-le/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/calvinle/calvin-le.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "jest": "^30.2.0"
+  }
+}
