@@ -8,18 +8,15 @@
  */
 
 const {setGlobalOptions} = require("firebase-functions");
-const {onRequest} = require("firebase-functions/https");
-const {onSchedule} = require("firebase-functions/scheduler");
-const {defineSecret} = require("firebase-functions/params");
-const logger = require("firebase-functions/logger");
+const { onSchedule } = require("firebase-functions/v2/scheduler");
+const { defineSecret } = require("firebase-functions/params");
+const closePowerliftingApiKey = defineSecret("CLOSEPOWERLIFTING_API_KEY");
+const { logger } = require("firebase-functions");
 const admin = require("firebase-admin");
 const axios = require("axios");
 require("dotenv").config({path: __dirname + "/.env.local"});
 
 admin.initializeApp();
-
-// Define secrets for API keys and other sensitive information
-const closePowerliftingApiKey = defineSecret("CLOSEPOWERLIFTING_API_KEY");
 
 // For cost control, you can set the maximum number of containers that can be
 // running at the same time. This helps mitigate the impact of unexpected
@@ -40,43 +37,45 @@ setGlobalOptions({maxInstances: 10});
  */
 /* eslint-disable indent */
 /* eslint-disable max-len */
-exports.fetchClosePowerliftingData = onSchedule("0 2 1 * *", {secrets: [closePowerliftingApiKey]}, async (context) => {
-      try {
-        const apiKey = closePowerliftingApiKey.value();
+exports.fetchClosePowerliftingData = onSchedule({
+    schedule: "0 2 1 * *",           // Move schedule string here
+    secrets: [closePowerliftingApiKey], // Secrets belong in this object
+    timeoutSeconds: 60,              // Optional: standard for API calls
+  }, 
+  async (event) => {                 // In v2, the argument is 'event', not 'context'
+    try {
+      const apiKey = closePowerliftingApiKey.value();
 
-        if (!apiKey) {
-          throw new Error(
-              "CLOSEPOWERLIFTING_API_KEY secret is not set",
-          );
-        }
-
-        logger.info("Fetching powerlifting data from Close Powerlifting API");
-
-        const response = await axios.get(
-            "https://closepowerlifting.com/api/users/calvinle",
-            {
-              headers: {
-                "Authorization": `Bearer ${apiKey}`,
-              },
-            });
-
-        const db = admin.database();
-        const timestamp = new Date().toISOString();
-
-        // Store the fetched data in Firebase Realtime Database
-        await db.ref("powerlifting/user_data").set({
-          data: response.data,
-          lastUpdated: timestamp,
-        });
-
-        logger.info("Successfully fetched and stored powerlifting data", {
-          timestamp,
-          dataSize: JSON.stringify(response.data).length,
-        });
-      } catch (error) {
-        logger.error("Error fetching powerlifting data", error);
-        throw error;
+      if (!apiKey) {
+        throw new Error("CLOSEPOWERLIFTING_API_KEY secret is not set");
       }
-    });
+
+      logger.info("Fetching powerlifting data from Close Powerlifting API");
+
+      const response = await axios.get(
+        "https://closepowerlifting.com/api/users/calvinle",
+        {
+          headers: {
+            "Authorization": `Bearer ${apiKey}`,
+          },
+        }
+      );
+
+      const db = admin.database();
+      const timestamp = new Date().toISOString();
+
+      await db.ref("powerlifting/user_data").set({
+        data: response.data,
+        lastUpdated: timestamp,
+      });
+
+      logger.info("Successfully fetched and stored powerlifting data");
+      
+    } catch (error) {
+      // Log the actual error before re-throwing
+      logger.error("Error fetching powerlifting data", error);
+      throw error; 
+    }
+});
 /* eslint-enable indent */
 /* eslint-enable max-len */
