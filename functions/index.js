@@ -10,12 +10,16 @@
 const {setGlobalOptions} = require("firebase-functions");
 const {onRequest} = require("firebase-functions/https");
 const {onSchedule} = require("firebase-functions/scheduler");
+const {defineSecret} = require("firebase-functions/params");
 const logger = require("firebase-functions/logger");
 const admin = require("firebase-admin");
 const axios = require("axios");
 require("dotenv").config({path: __dirname + "/.env.local"});
 
 admin.initializeApp();
+
+// Define secrets for API keys and other sensitive information
+const closePowerliftingApiKey = defineSecret("CLOSEPOWERLIFTING_API_KEY");
 
 // For cost control, you can set the maximum number of containers that can be
 // running at the same time. This helps mitigate the impact of unexpected
@@ -28,14 +32,6 @@ admin.initializeApp();
 // In the v1 API, each function can only serve one request per container, so
 // this will be the maximum concurrent request count.
 setGlobalOptions({maxInstances: 10});
-
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
-
-exports.helloWorld = onRequest((request, response) => {
-  logger.info("Hello logs!", {structuredData: true});
-  response.send("Hello from Firebase!");
-});
 
 /**
  * Scheduled function that runs once a month to fetch powerlifting data
