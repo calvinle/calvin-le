@@ -10,6 +10,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7'
 import { lightTheme, darkTheme } from './theme'
 import Home from './components/Home'
 import About from './components/About'
+import Work from './components/Work'
 import NavBar from './components/NavBar'
 
 const styles = {
@@ -35,6 +36,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
+              <Route path="/work" element={<Work />} />
             </Routes>
           </Box>
         </Box>
