@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 import { 
   Box, Container, Paper, Typography, Table, TableBody, 
   TableCell, TableContainer, TableHead, TableRow, CircularProgress, 
-  Divider, useTheme, ToggleButtonGroup, ToggleButton, useMediaQuery, Link 
+  Divider, useTheme, ToggleButtonGroup, ToggleButton, useMediaQuery, Link, Tooltip 
 } from '@mui/material'
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { ref, onValue } from 'firebase/database'
 import { db } from '../firebase'
 
@@ -269,7 +270,6 @@ export default function Powerlifting() {
                   <TableCell sx={styles.tableHeader}>Bench</TableCell>
                   <TableCell sx={styles.tableHeader}>Deadlift</TableCell>
                   <TableCell sx={styles.tableHeader}>Total</TableCell>
-                  <TableCell sx={styles.tableHeader}>Equip</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -279,7 +279,6 @@ export default function Powerlifting() {
                     <TableCell sx={styles.cellBold}>{formatWeight(pb.bench)}</TableCell>
                     <TableCell sx={styles.cellBold}>{formatWeight(pb.deadlift)}</TableCell>
                     <TableCell sx={styles.totalCell}>{formatWeight(pb.total)}</TableCell>
-                    <TableCell sx={styles.cell}>{pb.equip}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -301,7 +300,17 @@ export default function Powerlifting() {
                   <TableCell sx={styles.tableHeader}>Bench</TableCell>
                   <TableCell sx={styles.tableHeader}>Deadlift</TableCell>
                   <TableCell sx={styles.tableHeader}>Total</TableCell>
-                  <TableCell sx={styles.tableHeader}>DOTS</TableCell>
+                  <Tooltip 
+                    title="DOTS is a formula that calculates relative strength by normalizing your total based on bodyweight, allowing fairer comparison across weight classes."
+                    arrow
+                    enterTouchDelay={0}
+                    leaveTouchDelay={3000}
+                  >
+                    <TableCell sx={{ ...styles.tableHeader, cursor: 'help', display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                      DOTS
+                      <InfoOutlinedIcon sx={{ fontSize: '0.875rem' }} />
+                    </TableCell>
+                  </Tooltip>
                 </TableRow>
               </TableHead>
               <TableBody>

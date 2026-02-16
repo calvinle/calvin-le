@@ -38,7 +38,7 @@ setGlobalOptions({maxInstances: 10});
 /* eslint-disable indent */
 /* eslint-disable max-len */
 exports.fetchClosePowerliftingData = onSchedule({
-  schedule: "59 23 * * 6",         // Saturdays at 23:59 UTC (adjust for Central Time)
+  schedule: "0 0 * * *",         // Every night at midnight UTC
   secrets: [closePowerliftingApiKey],
   timeoutSeconds: 60,
   }, 
