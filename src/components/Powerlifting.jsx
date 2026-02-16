@@ -70,6 +70,7 @@ const useStyles = (theme, isMobile) => ({
   },
   sectionTitle: {
     fontWeight: 700,
+    color: theme.palette.mode === 'dark' ? '#fff' : 'inherit',
   },
   sectionHeader: {
     display: 'flex',
