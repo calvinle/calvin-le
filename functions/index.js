@@ -38,44 +38,43 @@ setGlobalOptions({maxInstances: 10});
 /* eslint-disable indent */
 /* eslint-disable max-len */
 exports.fetchClosePowerliftingData = onSchedule({
-    schedule: "0 2 1 * *",           // Move schedule string here
-    secrets: [closePowerliftingApiKey], // Secrets belong in this object
-    timeoutSeconds: 60,              // Optional: standard for API calls
+  schedule: "59 23 * * 6",         // Saturdays at 23:59 UTC (adjust for Central Time)
+  secrets: [closePowerliftingApiKey],
+  timeoutSeconds: 60,
   }, 
-  async (event) => {                 // In v2, the argument is 'event', not 'context'
-    try {
-      const apiKey = closePowerliftingApiKey.value();
+  async (event) => {
+  try {
+    const apiKey = closePowerliftingApiKey.value();
 
-      if (!apiKey) {
-        throw new Error("CLOSEPOWERLIFTING_API_KEY secret is not set");
-      }
-
-      logger.info("Fetching powerlifting data from Close Powerlifting API");
-
-      const response = await axios.get(
-        "https://closepowerlifting.com/api/users/calvinle",
-        {
-          headers: {
-            "Authorization": `Bearer ${apiKey}`,
-          },
-        }
-      );
-
-      const db = admin.database();
-      const timestamp = new Date().toISOString();
-
-      await db.ref("powerlifting/user_data").set({
-        data: response.data,
-        lastUpdated: timestamp,
-      });
-
-      logger.info("Successfully fetched and stored powerlifting data");
-      
-    } catch (error) {
-      // Log the actual error before re-throwing
-      logger.error("Error fetching powerlifting data", error);
-      throw error; 
+    if (!apiKey) {
+    throw new Error("CLOSEPOWERLIFTING_API_KEY secret is not set");
     }
+
+    logger.info("Fetching powerlifting data from Close Powerlifting API");
+
+    const response = await axios.get(
+    "https://closepowerlifting.com/api/users/calvinle",
+    {
+      headers: {
+      "Authorization": `Bearer ${apiKey}`,
+      },
+    }
+    );
+
+    const db = admin.database();
+    const timestamp = new Date().toISOString();
+
+    await db.ref("powerlifting/user_data").set({
+    data: response.data,
+    lastUpdated: timestamp,
+    });
+
+    logger.info("Successfully fetched and stored powerlifting data");
+    
+  } catch (error) {
+    logger.error("Error fetching powerlifting data", error);
+    throw error; 
+  }
 });
 /* eslint-enable indent */
 /* eslint-enable max-len */
