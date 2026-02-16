@@ -95,3 +95,95 @@ export const darkTheme = createTheme({
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
   },
 })
+
+export const redTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#FF6B6B',           // Vibrant coral red
+      light: '#FF8A8A',
+      dark: '#C62828',
+      contrastText: '#1A1A1A',
+    },
+    secondary: {
+      main: '#FFB4B4',           // Soft pink accent
+      light: '#FFCCCC',
+      dark: '#E57373',
+      contrastText: '#1A1A1A',
+    },
+    error: {
+      main: '#FF5252',
+      contrastText: '#1A1A1A',
+    },
+    background: {
+      default: '#1A0A0A',        // Very dark red-tinted black
+      paper: '#2D1515',          // Dark maroon paper
+    },
+    surface: {
+      main: '#1A0A0A',
+      variant: '#3D1E1E',        // Surface variant for borders/dividers
+    },
+    text: {
+      primary: '#FFE5E5',        // Warm off-white with red tint
+      secondary: '#CCAAAA',      // Muted red-tinted secondary text
+    },
+    divider: 'rgba(255, 107, 107, 0.15)',
+    action: {
+      active: '#FF6B6B',
+      hover: 'rgba(255, 107, 107, 0.1)',
+      selected: 'rgba(255, 107, 107, 0.15)',
+      disabled: 'rgba(255, 229, 229, 0.38)',
+      disabledBackground: 'rgba(255, 229, 229, 0.12)',
+    },
+  },
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#2D1515',  // Dark maroon app bar
+          borderBottom: '1px solid rgba(255, 107, 107, 0.2)',
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundImage: 'none',
+          backgroundColor: '#2D1515',
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          borderColor: 'rgba(255, 107, 107, 0.15)',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            backgroundColor: 'rgba(255, 107, 107, 0.1)',
+          },
+        },
+      },
+    },
+    MuiToggleButton: {
+      styleOverrides: {
+        root: {
+          '&.Mui-selected': {
+            backgroundColor: '#C62828',
+            color: '#FFE5E5',
+            '&:hover': {
+              backgroundColor: '#B71C1C',
+            },
+          },
+        },
+      },
+    },
+  },
+  typography: {
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
+  },
+})

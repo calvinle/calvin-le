@@ -7,11 +7,12 @@ import WorkIcon from '@mui/icons-material/Work'
 import ContactMailIcon from '@mui/icons-material/ContactMail'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
-import { lightTheme, darkTheme } from './theme'
+import { lightTheme, darkTheme, redTheme } from './theme'
 import Home from './components/Home'
 import About from './components/About'
 import Work from './components/Work'
 import Powerlifting from './components/Powerlifting'
+import Contact from './components/Contact'
 import NavBar from './components/NavBar'
 
 const styles = {
@@ -23,15 +24,29 @@ const styles = {
   },
 }
 
+const themes = {
+  light: lightTheme,
+  dark: darkTheme,
+  red: redTheme,
+}
+
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false)
-  const theme = isDarkMode ? darkTheme : lightTheme
+  const [themeName, setThemeName] = useState('light')
+  const theme = themes[themeName]
+
+  const cycleTheme = () => {
+    setThemeName(prev => {
+      if (prev === 'light') return 'dark'
+      if (prev === 'dark') return 'red'
+      return 'light'
+    })
+  }
 
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
-          <NavBar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+          <NavBar themeName={themeName} cycleTheme={cycleTheme} />
 
           <Box sx={styles.appWrapper}>
             <Routes>
@@ -39,6 +54,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/work" element={<Work />} />
               <Route path="/powerlifting" element={<Powerlifting />} />
+              <Route path="/contact" element={<Contact />} />
             </Routes>
           </Box>
         </Box>

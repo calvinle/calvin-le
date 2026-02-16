@@ -8,6 +8,7 @@ import ContactMailIcon from '@mui/icons-material/ContactMail'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
 import MenuIcon from '@mui/icons-material/Menu'
 
 const styles = {
@@ -56,12 +57,23 @@ const navItems = [
   { label: 'Contact', icon: ContactMailIcon, path: '/contact' },
 ]
 
-export default function NavBar({ isDarkMode, setIsDarkMode }) {
+export default function NavBar({ themeName, cycleTheme }) {
   const location = useLocation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [anchorEl, setAnchorEl] = useState(null)
   const menuOpen = Boolean(anchorEl)
+
+  const getThemeIcon = () => {
+    switch (themeName) {
+      case 'dark':
+        return <Brightness7Icon />
+      case 'red':
+        return <LocalFireDepartmentIcon />
+      default:
+        return <Brightness4Icon />
+    }
+  }
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget)
@@ -123,9 +135,9 @@ export default function NavBar({ isDarkMode, setIsDarkMode }) {
         )}
         <IconButton
           sx={styles.themeToggle}
-          onClick={() => setIsDarkMode(!isDarkMode)}
+          onClick={cycleTheme}
         >
-          {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+          {getThemeIcon()}
         </IconButton>
       </Toolbar>
     </AppBar>
