@@ -145,11 +145,11 @@ export default function Work() {
               </Box>
 
               {job.projects.map((project, projectIndex) => (
-                <Box key={projectIndex}>
+                <Box key={projectIndex} sx={{ mb: 3, '&:last-child': { mb: 0 } }}>
                   <Typography variant="body1" sx={styles.projectName}>
                     {project.name}
                   </Typography>
-                  <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
+                  <Typography variant="body2" sx={{ lineHeight: 1.6, mt: 0.5 }}>
                     {project.description}
                   </Typography>
                 </Box>
