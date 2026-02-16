@@ -1,4 +1,4 @@
-import { Box, Container, Paper, Typography, Avatar } from '@mui/material'
+import { Box, Container, Paper, Typography } from '@mui/material'
 
 const styles = {
   container: {
@@ -15,19 +15,6 @@ const styles = {
     borderRadius: 3,
     backdropFilter: 'blur(10px)',
     maxWidth: '600px',
-  },
-  avatarSection: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginBottom: 4,
-    gap: 3,
-    flexWrap: 'wrap',
-  },
-  avatar: {
-    width: 150,
-    height: 150,
-    bgcolor: 'primary.main',
-    fontSize: '4rem',
   },
   content: {
     display: 'flex',
@@ -54,16 +41,12 @@ export default function About() {
     <Box sx={styles.container}>
       <Container maxWidth="sm">
         <Paper elevation={10} sx={styles.paper}>
-          <Box sx={styles.avatarSection}>
-            <Avatar sx={styles.avatar}>📸</Avatar>
-          </Box>
-
           <Typography
             variant="h4"
             component="h2"
             sx={styles.heading}
           >
-            About Me
+            A Little Bit About Me
           </Typography>
 
           <Typography
@@ -74,14 +57,23 @@ export default function About() {
           </Typography>
 
           <Typography
-            variant="body2"
-            sx={{
-              fontSize: '0.95rem',
-              lineHeight: 1.8,
-            }}
+            variant="h4"
+            component="h2"
+            sx={styles.heading}
           >
-            When I'm not coding, you can find me exploring new technologies, contributing to open source projects, 
-            or working on creative side projects.
+            Some More About Me
+          </Typography>
+
+          <Typography
+            variant="body1"
+            sx={styles.description}
+          >
+            <Box component="ul" sx={{ textAlign: 'left', display: 'inline-block', lineHeight: 2 }}>
+              <li>Born and raised in the suburbs of Los Angeles, California</li>
+              <li>Bachelor of Science in Computer Science @ Colorado State University, 2018</li>
+              <li>Semi-competitive speedcuber</li>
+              <li>Actually-competitive powerlifter</li>
+            </Box>
           </Typography>
         </Paper>
       </Container>

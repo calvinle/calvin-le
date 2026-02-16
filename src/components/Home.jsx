@@ -15,6 +15,19 @@ const styles = {
     borderRadius: 3,
     backdropFilter: 'blur(10px)',
   },
+  photoSection: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: 4,
+  },
+  photo: {
+    width: '100%',
+    maxWidth: 200,
+    height: 200,
+    borderRadius: '50%',
+    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+    objectFit: 'cover',
+  },
   heading: {
     fontWeight: 700,
     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -34,6 +47,13 @@ export default function Home() {
     <Box sx={styles.container}>
       <Container maxWidth="sm">
         <Paper elevation={10} sx={styles.paper}>
+          <Box sx={styles.photoSection}>
+            <img 
+              src="/images/photo.jpg" 
+              alt="Calvin" 
+              style={styles.photo}
+            />
+          </Box>
           <Typography
             variant="h3"
             component="h1"
