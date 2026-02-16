@@ -1,58 +1,45 @@
-import { Box, Container, Typography, Paper } from '@mui/material'
+import { Box, AppBar, Toolbar, Button, ThemeProvider, IconButton } from '@mui/material'
+import { useState } from 'react'
+import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom'
+import HomeIcon from '@mui/icons-material/Home'
+import InfoIcon from '@mui/icons-material/Info'
+import WorkIcon from '@mui/icons-material/Work'
+import ContactMailIcon from '@mui/icons-material/ContactMail'
+import Brightness4Icon from '@mui/icons-material/Brightness4'
+import Brightness7Icon from '@mui/icons-material/Brightness7'
+import { lightTheme, darkTheme } from './theme'
+import Home from './components/Home'
+import About from './components/About'
+import NavBar from './components/NavBar'
 
-let styles = {
-  container: {
+const styles = {
+  appWrapper: {
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: 'column',
     minHeight: '100vh',
-    background: 'linear-gradient(135deg, #8b0000 0%, #1a1a1a 100%)',
-  },
-  paper: {
-    padding: 6,
-    textAlign: 'center',
-    borderRadius: 3,
-    background: 'rgba(255, 255, 255, 0.95)',
-    backdropFilter: 'blur(10px)',
-  },
-  heading: {
-    fontWeight: 700,
-    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    backgroundClip: 'text',
-    webkitBackgroundClip: 'text',
-    webkitTextFillColor: 'transparent',
-    marginBottom: 2,
-  },
-  description: {
-    color: 'text.secondary',
-    fontSize: '1.1rem',
-    lineHeight: 1.6,
+    paddingTop: '64px',
   },
 }
 
-let paperElevation = 10;
-
 function App() {
+  const [isDarkMode, setIsDarkMode] = useState(false)
+  const theme = isDarkMode ? darkTheme : lightTheme
+
   return (
-    <Box sx={styles.container}>
-      <Container maxWidth="sm">
-        <Paper elevation={paperElevation} sx={styles.paper}>
-          <Typography
-            variant="h3"
-            component="h1"
-            sx={styles.heading}
-          >
-            Hello, I'm Calvin!
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={styles.description}
-          >
-            Welcome to my portfolio. I'm a developer passionate about creating beautiful and functional web experiences.
-          </Typography>
-        </Paper>
-      </Container>
-    </Box>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
+          <NavBar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+
+          <Box sx={styles.appWrapper}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+            </Routes>
+          </Box>
+        </Box>
+      </ThemeProvider>
+    </BrowserRouter>
   )
 }
 
