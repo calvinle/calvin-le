@@ -119,18 +119,26 @@ export default function NavBar({ themeName, cycleTheme }) {
           </>
         ) : (
           <Box sx={styles.navButtons}>
-            {navItems.map((item) => (
-              <Button
-                key={item.path}
-                component={Link}
-                to={item.path}
-                sx={styles.navButton}
-                startIcon={<item.icon />}
-                color={location.pathname === item.path ? 'secondary' : 'inherit'}
-              >
-                {item.label}
-              </Button>
-            ))}
+            {navItems.map((item) => {
+              const isActive = location.pathname === item.path
+              return (
+                <Button
+                  key={item.path}
+                  component={Link}
+                  to={item.path}
+                  sx={{
+                    ...styles.navButton,
+                    borderBottom: isActive ? '2px solid' : '2px solid transparent',
+                    borderRadius: 0,
+                    fontWeight: isActive ? 700 : 400,
+                  }}
+                  startIcon={<item.icon />}
+                  color={isActive ? 'secondary' : 'inherit'}
+                >
+                  {item.label}
+                </Button>
+              )
+            })}
           </Box>
         )}
         <IconButton
