@@ -270,6 +270,17 @@ export default function Powerlifting() {
                   <TableCell sx={styles.tableHeader}>Bench</TableCell>
                   <TableCell sx={styles.tableHeader}>Deadlift</TableCell>
                   <TableCell sx={styles.tableHeader}>Total</TableCell>
+                  <Tooltip 
+                    title="Raw lifting uses minimal supportive gear (belt, knee sleeves, wrist wraps). Equipped lifting uses specialized suits and shirts that can add significant weight to lifts."
+                    arrow
+                    enterTouchDelay={0}
+                    leaveTouchDelay={3000}
+                  >
+                    <TableCell sx={{ ...styles.tableHeader, cursor: 'help', display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                      Equipped
+                      <InfoOutlinedIcon sx={{ fontSize: '0.875rem' }} />
+                    </TableCell>
+                  </Tooltip>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -279,6 +290,7 @@ export default function Powerlifting() {
                     <TableCell sx={styles.cellBold}>{formatWeight(pb.bench)}</TableCell>
                     <TableCell sx={styles.cellBold}>{formatWeight(pb.deadlift)}</TableCell>
                     <TableCell sx={styles.totalCell}>{formatWeight(pb.total)}</TableCell>
+                    <TableCell sx={styles.cell}>{pb.equip}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
