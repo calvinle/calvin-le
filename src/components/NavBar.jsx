@@ -25,6 +25,10 @@ const styles = {
     gap: 2,
     flex: 1,
     justifyContent: 'center',
+    overflowX: 'auto',
+    WebkitOverflowScrolling: 'touch',
+    whiteSpace: 'nowrap',
+    '&::-webkit-scrollbar': { display: 'none' },
   },
   navButton: {
     color: 'inherit',
@@ -34,6 +38,7 @@ const styles = {
     alignItems: 'center',
     gap: 0.5,
     textDecoration: 'none',
+    flex: '0 0 auto',
   },
   themeToggle: {
     color: 'inherit',
