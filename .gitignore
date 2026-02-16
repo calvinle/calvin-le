@@ -33,3 +33,4 @@ Thumbs.db
 # Firebase
 .firebase/
 .firebaserc
+database-debug.log
