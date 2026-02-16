@@ -56,12 +56,15 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     marginBottom: 2,
+    flexDirection: { xs: 'column', sm: 'row' },
   },
   headerLeft: {
     flex: 1,
   },
   headerRight: {
     textAlign: 'right',
+    marginTop: { xs: 1, sm: 0 },
+    textAlign: { xs: 'left', sm: 'right' },
   },
 }
 
