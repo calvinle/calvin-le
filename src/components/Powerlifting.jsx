@@ -2,51 +2,75 @@ import { useEffect, useState } from 'react'
 import { 
   Box, Container, Paper, Typography, Table, TableBody, 
   TableCell, TableContainer, TableHead, TableRow, CircularProgress, 
-  Divider 
+  Divider, useTheme 
 } from '@mui/material'
 import { ref, onValue } from 'firebase/database'
 import { db } from '../firebase'
 
-const styles = {
+const useStyles = (theme) => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     paddingY: 6,
     gap: 4,
-    minHeight: '100vh',
-    backgroundColor: '#f8f9fa',
+    flex: 1,
+    backgroundImage: theme.palette.mode === 'dark'
+      ? 'linear-gradient(135deg, rgba(144, 202, 249, 0.05) 0%, rgba(30, 58, 95, 0.15) 100%)'
+      : 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)',
+    overflowX: 'auto',
   },
   paper: {
     padding: 0,
-    borderRadius: 4,
-    width: '100%',
-    boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.08)',
-    overflow: 'hidden',
-    mb: 5
+    borderRadius: 3,
+    backdropFilter: 'blur(10px)',
+    overflow: 'visible',
+    mb: 5,
+    minWidth: '800px',
+  },
+  table: {
+    minWidth: '800px',
   },
   heading: {
     fontWeight: 800,
-    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    background: theme.palette.mode === 'dark'
+      ? 'linear-gradient(135deg, #90CAF9 0%, #CE93D8 100%)'
+      : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
     mb: 1,
   },
   tableHeader: {
     fontWeight: 700,
-    color: '#667eea',
-    backgroundColor: 'rgba(102, 126, 234, 0.05)',
+    color: theme.palette.mode === 'dark' ? '#90CAF9' : '#667eea',
     textTransform: 'uppercase',
     fontSize: '0.75rem',
     letterSpacing: '0.05rem',
+    whiteSpace: 'nowrap',
   },
   cellBold: {
     fontWeight: 600,
-    color: 'text.primary'
-  }
-}
+    color: 'text.primary',
+    whiteSpace: 'nowrap',
+  },
+  cell: {
+    whiteSpace: 'nowrap',
+  },
+  totalCell: {
+    fontWeight: 600,
+    color: theme.palette.mode === 'dark' ? '#CE93D8' : '#764ba2',
+    whiteSpace: 'nowrap',
+  },
+  dotsCell: {
+    color: theme.palette.mode === 'dark' ? '#90CAF9' : '#667eea',
+    fontWeight: 600,
+    whiteSpace: 'nowrap',
+  },
+})
 
 export default function Powerlifting() {
+  const theme = useTheme()
+  const styles = useStyles(theme)
   const [athlete, setAthlete] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -74,7 +98,7 @@ export default function Powerlifting() {
 
   if (loading) return (
     <Box sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
-      <CircularProgress thickness={5} size={60} sx={{ color: '#667eea' }} />
+      <CircularProgress thickness={5} size={60} sx={{ color: theme.palette.primary.main }} />
     </Box>
   )
 
@@ -93,70 +117,76 @@ export default function Powerlifting() {
   }
 
   return (
-    <Box sx={styles.container}>
-      <Container maxWidth="lg">
-        
-        {/* Personal Bests Table */}
-        <Typography variant="h6" sx={{ mb: 2, fontWeight: 700, px: 1 }}>Personal Bests</Typography>
-        <TableContainer component={Paper} sx={styles.paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell sx={styles.tableHeader}>Squat</TableCell>
-                <TableCell sx={styles.tableHeader}>Bench</TableCell>
-                <TableCell sx={styles.tableHeader}>Deadlift</TableCell>
-                <TableCell sx={styles.tableHeader}>Total</TableCell>
-                <TableCell sx={styles.tableHeader}>Equip</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {athlete?.personal_best?.map((pb, i) => (
-                <TableRow key={i} hover>
-                  <TableCell sx={styles.cellBold}>{pb.squat} lbs</TableCell>
-                  <TableCell sx={styles.cellBold}>{pb.bench} lbs</TableCell>
-                  <TableCell sx={styles.cellBold}>{pb.deadlift} lbs</TableCell>
-                  <TableCell sx={{ ...styles.cellBold, color: '#764ba2' }}>{pb.total} lbs</TableCell>
-                  <TableCell>{pb.equip}</TableCell>
+    <Box sx={{ overflowX: 'auto', width: '100%', flex: 1, display: 'flex' }}>
+      <Box sx={styles.container}>
+        <Container maxWidth="lg" sx={{ minWidth: '800px' }}>
+          
+          {/* Personal Bests Table */}
+          <Typography variant="h6" sx={{ mb: 2, fontWeight: 700, px: 1 }}>Personal Bests</Typography>
+          <Paper elevation={10} sx={styles.paper}>
+          <TableContainer>
+            <Table sx={styles.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={styles.tableHeader}>Squat</TableCell>
+                  <TableCell sx={styles.tableHeader}>Bench</TableCell>
+                  <TableCell sx={styles.tableHeader}>Deadlift</TableCell>
+                  <TableCell sx={styles.tableHeader}>Total</TableCell>
+                  <TableCell sx={styles.tableHeader}>Equip</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {athlete?.personal_best?.map((pb, i) => (
+                  <TableRow key={i} hover>
+                    <TableCell sx={styles.cellBold}>{pb.squat} lbs</TableCell>
+                    <TableCell sx={styles.cellBold}>{pb.bench} lbs</TableCell>
+                    <TableCell sx={styles.cellBold}>{pb.deadlift} lbs</TableCell>
+                    <TableCell sx={styles.totalCell}>{pb.total} lbs</TableCell>
+                    <TableCell sx={styles.cell}>{pb.equip}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          </Paper>
 
-        {/* Past Competitions Table */}
-        <Typography variant="h6" sx={{ mt: 4, mb: 2, fontWeight: 700, px: 1 }}>Competition History (Since 2018)</Typography>
-        <TableContainer component={Paper} sx={styles.paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell sx={styles.tableHeader}>Competition</TableCell>
-                <TableCell sx={styles.tableHeader}>Squat</TableCell>
-                <TableCell sx={styles.tableHeader}>Bench</TableCell>
-                <TableCell sx={styles.tableHeader}>Deadlift</TableCell>
-                <TableCell sx={styles.tableHeader}>Total</TableCell>
-                <TableCell sx={styles.tableHeader}>DOTS</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {competitions.map((comp, i) => (
-                <TableRow key={i} hover>
-                  <TableCell>
-                    <Typography variant="body2" sx={{ fontWeight: 700 }}>{comp.competition}</Typography>
-                    <Typography variant="caption" color="text.secondary">{comp.date} • {comp.location}</Typography>
-                  </TableCell>
-                  <TableCell>{comp.squat} lbs</TableCell>
-                  <TableCell>{comp.bench} lbs</TableCell>
-                  <TableCell>{comp.deadlift} lbs</TableCell>
-                  <TableCell sx={{ fontWeight: 700 }}>
-                    {displayTotal(comp.total, comp.squat, comp.bench, comp.deadlift)}
-                  </TableCell>
-                  <TableCell sx={{ color: '#667eea', fontWeight: 600 }}>{comp.dots}</TableCell>
+          {/* Past Competitions Table */}
+          <Typography variant="h6" sx={{ mt: 4, mb: 2, fontWeight: 700, px: 1 }}>Competition History (Since 2018)</Typography>
+          <Paper elevation={10} sx={styles.paper}>
+          <TableContainer>
+            <Table sx={styles.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={styles.tableHeader}>Competition</TableCell>
+                  <TableCell sx={styles.tableHeader}>Squat</TableCell>
+                  <TableCell sx={styles.tableHeader}>Bench</TableCell>
+                  <TableCell sx={styles.tableHeader}>Deadlift</TableCell>
+                  <TableCell sx={styles.tableHeader}>Total</TableCell>
+                  <TableCell sx={styles.tableHeader}>DOTS</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Container>
+              </TableHead>
+              <TableBody>
+                {competitions.map((comp, i) => (
+                  <TableRow key={i} hover>
+                    <TableCell sx={styles.cell}>
+                      <Typography variant="body2" sx={{ fontWeight: 700, whiteSpace: 'nowrap' }}>{comp.competition}</Typography>
+                      <Typography variant="caption" color="text.secondary" sx={{ whiteSpace: 'nowrap' }}>{comp.date} • {comp.location}</Typography>
+                    </TableCell>
+                    <TableCell sx={styles.cell}>{comp.squat} lbs</TableCell>
+                    <TableCell sx={styles.cell}>{comp.bench} lbs</TableCell>
+                    <TableCell sx={styles.cell}>{comp.deadlift} lbs</TableCell>
+                    <TableCell sx={{ ...styles.cell, fontWeight: 700 }}>
+                      {displayTotal(comp.total, comp.squat, comp.bench, comp.deadlift)}
+                    </TableCell>
+                    <TableCell sx={styles.dotsCell}>{comp.dots}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          </Paper>
+        </Container>
+      </Box>
     </Box>
   )
 }
