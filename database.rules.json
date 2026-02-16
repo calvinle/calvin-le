@@ -1,0 +1,12 @@
+{
+  "rules": {
+    "powerlifting": {
+      ".read": true,
+      ".write": false
+    },
+    "speedcubing": {
+      ".read": true,
+      ".write": false
+    }
+  }
+}

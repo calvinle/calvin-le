@@ -6,6 +6,7 @@ import InfoIcon from '@mui/icons-material/Info'
 import WorkIcon from '@mui/icons-material/Work'
 import ContactMailIcon from '@mui/icons-material/ContactMail'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
+import CasinoIcon from '@mui/icons-material/Casino'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
@@ -54,6 +55,7 @@ const navItems = [
   { label: 'About', icon: InfoIcon, path: '/about' },
   { label: 'Work', icon: WorkIcon, path: '/work' },
   { label: 'Powerlifting', icon: FitnessCenterIcon, path: '/powerlifting' },
+  { label: 'Speedcubing', icon: CasinoIcon, path: '/speedcubing' },
   { label: 'Contact', icon: ContactMailIcon, path: '/contact' },
 ]
 

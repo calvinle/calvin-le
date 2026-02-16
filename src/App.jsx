@@ -12,6 +12,7 @@ import Home from './components/Home'
 import About from './components/About'
 import Work from './components/Work'
 import Powerlifting from './components/Powerlifting'
+import Speedcubing from './components/Speedcubing'
 import Contact from './components/Contact'
 import NavBar from './components/NavBar'
 
@@ -54,6 +55,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/work" element={<Work />} />
               <Route path="/powerlifting" element={<Powerlifting />} />
+              <Route path="/speedcubing" element={<Speedcubing />} />
               <Route path="/contact" element={<Contact />} />
             </Routes>
           </Box>

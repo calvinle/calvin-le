@@ -78,3 +78,40 @@ exports.fetchClosePowerliftingData = onSchedule({
 });
 /* eslint-enable indent */
 /* eslint-enable max-len */
+
+/**
+ * Scheduled function that runs once a day to fetch speedcubing data
+ * from WCA REST API and store it in Firebase Realtime Database.
+ * Runs at 3:00 AM UTC daily.
+ */
+/* eslint-disable indent */
+/* eslint-disable max-len */
+exports.fetchWcaSpeedcubingData = onSchedule({
+  schedule: "0 3 * * *",         // Every day at 3:00 AM UTC
+  timeoutSeconds: 60,
+  }, 
+  async (event) => {
+  try {
+    logger.info("Fetching speedcubing data from WCA REST API");
+
+    const response = await axios.get(
+    "https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons/2010LECA01.json"
+    );
+
+    const db = admin.database();
+    const timestamp = new Date().toISOString();
+
+    await db.ref("speedcubing/wca_data").set({
+    data: response.data,
+    lastUpdated: timestamp,
+    });
+
+    logger.info("Successfully fetched and stored WCA speedcubing data");
+    
+  } catch (error) {
+    logger.error("Error fetching WCA speedcubing data", error);
+    throw error; 
+  }
+});
+/* eslint-enable indent */
+/* eslint-enable max-len */
