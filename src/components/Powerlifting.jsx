@@ -333,6 +333,7 @@ export default function Powerlifting() {
                   <li>In a practical sense, this means this will update within two weeks of a competition</li>
                 </ul>
               </li>
+              <li>My data on OpenPowerlifting is conjoined with another Calvin Le(s?) who competed years before I did, so I have to filter that Calvin's results out</li>
             </Box>
           </Paper>
         </Container>
