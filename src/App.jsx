@@ -11,6 +11,7 @@ import { lightTheme, darkTheme } from './theme'
 import Home from './components/Home'
 import About from './components/About'
 import Work from './components/Work'
+import Powerlifting from './components/Powerlifting'
 import NavBar from './components/NavBar'
 
 const styles = {
@@ -37,6 +38,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/work" element={<Work />} />
+              <Route path="/powerlifting" element={<Powerlifting />} />
             </Routes>
           </Box>
         </Box>
