@@ -27,7 +27,7 @@ admin.initializeApp();
 // functions should each use functions.runWith({ maxInstances: 10 }) instead.
 // In the v1 API, each function can only serve one request per container, so
 // this will be the maximum concurrent request count.
-setGlobalOptions({ maxInstances: 10 });
+setGlobalOptions({maxInstances: 10});
 
 // Create and deploy your first functions
 // https://firebase.google.com/docs/functions/get-started
@@ -42,37 +42,45 @@ exports.helloWorld = onRequest((request, response) => {
  * from Close Powerlifting API and store it in Firebase Realtime Database.
  * Runs at 2:00 AM UTC on the 1st of each month.
  */
-exports.fetchClosePowerliftingData = onSchedule("0 2 1 * *", async (context) => {
-  try {
-    const apiKey = process.env.CLOSEPOWERLIFTING_API_KEY;
+/* eslint-disable indent */
+/* eslint-disable max-len */
+exports.fetchClosePowerliftingData = onSchedule("0 2 1 * *", {secrets: [closePowerliftingApiKey]}, async (context) => {
+      try {
+        const apiKey = closePowerliftingApiKey.value();
 
-    if (!apiKey) {
-      throw new Error("CLOSEPOWERLIFTING_API_KEY environment variable is not set");
-    }
+        if (!apiKey) {
+          throw new Error(
+              "CLOSEPOWERLIFTING_API_KEY secret is not set",
+          );
+        }
 
-    logger.info("Fetching powerlifting data from Close Powerlifting API");
+        logger.info("Fetching powerlifting data from Close Powerlifting API");
 
-    const response = await axios.get("https://closepowerlifting.com/api/users/calvinle", {
-      headers: {
-        "Authorization": `Bearer ${apiKey}`,
-      },
+        const response = await axios.get(
+            "https://closepowerlifting.com/api/users/calvinle",
+            {
+              headers: {
+                "Authorization": `Bearer ${apiKey}`,
+              },
+            });
+
+        const db = admin.database();
+        const timestamp = new Date().toISOString();
+
+        // Store the fetched data in Firebase Realtime Database
+        await db.ref("powerlifting/user_data").set({
+          data: response.data,
+          lastUpdated: timestamp,
+        });
+
+        logger.info("Successfully fetched and stored powerlifting data", {
+          timestamp,
+          dataSize: JSON.stringify(response.data).length,
+        });
+      } catch (error) {
+        logger.error("Error fetching powerlifting data", error);
+        throw error;
+      }
     });
-
-    const db = admin.database();
-    const timestamp = new Date().toISOString();
-
-    // Store the fetched data in Firebase Realtime Database
-    await db.ref("powerlifting/user_data").set({
-      data: response.data,
-      lastUpdated: timestamp,
-    });
-
-    logger.info("Successfully fetched and stored powerlifting data", {
-      timestamp,
-      dataSize: JSON.stringify(response.data).length,
-    });
-  } catch (error) {
-    logger.error("Error fetching powerlifting data", error);
-    throw error;
-  }
-});
+/* eslint-enable indent */
+/* eslint-enable max-len */
