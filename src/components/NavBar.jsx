@@ -1,4 +1,5 @@
-import { AppBar, Toolbar, Button, IconButton, Box } from '@mui/material'
+import { useState } from 'react'
+import { AppBar, Toolbar, Button, IconButton, Box, Menu, MenuItem, useMediaQuery, useTheme } from '@mui/material'
 import { Link, useLocation } from 'react-router-dom'
 import HomeIcon from '@mui/icons-material/Home'
 import InfoIcon from '@mui/icons-material/Info'
@@ -7,6 +8,7 @@ import ContactMailIcon from '@mui/icons-material/ContactMail'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
+import MenuIcon from '@mui/icons-material/Menu'
 
 const styles = {
   appBar: {
@@ -56,24 +58,69 @@ const navItems = [
 
 export default function NavBar({ isDarkMode, setIsDarkMode }) {
   const location = useLocation()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const [anchorEl, setAnchorEl] = useState(null)
+  const menuOpen = Boolean(anchorEl)
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleMenuClose = () => {
+    setAnchorEl(null)
+  }
 
   return (
     <AppBar sx={styles.appBar}>
       <Toolbar sx={styles.toolbar}>
-        <Box sx={styles.navButtons}>
-          {navItems.map((item) => (
-            <Button
-              key={item.path}
-              component={Link}
-              to={item.path}
-              sx={styles.navButton}
-              startIcon={<item.icon />}
-              color={location.pathname === item.path ? 'secondary' : 'inherit'}
+        {isMobile ? (
+          <>
+            <IconButton
+              color="inherit"
+              onClick={handleMenuOpen}
+              sx={{ mr: 'auto' }}
             >
-              {item.label}
-            </Button>
-          ))}
-        </Box>
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={menuOpen}
+              onClose={handleMenuClose}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+              transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+            >
+              {navItems.map((item) => (
+                <MenuItem
+                  key={item.path}
+                  component={Link}
+                  to={item.path}
+                  onClick={handleMenuClose}
+                  selected={location.pathname === item.path}
+                  sx={{ gap: 1 }}
+                >
+                  <item.icon fontSize="small" />
+                  {item.label}
+                </MenuItem>
+              ))}
+            </Menu>
+          </>
+        ) : (
+          <Box sx={styles.navButtons}>
+            {navItems.map((item) => (
+              <Button
+                key={item.path}
+                component={Link}
+                to={item.path}
+                sx={styles.navButton}
+                startIcon={<item.icon />}
+                color={location.pathname === item.path ? 'secondary' : 'inherit'}
+              >
+                {item.label}
+              </Button>
+            ))}
+          </Box>
+        )}
         <IconButton
           sx={styles.themeToggle}
           onClick={() => setIsDarkMode(!isDarkMode)}
