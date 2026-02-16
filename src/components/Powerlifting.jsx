@@ -53,7 +53,8 @@ const useStyles = (theme, isMobile) => ({
     backdropFilter: 'blur(10px)',
     overflow: 'visible',
     mb: 5,
-    minWidth: 'auto',
+    minWidth: isMobile ? 'auto' : '800px',
+    maxWidth: '100%',
   },
   table: {
     minWidth: '800px',
@@ -141,15 +142,25 @@ const useStyles = (theme, isMobile) => ({
   bulletList: {
     textAlign: 'left',
     lineHeight: 2,
-    pl: 2,
+    pl: isMobile ? 1 : 2,
+    pr: isMobile ? 1 : 0,
     m: 0,
     '& ul': {
-      pl: 3,
+      pl: isMobile ? 2 : 3,
       mt: 0.5,
       listStyleType: 'circle',
     },
     '& li': {
       mb: 0.5,
+      whiteSpace: 'normal',
+      wordWrap: 'break-word',
+    },
+    '& a': {
+      color: theme.palette.mode === 'dark' ? '#90CAF9' : '#667eea',
+      textDecoration: 'none',
+      '&:hover': {
+        textDecoration: 'underline',
+      },
     },
   },
 })
