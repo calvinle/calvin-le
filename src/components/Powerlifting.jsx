@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { 
   Box, Container, Paper, Typography, Table, TableBody, 
   TableCell, TableContainer, TableHead, TableRow, CircularProgress, 
-  Divider, useTheme, ToggleButtonGroup, ToggleButton, useMediaQuery 
+  Divider, useTheme, ToggleButtonGroup, ToggleButton, useMediaQuery, Link 
 } from '@mui/material'
 import { ref, onValue } from 'firebase/database'
 import { db } from '../firebase'
@@ -155,7 +155,7 @@ const useStyles = (theme, isMobile) => ({
       whiteSpace: 'normal',
       wordWrap: 'break-word',
     },
-    '& a': {
+    '& .MuiLink-root': {
       color: theme.palette.mode === 'dark' ? '#90CAF9' : '#667eea',
       textDecoration: 'none',
       '&:hover': {
@@ -330,18 +330,48 @@ export default function Powerlifting() {
           </Box>
           <Paper elevation={10} sx={styles.aboutPaper}>
             <Box component="ul" sx={styles.bulletList}>
-              <li>Powerlifting has multiple federations, each with its own rules and standards, resulting in a lack of formal unified data
+              <li>
+                <Typography variant="body1" component="span">
+                  Powerlifting has multiple federations, each with its own rules and standards, resulting in a lack of formal unified data
+                </Typography>
                 <ul>
-                  <li><a href="https://www.openpowerlifting.org/" target="_blank" rel="noopener noreferrer"><b>Open</b>Powerlifting</a> provides a comprehensive tabled view of all powerlifting results.</li>
-                  <li>However, they don't provide an API, as they prioritize maintaining the integrity of public data</li>
-                  <li>...But there is a 150MB CSV file for download!</li>
-                  <li>Also, it is literally being managed by 8 people</li>
+                  <li>
+                    <Typography variant="body2" component="span">
+                      <Link href="https://www.openpowerlifting.org/" target="_blank" rel="noopener noreferrer"><strong>Open</strong>Powerlifting</Link> provides a comprehensive tabled view of all powerlifting results.
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography variant="body2" component="span">
+                      However, they don't provide an API, as they prioritize maintaining the integrity of public data
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography variant="body2" component="span">
+                      ...But there is a 150MB CSV file for download!
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography variant="body2" component="span">
+                      Also, it is literally being managed by 8 people
+                    </Typography>
+                  </li>
                 </ul>
               </li>
-              <li><a href="https://closepowerlifting.com/" target="_blank" rel="noopener noreferrer"><b>Close</b>Powerlifting</a> serves as a 3rd-party API with a monthly quota</li>
-              <li>Combined with Firebase cron jobs and other automation tools, this page will update and cache weekly
+              <li>
+                <Typography variant="body1" component="span">
+                  <Link href="https://closepowerlifting.com/" target="_blank" rel="noopener noreferrer"><strong>Close</strong>Powerlifting</Link> serves as a 3rd-party API with a monthly quota
+                </Typography>
+              </li>
+              <li>
+                <Typography variant="body1" component="span">
+                  Combined with Firebase cron jobs and other automation tools, this page will update and cache weekly
+                </Typography>
                 <ul>
-                  <li>In a practical sense, this means this will update within two weeks of a competition</li>
+                  <li>
+                    <Typography variant="body2" component="span">
+                      In a practical sense, this means this will update within two weeks of a competition
+                    </Typography>
+                  </li>
                 </ul>
               </li>
             </Box>
