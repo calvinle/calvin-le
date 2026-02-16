@@ -29,3 +29,7 @@ out/
 
 # OS
 Thumbs.db
+
+# Firebase
+.firebase/
+.firebaserc
