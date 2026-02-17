@@ -1,5 +1,10 @@
 import { Box, Container, Paper, Typography, useTheme } from '@mui/material'
 
+/**
+ * Creates theme-aware styles for the Home component.
+ * @param {Object} theme - MUI theme object
+ * @returns {Object} Style definitions for component elements
+ */
 const useStyles = (theme) => ({
   container: {
     display: 'flex',
@@ -55,6 +60,18 @@ const useStyles = (theme) => ({
   },
 })
 
+/**
+ * Home component - Landing page of the portfolio website.
+ * 
+ * Displays a profile photo with hover effect and a brief introduction.
+ * Uses theme-aware gradient styling for visual appeal.
+ * 
+ * @component
+ * @returns {JSX.Element} The rendered Home page component
+ * 
+ * @example
+ * <Home />
+ */
 export default function Home() {
   const theme = useTheme()
   const styles = useStyles(theme)

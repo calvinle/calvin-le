@@ -10,6 +10,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { ref, onValue } from 'firebase/database'
 import { db } from '../firebase'
 
+/**
+ * Responsive styles for the Powerlifting component.
+ * @param {Object} theme - MUI theme object
+ * @param {boolean} isMobile - Whether the viewport is mobile-sized
+ * @returns {Object} Style definitions for component elements
+ */
 const useStyles = (theme, isMobile) => ({
   container: {
     display: 'flex',
@@ -212,12 +218,34 @@ const useStyles = (theme, isMobile) => ({
   },
 })
 
-// Conversion: 1 lb = 0.453592 kg
+/**
+ * Converts Imperial pounds to Metric kilograms.
+ * @param {number|string} lbs - Weight in pounds
+ * @returns {string} Weight in kilograms formatted to 1 decimal place, or '—' if invalid
+ */
 const lbsToKg = (lbs) => {
   if (!lbs || isNaN(lbs)) return '—'
   return (parseFloat(lbs) * 0.453592).toFixed(1)
 }
 
+/**
+ * Powerlifting component that displays powerlifting stats and competition history.
+ * 
+ * Fetches athlete data from Firebase Realtime Database and displays:
+ * - Personal bests (squat, bench, deadlift, total)
+ * - Competition history with results
+ * - About section explaining data sources (OpenPowerlifting)
+ * 
+ * Features responsive design with horizontally scrollable tables on mobile
+ * and a toggle for lb/kg unit conversion.
+ * 
+ * @component
+ * @requires Firebase - Realtime Database connection via '../firebase'
+ * @returns {JSX.Element} The rendered Powerlifting statistics page
+ * 
+ * @example
+ * <Powerlifting />
+ */
 export default function Powerlifting() {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -237,13 +265,27 @@ export default function Powerlifting() {
     if (newUnit !== null) setUnit(newUnit)
   }
 
+  /**
+   * Subscribes to Firebase Realtime Database for powerlifting data
+   * 
+   * On mount:
+   * - Creates a reference to powerlifting db in Firebase
+   * - Sets up a real-time listener that updates athlete state on data changes
+   * - Extracts athlete data from response (data.data[0])
+   * - Sets loading to false and handles errors appropriately
+   * 
+   * On unmount:
+   * - Unsubscribes/unmounts Firebase to prevent memory leaks
+   * 
+   * Dependencies: [] (runs once on mount)
+   */
   useEffect(() => {
     const userDataRef = ref(db, 'powerlifting/user_data')
 
     const unsubscribe = onValue(userDataRef, (snapshot) => {
       if (snapshot.exists()) {
         const rawResponse = snapshot.val()
-        // Parsing the nested structure: data -> data -> [0]
+
         const athleteData = rawResponse.data?.data?.[0]
         setAthlete(athleteData || null)
       } else {
@@ -258,15 +300,17 @@ export default function Powerlifting() {
     return () => unsubscribe()
   }, [])
 
+  // Loading state
   if (loading) return (
     <Box sx={styles.loadingBox}>
       <CircularProgress thickness={5} size={60} sx={{ color: theme.palette.primary.main }} />
     </Box>
   )
 
+  // Display error message if data fetching fails
   if (error) return <Typography color="error" align="center" sx={styles.errorText}>{error}</Typography>
 
-  // Filter competitions for 2018 and later
+  // Filter competitions for 2018 and later, because original data conjoined people
   const competitions = (athlete?.competition_results || [])
     .filter(comp => new Date(comp.date).getFullYear() >= 2018)
     .sort((a, b) => new Date(b.date) - new Date(a.date))
@@ -339,7 +383,7 @@ export default function Powerlifting() {
             </AccordionDetails>
           </Accordion>
           
-          {/* Unit Toggle - Mobile: centered above, Desktop: right-aligned */}
+          {/* Unit Toggle. Mobile: centered above. Desktop: right-aligned. */}
           <Box sx={styles.sectionHeader}>
             {isMobile && (
               <ToggleButtonGroup
@@ -410,7 +454,7 @@ export default function Powerlifting() {
           </Box>
           </Box>
 
-          {/* Past Competitions Table */}
+          {/* Competitions History Table */}
           <Box sx={styles.sectionTitleBox}>
             <Typography variant="h6" sx={styles.sectionTitle}>Competition History</Typography>
           </Box>

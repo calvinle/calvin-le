@@ -1,5 +1,10 @@
 import { Box, Container, Paper, Typography, Stack, useTheme } from '@mui/material'
 
+/**
+ * Creates theme-aware styles for the Work component.
+ * @param {Object} theme - MUI theme object
+ * @returns {Object} Style definitions for component elements
+ */
 const useStyles = (theme) => ({
   container: {
     display: 'flex',
@@ -72,6 +77,17 @@ const useStyles = (theme) => ({
   },
 })
 
+/**
+ * Work component - Professional experience and projects page.
+ * 
+ * Displays work history with company details, dates, and project descriptions, organized chronologically
+ * 
+ * @component
+ * @returns {JSX.Element} The rendered Work experience page component
+ * 
+ * @example
+ * <Work />
+ */
 export default function Work() {
   const theme = useTheme()
   const styles = useStyles(theme)

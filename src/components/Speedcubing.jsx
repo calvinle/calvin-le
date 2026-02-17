@@ -10,6 +10,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { ref, onValue } from 'firebase/database'
 import { db } from '../firebase'
 
+/**
+ * Responsive styles for the Speedcubing component.
+ * @param {Object} theme - MUI theme object
+ * @param {boolean} isMobile - Whether the viewport is mobile-sized
+ * @returns {Object} Style definitions for component elements
+ */
 const useStyles = (theme, isMobile) => ({
   container: {
     display: 'flex',
@@ -172,12 +178,22 @@ const eventNames = {
   'mmagic': 'Master Magic',
 }
 
+/**
+ * Map of discontinued WCA events with explanatory messages.
+ * @type {Object.<string, string>}
+ */
 const discontinuedEvents = {
   'magic': 'Magic was discontinued as an official WCA event in 2012.',
   'mmagic': 'Master Magic was discontinued as an official WCA event in 2012.',
 }
 
-// Format time from centiseconds to human readable format
+/**
+ * Formats time from WCA centiseconds to human-readable format.
+ * Also handles times over 1 minute with mm:ss.cc format.
+ * 
+ * @param {number} centiseconds - Time in centiseconds from WCA API
+ * @returns {string} Formatted time string (e.g., "12.34" or "1:05.00") or '—' if invalid
+ */
 const formatTime = (centiseconds) => {
   if (!centiseconds || centiseconds <= 0) return '—'
   
@@ -192,6 +208,22 @@ const formatTime = (centiseconds) => {
   return totalSeconds.toFixed(2)
 }
 
+/**
+ * Speedcubing component to display WCA speedcubing statistics and competition history.
+ * 
+ * Grabs data from Firebase Realtime Database (cached from WCA REST API) and displays:
+ * - Competition count and medal stats
+ * - Personal bests for each WCA event (single and average)
+ * - Competition history with detailed results
+ * - About section with cubing methods and WCA links
+ * 
+ * @component
+ * @requires Firebase - Realtime Database connection via '../firebase'
+ * @returns {JSX.Element} The rendered Speedcubing statistics page
+ * 
+ * @example
+ * <Speedcubing />
+ */
 export default function Speedcubing() {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -266,6 +298,7 @@ export default function Speedcubing() {
     <Box sx={styles.outerWrapper}>
       <Box sx={styles.container}>
         <Container maxWidth="md" sx={styles.mainContainer}>
+          
           {/* About Section - Accordion */}
           <Accordion sx={styles.accordion} defaultExpanded={false}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>

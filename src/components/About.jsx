@@ -1,5 +1,10 @@
 import { Box, Container, Paper, Typography, useTheme } from '@mui/material'
 
+/**
+ * Creates theme-aware styles for the About component.
+ * @param {Object} theme - MUI theme object
+ * @returns {Object} Style definitions for component elements
+ */
 const useStyles = (theme) => ({
   container: {
     display: 'flex',
@@ -40,6 +45,18 @@ const useStyles = (theme) => ({
   },
 })
 
+/**
+ * About component - Personal information page.
+ * 
+ * Displays biographical information and background details.
+ * Features a centered card layout with themed gradient styling.
+ * 
+ * @component
+ * @returns {JSX.Element} The rendered About page component
+ * 
+ * @example
+ * <About />
+ */
 export default function About() {
   const theme = useTheme()
   const styles = useStyles(theme)

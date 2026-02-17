@@ -3,6 +3,11 @@ import EmailIcon from '@mui/icons-material/Email'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import GitHubIcon from '@mui/icons-material/GitHub'
 
+/**
+ * Creates theme-aware styles for the Contact component.
+ * @param {Object} theme - MUI theme object
+ * @returns {Object} Style definitions for component elements
+ */
 const useStyles = (theme) => ({
   container: {
     display: 'flex',
@@ -68,6 +73,9 @@ const useStyles = (theme) => ({
   },
 })
 
+/**
+ * Contact information items with links.
+ */
 const contactItems = [
   {
     icon: EmailIcon,
@@ -89,6 +97,18 @@ const contactItems = [
   },
 ]
 
+/**
+ * Contact component - Contact information page.
+ * 
+ * Displays contact methods including email, LinkedIn, and GitHub
+ * with interactive hover effects and external links.
+ * 
+ * @component
+ * @returns {JSX.Element} The rendered Contact page component
+ * 
+ * @example
+ * <Contact />
+ */
 export default function Contact() {
   const theme = useTheme()
   const styles = useStyles(theme)

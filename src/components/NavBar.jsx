@@ -12,6 +12,10 @@ import Brightness7Icon from '@mui/icons-material/Brightness7'
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
 import MenuIcon from '@mui/icons-material/Menu'
 
+/**
+ * Responsive styles for the NavBar component.
+ * @returns {Object} Style definitions for component elements
+ */
 const styles = {
   appBar: {
     position: 'fixed',
@@ -50,6 +54,9 @@ const styles = {
   },
 }
 
+/**
+ * Items for navigation bar
+ */
 const navItems = [
   { label: 'Home', icon: HomeIcon, path: '/' },
   { label: 'About', icon: InfoIcon, path: '/about' },
@@ -59,6 +66,22 @@ const navItems = [
   { label: 'Contact', icon: ContactMailIcon, path: '/contact' },
 ]
 
+/**
+ * NavBar component - Main navigation bar for the application.
+ * 
+ * Provides navigation links to all pages with responsive design.
+ * Includes a theme toggle button that cycles through light, dark, and red modes.
+ * On mobile, navigation collapses into a hamburger menu.
+ * 
+ * @component
+ * @param {Object} props - Component props
+ * @param {string} props.themeName - Current theme name ('light' | 'dark' | 'red')
+ * @param {Function} props.cycleTheme - Callback function to cycle to the next theme
+ * @returns {JSX.Element} The rendered navigation bar component
+ * 
+ * @example
+ * <NavBar themeName="dark" cycleTheme={() => setTheme(nextTheme)} />
+ */
 export default function NavBar({ themeName, cycleTheme }) {
   const location = useLocation()
   const theme = useTheme()
