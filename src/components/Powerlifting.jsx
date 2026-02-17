@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react'
 import { 
   Box, Container, Paper, Typography, Table, TableBody, 
   TableCell, TableContainer, TableHead, TableRow, CircularProgress, 
-  Divider, useTheme, ToggleButtonGroup, ToggleButton, useMediaQuery, Link, Tooltip 
+  Divider, useTheme, ToggleButtonGroup, ToggleButton, useMediaQuery, Link, Tooltip,
+  Accordion, AccordionSummary, AccordionDetails
 } from '@mui/material'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { ref, onValue } from 'firebase/database'
 import { db } from '../firebase'
 
@@ -73,6 +75,20 @@ const useStyles = (theme, isMobile) => ({
     minWidth: 'auto',
     maxWidth: '100%',
     width: '100%',
+  },
+  accordion: {
+    borderRadius: '12px !important',
+    backdropFilter: 'blur(10px)',
+    mb: 4,
+    '&:before': {
+      display: 'none',
+    },
+    '& .MuiAccordionSummary-root': {
+      minHeight: 56,
+    },
+    '& .MuiAccordionSummary-content': {
+      margin: '12px 0',
+    },
   },
   table: {
     minWidth: '800px',
@@ -259,6 +275,69 @@ export default function Powerlifting() {
     <Box sx={styles.outerWrapper}>
       <Box sx={styles.container}>
         <Container maxWidth="lg" sx={styles.mainContainer}>
+
+          {/* About Section - Accordion */}
+          <Accordion sx={styles.accordion} defaultExpanded={false}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Box>
+                <Typography variant="h6" sx={styles.sectionTitle}>Why This Page?</Typography>
+                <Typography variant="caption" color="text.secondary">Click to expand</Typography>
+              </Box>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box component="ul" sx={styles.bulletList}>
+                <li>
+                  <Typography variant="body1" component="span">
+                    Powerlifting has multiple federations, each with its own rules and standards, resulting in a lack of formal unified data
+                  </Typography>
+                  <ul>
+                    <li>
+                      <Typography variant="body2" component="span">
+                        <Link href="https://www.openpowerlifting.org/" target="_blank" rel="noopener noreferrer"><strong>Open</strong>Powerlifting</Link> provides a comprehensive tabled view of all powerlifting results.
+                      </Typography>
+                    </li>
+                    <li>
+                      <Typography variant="body2" component="span">
+                        However, they don't provide an API, as they prioritize maintaining the integrity of public data
+                      </Typography>
+                    </li>
+                    <li>
+                      <Typography variant="body2" component="span">
+                        ...But there is a 150MB CSV file for download!
+                      </Typography>
+                    </li>
+                    <li>
+                      <Typography variant="body2" component="span">
+                        Also, it is literally being managed by 8 people
+                      </Typography>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <Typography variant="body1" component="span">
+                    <Link href="https://closepowerlifting.com/" target="_blank" rel="noopener noreferrer"><strong>Close</strong>Powerlifting</Link> serves as a 3rd-party API with a monthly quota
+                  </Typography>
+                </li>
+                <li>
+                  <Typography variant="body1" component="span">
+                    Combined with Firebase cron jobs and other automation tools, this page will update and cache weekly
+                  </Typography>
+                  <ul>
+                    <li>
+                      <Typography variant="body2" component="span">
+                        In a practical sense, this means this will update within two weeks of a competition
+                      </Typography>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <Typography variant="body2" component="span">
+                    My data on OpenPowerlifting is conjoined with another Calvin Le(s?) who competed years before I did, so I have to filter that Calvin's results out
+                  </Typography>
+                </li>
+              </Box>
+            </AccordionDetails>
+          </Accordion>
           
           {/* Unit Toggle - Mobile: centered above, Desktop: right-aligned */}
           <Box sx={styles.sectionHeader}>
@@ -382,64 +461,6 @@ export default function Powerlifting() {
           </Paper>
           </Box>
           </Box>
-
-          {/* About Section */}
-          <Box sx={styles.sectionTitleBox}>
-            <Typography variant="h6" sx={styles.sectionTitle}>Why This Page?</Typography>
-          </Box>
-          <Paper elevation={10} sx={styles.aboutPaper}>
-            <Box component="ul" sx={styles.bulletList}>
-              <li>
-                <Typography variant="body1" component="span">
-                  Powerlifting has multiple federations, each with its own rules and standards, resulting in a lack of formal unified data
-                </Typography>
-                <ul>
-                  <li>
-                    <Typography variant="body2" component="span">
-                      <Link href="https://www.openpowerlifting.org/" target="_blank" rel="noopener noreferrer"><strong>Open</strong>Powerlifting</Link> provides a comprehensive tabled view of all powerlifting results.
-                    </Typography>
-                  </li>
-                  <li>
-                    <Typography variant="body2" component="span">
-                      However, they don't provide an API, as they prioritize maintaining the integrity of public data
-                    </Typography>
-                  </li>
-                  <li>
-                    <Typography variant="body2" component="span">
-                      ...But there is a 150MB CSV file for download!
-                    </Typography>
-                  </li>
-                  <li>
-                    <Typography variant="body2" component="span">
-                      Also, it is literally being managed by 8 people
-                    </Typography>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <Typography variant="body1" component="span">
-                  <Link href="https://closepowerlifting.com/" target="_blank" rel="noopener noreferrer"><strong>Close</strong>Powerlifting</Link> serves as a 3rd-party API with a monthly quota
-                </Typography>
-              </li>
-              <li>
-                <Typography variant="body1" component="span">
-                  Combined with Firebase cron jobs and other automation tools, this page will update and cache weekly
-                </Typography>
-                <ul>
-                  <li>
-                    <Typography variant="body2" component="span">
-                      In a practical sense, this means this will update within two weeks of a competition
-                    </Typography>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <Typography variant="body2" component="span">
-                  My data on OpenPowerlifting is conjoined with another Calvin Le(s?) who competed years before I did, so I have to filter that Calvin's results out
-                </Typography>
-              </li>
-            </Box>
-          </Paper>
         </Container>
       </Box>
     </Box>
