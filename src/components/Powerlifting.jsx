@@ -17,18 +17,26 @@ const useStyles = (theme, isMobile) => ({
     gap: 4,
     flex: 1,
     backgroundImage: `linear-gradient(135deg, ${theme.palette.primary.main}10 0%, ${theme.palette.secondary.main}15 100%)`,
-    overflowX: 'auto',
-    minWidth: 'fit-content',
+    overflowX: isMobile ? 'hidden' : 'auto',
+    minWidth: isMobile ? 'auto' : 'fit-content',
+    width: '100%',
   },
   outerWrapper: {
-    overflowX: 'auto',
+    overflowX: isMobile ? 'hidden' : 'auto',
     width: '100%',
     flex: 1,
     display: 'flex',
     minWidth: 0,
   },
   mainContainer: {
-    minWidth: '800px',
+    minWidth: isMobile ? 'auto' : '800px',
+    width: '100%',
+    px: isMobile ? 2 : 3,
+  },
+  tableScrollWrapper: {
+    overflowX: 'auto',
+    width: '100%',
+    WebkitOverflowScrolling: 'touch',
   },
   loadingBox: {
     display: 'flex',
@@ -44,7 +52,8 @@ const useStyles = (theme, isMobile) => ({
     backdropFilter: 'blur(10px)',
     overflow: 'hidden',
     mb: 5,
-    minWidth: '800px',
+    minWidth: isMobile ? 'auto' : '800px',
+    width: '100%',
   },
   aboutPaper: {
     padding: 3,
@@ -52,8 +61,9 @@ const useStyles = (theme, isMobile) => ({
     backdropFilter: 'blur(10px)',
     overflow: 'hidden',
     mb: 5,
-    minWidth: isMobile ? 'auto' : '800px',
+    minWidth: 'auto',
     maxWidth: '100%',
+    width: '100%',
   },
   table: {
     minWidth: '800px',
@@ -257,6 +267,7 @@ export default function Powerlifting() {
           </Box>
 
           {/* Personal Bests Table */}
+          <Box sx={styles.tableScrollWrapper}>
           <Paper elevation={10} sx={styles.paper}>
           <TableContainer>
             <Table sx={styles.table}>
@@ -293,11 +304,13 @@ export default function Powerlifting() {
             </Table>
           </TableContainer>
           </Paper>
+          </Box>
 
           {/* Past Competitions Table */}
           <Box sx={styles.sectionTitleBox}>
             <Typography variant="h6" sx={styles.sectionTitle}>Competition History</Typography>
           </Box>
+          <Box sx={styles.tableScrollWrapper}>
           <Paper elevation={10} sx={styles.paper}>
           <TableContainer>
             <Table sx={styles.table}>
@@ -341,6 +354,7 @@ export default function Powerlifting() {
             </Table>
           </TableContainer>
           </Paper>
+          </Box>
 
           {/* About Section */}
           <Box sx={styles.sectionTitleBox}>
