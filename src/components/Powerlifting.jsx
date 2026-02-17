@@ -33,10 +33,20 @@ const useStyles = (theme, isMobile) => ({
     width: '100%',
     px: isMobile ? 2 : 3,
   },
+  tableShadowWrapper: {
+    borderRadius: '24px',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)',
+    mb: 5,
+  },
   tableScrollWrapper: {
     overflowX: 'auto',
     width: '100%',
     WebkitOverflowScrolling: 'touch',
+    borderRadius: '24px',
+  },
+  tableContainer: {
+    overflowX: 'auto',
+    overflowY: 'hidden',
   },
   loadingBox: {
     display: 'flex',
@@ -48,10 +58,9 @@ const useStyles = (theme, isMobile) => ({
   },
   paper: {
     padding: 0,
-    borderRadius: 3,
+    borderRadius: '24px',
     backdropFilter: 'blur(10px)',
     overflow: 'hidden',
-    mb: 5,
     minWidth: isMobile ? 'auto' : '800px',
     width: '100%',
   },
@@ -67,6 +76,20 @@ const useStyles = (theme, isMobile) => ({
   },
   table: {
     minWidth: '800px',
+    borderRadius: '24px',
+    overflow: 'hidden',
+    '& tbody tr:last-child': {
+      '& td:first-of-type': {
+        borderBottomLeftRadius: '24px',
+      },
+      '& td:last-of-type': {
+        borderBottomRightRadius: '24px',
+      },
+    },
+    '& tbody tr:last-child:hover': {
+      borderBottomLeftRadius: '24px',
+      borderBottomRightRadius: '24px',
+    },
   },
   heading: {
     fontWeight: 800,
@@ -267,9 +290,10 @@ export default function Powerlifting() {
           </Box>
 
           {/* Personal Bests Table */}
+          <Box sx={styles.tableShadowWrapper}>
           <Box sx={styles.tableScrollWrapper}>
-          <Paper elevation={10} sx={styles.paper}>
-          <TableContainer>
+          <Paper elevation={0} sx={styles.paper}>
+          <TableContainer sx={styles.tableContainer}>
             <Table sx={styles.table}>
               <TableHead>
                 <TableRow>
@@ -305,14 +329,16 @@ export default function Powerlifting() {
           </TableContainer>
           </Paper>
           </Box>
+          </Box>
 
           {/* Past Competitions Table */}
           <Box sx={styles.sectionTitleBox}>
             <Typography variant="h6" sx={styles.sectionTitle}>Competition History</Typography>
           </Box>
+          <Box sx={styles.tableShadowWrapper}>
           <Box sx={styles.tableScrollWrapper}>
-          <Paper elevation={10} sx={styles.paper}>
-          <TableContainer>
+          <Paper elevation={0} sx={styles.paper}>
+          <TableContainer sx={styles.tableContainer}>
             <Table sx={styles.table}>
               <TableHead>
                 <TableRow>
@@ -354,6 +380,7 @@ export default function Powerlifting() {
             </Table>
           </TableContainer>
           </Paper>
+          </Box>
           </Box>
 
           {/* About Section */}
