@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { 
   Box, Container, Paper, Typography, Table, TableBody, 
-  TableCell, TableContainer, TableHead, TableRow, CircularProgress, 
+  TableCell, TableHead, TableRow, CircularProgress, 
   useTheme, useMediaQuery 
 } from '@mui/material'
 import { ref, onValue } from 'firebase/database'
@@ -13,13 +13,15 @@ const useStyles = (theme, isMobile) => ({
     flexDirection: 'column',
     alignItems: 'center',
     paddingY: isMobile ? 3 : 6,
-    paddingX: isMobile ? 2 : 0,
+    paddingX: isMobile ? 0 : 0,
     gap: isMobile ? 2 : 4,
     flex: 1,
     backgroundImage: `linear-gradient(135deg, ${theme.palette.primary.main}10 0%, ${theme.palette.secondary.main}15 100%)`,
+    overflowX: isMobile ? 'hidden' : 'auto',
+    width: '100%',
   },
   outerWrapper: {
-    overflowX: 'auto',
+    overflowX: isMobile ? 'hidden' : 'auto',
     width: '100%',
     flex: 1,
     display: 'flex',
@@ -28,6 +30,7 @@ const useStyles = (theme, isMobile) => ({
   mainContainer: {
     minWidth: isMobile ? 'auto' : '800px',
     width: '100%',
+    px: isMobile ? 2 : 3,
   },
   loadingBox: {
     display: 'flex',
@@ -43,9 +46,17 @@ const useStyles = (theme, isMobile) => ({
     backdropFilter: 'blur(10px)',
     overflow: 'hidden',
     mb: isMobile ? 3 : 5,
+    minWidth: isMobile ? 'auto' : '800px',
+    width: '100%',
+  },
+  tableScrollContainer: {
+    overflowX: 'auto',
+    overflowY: 'hidden',
+    width: '100%',
+    WebkitOverflowScrolling: 'touch',
+    borderRadius: 3,
   },
   tableWrapper: {
-    overflowX: 'auto',
     width: '100%',
   },
   aboutPaper: {
@@ -54,7 +65,9 @@ const useStyles = (theme, isMobile) => ({
     backdropFilter: 'blur(10px)',
     overflow: 'hidden',
     mb: isMobile ? 3 : 5,
+    minWidth: 'auto',
     maxWidth: '100%',
+    width: '100%',
   },
   table: {
     minWidth: isMobile ? 500 : 800,
@@ -266,35 +279,37 @@ export default function Speedcubing() {
           </Box>
 
           <Box sx={styles.tableWrapper}>
-            <TableContainer component={Paper} sx={styles.paper}>
-              <Table sx={styles.table}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell sx={styles.tableHeader}>Event</TableCell>
-                    <TableCell sx={styles.tableHeader} align="center">Single</TableCell>
-                    <TableCell sx={styles.tableHeader} align="center">Average</TableCell>
-                    <TableCell sx={styles.tableHeader} align="center">Country Rank</TableCell>
-                    <TableCell sx={styles.tableHeader} align="center">World Rank</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {personalBests.map((pb, index) => (
-                    <TableRow key={index} sx={styles.tableRow}>
-                      <TableCell component="th" scope="row">
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                          <span className={`cubing-icon event-${pb.eventId}`} style={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
-                          <Typography fontWeight={600} sx={{ fontSize: isMobile ? '0.8rem' : '0.875rem' }}>{pb.event}</Typography>
-                        </Box>
-                      </TableCell>
-                      <TableCell align="center">{pb.single}</TableCell>
-                      <TableCell align="center">{pb.average}</TableCell>
-                      <TableCell align="center">{pb.countryRank?.toLocaleString() || '—'}</TableCell>
-                      <TableCell align="center">{pb.worldRank?.toLocaleString() || '—'}</TableCell>
+            <Paper sx={styles.paper}>
+              <Box sx={styles.tableScrollContainer}>
+                <Table sx={styles.table}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell sx={styles.tableHeader}>Event</TableCell>
+                      <TableCell sx={styles.tableHeader} align="center">Single</TableCell>
+                      <TableCell sx={styles.tableHeader} align="center">Average</TableCell>
+                      <TableCell sx={styles.tableHeader} align="center">Country Rank</TableCell>
+                      <TableCell sx={styles.tableHeader} align="center">World Rank</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                  </TableHead>
+                  <TableBody>
+                    {personalBests.map((pb, index) => (
+                      <TableRow key={index} sx={styles.tableRow}>
+                        <TableCell component="th" scope="row">
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <span className={`cubing-icon event-${pb.eventId}`} style={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
+                            <Typography fontWeight={600} sx={{ fontSize: isMobile ? '0.8rem' : '0.875rem' }}>{pb.event}</Typography>
+                          </Box>
+                        </TableCell>
+                        <TableCell align="center">{pb.single}</TableCell>
+                        <TableCell align="center">{pb.average}</TableCell>
+                        <TableCell align="center">{pb.countryRank?.toLocaleString() || '—'}</TableCell>
+                        <TableCell align="center">{pb.worldRank?.toLocaleString() || '—'}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Box>
+            </Paper>
           </Box>
 
           {/* Competition History */}
@@ -326,37 +341,39 @@ export default function Speedcubing() {
                   {formatCompName(compId)}
                 </Typography>
                 <Box sx={styles.tableWrapper}>
-                  <TableContainer component={Paper} sx={styles.paper}>
-                    <Table sx={styles.table}>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell sx={styles.tableHeader}>Event</TableCell>
-                          <TableCell sx={styles.tableHeader}>Round</TableCell>
-                          <TableCell sx={styles.tableHeader} align="center">Place</TableCell>
-                          <TableCell sx={styles.tableHeader} align="center">Single</TableCell>
-                          <TableCell sx={styles.tableHeader} align="center">Average</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {Object.entries(compResults).flatMap(([eventId, rounds]) =>
-                          rounds.map((round, idx) => (
-                            <TableRow key={`${eventId}-${idx}`} sx={styles.tableRow}>
-                              <TableCell>
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                  <span className={`cubing-icon event-${eventId}`} style={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
-                                  <Typography fontWeight={600} sx={{ fontSize: isMobile ? '0.8rem' : '0.875rem' }}>{eventNames[eventId] || eventId}</Typography>
-                                </Box>
-                              </TableCell>
-                              <TableCell>{round.round}</TableCell>
-                              <TableCell align="center">{round.position}</TableCell>
-                              <TableCell align="center">{formatTime(round.best)}</TableCell>
-                              <TableCell align="center">{formatTime(round.average)}</TableCell>
-                            </TableRow>
-                          ))
-                        )}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
+                  <Paper sx={styles.paper}>
+                    <Box sx={styles.tableScrollContainer}>
+                      <Table sx={styles.table}>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell sx={styles.tableHeader}>Event</TableCell>
+                            <TableCell sx={styles.tableHeader}>Round</TableCell>
+                            <TableCell sx={styles.tableHeader} align="center">Place</TableCell>
+                            <TableCell sx={styles.tableHeader} align="center">Single</TableCell>
+                            <TableCell sx={styles.tableHeader} align="center">Average</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {Object.entries(compResults).flatMap(([eventId, rounds]) =>
+                            rounds.map((round, idx) => (
+                              <TableRow key={`${eventId}-${idx}`} sx={styles.tableRow}>
+                                <TableCell>
+                                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                    <span className={`cubing-icon event-${eventId}`} style={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
+                                    <Typography fontWeight={600} sx={{ fontSize: isMobile ? '0.8rem' : '0.875rem' }}>{eventNames[eventId] || eventId}</Typography>
+                                  </Box>
+                                </TableCell>
+                                <TableCell>{round.round}</TableCell>
+                                <TableCell align="center">{round.position}</TableCell>
+                                <TableCell align="center">{formatTime(round.best)}</TableCell>
+                                <TableCell align="center">{formatTime(round.average)}</TableCell>
+                              </TableRow>
+                            ))
+                          )}
+                        </TableBody>
+                      </Table>
+                    </Box>
+                  </Paper>
                 </Box>
               </Box>
             )
