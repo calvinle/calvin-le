@@ -69,7 +69,7 @@ export default function Home() {
               alt="Calvin" 
               style={{
                 ...styles.photo,
-                opacity: theme.palette.mode === 'dark' ? 0 : 1,
+                opacity: theme.palette.mode === 'light' ? 1 : 0,
               }}
             />
             <img 
@@ -77,7 +77,15 @@ export default function Home() {
               alt="Calvin" 
               style={{
                 ...styles.photo,
-                opacity: theme.palette.mode === 'dark' ? 1 : 0,
+                opacity: theme.palette.mode === 'dark' && theme.palette.primary.main !== '#FF6B6B' ? 1 : 0,
+              }}
+            />
+            <img 
+              src="/images/photo-red.jpg"
+              alt="Calvin" 
+              style={{
+                ...styles.photo,
+                opacity: theme.palette.primary.main === '#FF6B6B' ? 1 : 0,
               }}
             />
           </Box>

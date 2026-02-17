@@ -17,18 +17,36 @@ const useStyles = (theme, isMobile) => ({
     gap: 4,
     flex: 1,
     backgroundImage: `linear-gradient(135deg, ${theme.palette.primary.main}10 0%, ${theme.palette.secondary.main}15 100%)`,
-    overflowX: 'auto',
-    minWidth: 'fit-content',
+    overflowX: isMobile ? 'hidden' : 'auto',
+    minWidth: isMobile ? 'auto' : 'fit-content',
+    width: '100%',
   },
   outerWrapper: {
-    overflowX: 'auto',
+    overflowX: isMobile ? 'hidden' : 'auto',
     width: '100%',
     flex: 1,
     display: 'flex',
     minWidth: 0,
   },
   mainContainer: {
-    minWidth: '800px',
+    minWidth: isMobile ? 'auto' : '800px',
+    width: '100%',
+    px: isMobile ? 2 : 3,
+  },
+  tableShadowWrapper: {
+    borderRadius: '24px',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)',
+    mb: 5,
+  },
+  tableScrollWrapper: {
+    overflowX: 'auto',
+    width: '100%',
+    WebkitOverflowScrolling: 'touch',
+    borderRadius: '24px',
+  },
+  tableContainer: {
+    overflowX: 'auto',
+    overflowY: 'hidden',
   },
   loadingBox: {
     display: 'flex',
@@ -40,11 +58,11 @@ const useStyles = (theme, isMobile) => ({
   },
   paper: {
     padding: 0,
-    borderRadius: 3,
+    borderRadius: '24px',
     backdropFilter: 'blur(10px)',
     overflow: 'hidden',
-    mb: 5,
-    minWidth: '800px',
+    minWidth: isMobile ? 'auto' : '800px',
+    width: '100%',
   },
   aboutPaper: {
     padding: 3,
@@ -52,11 +70,26 @@ const useStyles = (theme, isMobile) => ({
     backdropFilter: 'blur(10px)',
     overflow: 'hidden',
     mb: 5,
-    minWidth: isMobile ? 'auto' : '800px',
+    minWidth: 'auto',
     maxWidth: '100%',
+    width: '100%',
   },
   table: {
     minWidth: '800px',
+    borderRadius: '24px',
+    overflow: 'hidden',
+    '& tbody tr:last-child': {
+      '& td:first-of-type': {
+        borderBottomLeftRadius: '24px',
+      },
+      '& td:last-of-type': {
+        borderBottomRightRadius: '24px',
+      },
+    },
+    '& tbody tr:last-child:hover': {
+      borderBottomLeftRadius: '24px',
+      borderBottomRightRadius: '24px',
+    },
   },
   heading: {
     fontWeight: 800,
@@ -257,8 +290,10 @@ export default function Powerlifting() {
           </Box>
 
           {/* Personal Bests Table */}
-          <Paper elevation={10} sx={styles.paper}>
-          <TableContainer>
+          <Box sx={styles.tableShadowWrapper}>
+          <Box sx={styles.tableScrollWrapper}>
+          <Paper elevation={0} sx={styles.paper}>
+          <TableContainer sx={styles.tableContainer}>
             <Table sx={styles.table}>
               <TableHead>
                 <TableRow>
@@ -293,13 +328,17 @@ export default function Powerlifting() {
             </Table>
           </TableContainer>
           </Paper>
+          </Box>
+          </Box>
 
           {/* Past Competitions Table */}
           <Box sx={styles.sectionTitleBox}>
             <Typography variant="h6" sx={styles.sectionTitle}>Competition History</Typography>
           </Box>
-          <Paper elevation={10} sx={styles.paper}>
-          <TableContainer>
+          <Box sx={styles.tableShadowWrapper}>
+          <Box sx={styles.tableScrollWrapper}>
+          <Paper elevation={0} sx={styles.paper}>
+          <TableContainer sx={styles.tableContainer}>
             <Table sx={styles.table}>
               <TableHead>
                 <TableRow>
@@ -341,6 +380,8 @@ export default function Powerlifting() {
             </Table>
           </TableContainer>
           </Paper>
+          </Box>
+          </Box>
 
           {/* About Section */}
           <Box sx={styles.sectionTitleBox}>
