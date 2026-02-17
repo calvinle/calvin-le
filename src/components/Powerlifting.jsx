@@ -331,7 +331,7 @@ export default function Powerlifting() {
                   </ul>
                 </li>
                 <li>
-                  <Typography variant="body2" component="span">
+                  <Typography variant="body1" component="span">
                     My data on OpenPowerlifting is conjoined with another Calvin Le(s?) who competed years before I did, so I have to filter that Calvin's results out
                   </Typography>
                 </li>
