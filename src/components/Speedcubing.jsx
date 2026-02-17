@@ -387,7 +387,7 @@ export default function Speedcubing() {
             
             return (
               <Box key={compId} sx={{ mb: isMobile ? 3 : 4 }}>
-                <Typography variant="h6" sx={{ fontWeight: 600, mb: 2, px: 1, fontSize: isMobile ? '1rem' : '1.25rem' }}>
+                <Typography variant="h6" sx={{ fontWeight: 600, mb: 2, px: 1, fontSize: isMobile ? '1rem' : '1.25rem', color: theme.palette.mode === 'dark' ? '#fff' : 'inherit' }}>
                   {formatCompName(compId)}
                 </Typography>
                 <Box sx={styles.tableWrapper}>
