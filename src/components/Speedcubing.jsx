@@ -1,13 +1,8 @@
 import { useEffect, useState } from 'react'
 import { 
   Box, Container, Paper, Typography, Table, TableBody, 
-<<<<<<< HEAD
   TableCell, TableHead, TableRow, CircularProgress, 
-  useTheme, useMediaQuery 
-=======
-  TableCell, TableContainer, TableHead, TableRow, CircularProgress, 
   useTheme, useMediaQuery, Link, Tooltip
->>>>>>> main
 } from '@mui/material'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { ref, onValue } from 'firebase/database'
@@ -74,6 +69,8 @@ const useStyles = (theme, isMobile) => ({
     minWidth: 'auto',
     maxWidth: '100%',
     width: '100%',
+    wordBreak: 'break-word',
+    overflowWrap: 'break-word',
   },
   table: {
     minWidth: isMobile ? 500 : 800,
@@ -269,10 +266,41 @@ export default function Speedcubing() {
               My main events are the 3x3, 3x3 One-Handed, and 4x4.
             </Typography>
             <Typography variant="body2" paragraph>
+              I use the following methods:
+              <Box component="ul" sx={{ listStyle: 'none', pl: 0, m: 0, mb: 2 }}>
+                <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+                  <span className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
+                  <Typography variant="body2">3x3: <Link href="https://jperm.net/3x3/cfop" target="_blank" rel="noopener noreferrer">CFOP with 2-look OLL and 1-look PLL</Link></Typography>
+                </Box>
+                <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+                  <span className="cubing-icon event-333oh" style={{ fontSize: '1rem' }} />
+                  <Typography variant="body2">3x3 One-Handed: <Link href="https://www.zzmethod.com/tutorial" target="_blank" rel="noopener noreferrer">ZZ </Link></Typography>
+                </Box>
+                <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+                  <span className="cubing-icon event-444" style={{ fontSize: '1rem' }} />
+                  <Typography variant="body2">4x4: <Link href="https://jperm.net/4x4" target="_blank" rel="noopener noreferrer">Yau</Link></Typography>
+                </Box>
+              </Box>
+            </Typography>
+            <Typography variant="body2" paragraph>
               The data on this page uses an unofficial API by Robin Engelbrecht, fully endorsed by the World Cube Association. This page also runs a cron job and caches the data in Firebase.
             </Typography>
             <Typography variant="body2" paragraph>
-              See the documentation for more details: <Link href="https://wca.github.io/wca-api-docs/#introduction" target="_blank" rel="noopener noreferrer>">WCA API Documentation</Link>.
+              See below links for more details:
+              <Box component="ul" sx={{ listStyle: 'none', pl: 0, m: 0, mb: 2 }}>
+                <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+                  <span className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
+                  <Typography variant="body2"><Link href="https://www.worldcubeassociation.org/" target="_blank" rel="noopener noreferrer">World Cube Association</Link></Typography>
+                </Box>
+                <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+                  <span className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
+                  <Typography variant="body2"><Link href="https://docs.worldcubeassociation.org/knowledge_base/wca_data_overview.html" target="_blank" rel="noopener noreferrer">WCA Data Overview</Link></Typography>
+                </Box>
+                <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+                  <span className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
+                  <Typography variant="body2"><Link href="https://wca-rest-api.robiningelbrecht.be/" target="_blank" rel="noopener noreferrer">WCA-REST-API Documentation</Link></Typography>
+                </Box>
+              </Box>
             </Typography>
           </Paper>
 
@@ -296,7 +324,6 @@ export default function Speedcubing() {
           </Box>
 
           <Box sx={styles.tableWrapper}>
-<<<<<<< HEAD
             <Paper sx={styles.paper}>
               <Box sx={styles.tableScrollContainer}>
                 <Table sx={styles.table}>
@@ -307,37 +334,6 @@ export default function Speedcubing() {
                       <TableCell sx={styles.tableHeader} align="center">Average</TableCell>
                       <TableCell sx={styles.tableHeader} align="center">Country Rank</TableCell>
                       <TableCell sx={styles.tableHeader} align="center">World Rank</TableCell>
-=======
-            <TableContainer component={Paper} sx={styles.paper}>
-              <Table sx={styles.table}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell sx={styles.tableHeader}>Event</TableCell>
-                    <TableCell sx={styles.tableHeader} align="center">Single</TableCell>
-                    <TableCell sx={styles.tableHeader} align="center">Average</TableCell>
-                    <TableCell sx={styles.tableHeader} align="center">Country Rank</TableCell>
-                    <TableCell sx={styles.tableHeader} align="center">World Rank</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {personalBests.map((pb, index) => (
-                    <TableRow key={index} sx={styles.tableRow}>
-                      <TableCell component="th" scope="row">
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                          <span className={`cubing-icon event-${pb.eventId}`} style={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
-                          <Typography fontWeight={600} sx={{ fontSize: isMobile ? '0.8rem' : '0.875rem' }}>{pb.event}</Typography>
-                          {discontinuedEvents[pb.eventId] && (
-                            <Tooltip title={discontinuedEvents[pb.eventId]} arrow enterTouchDelay={0} leaveTouchDelay={3000}>
-                              <InfoOutlinedIcon sx={{ fontSize: '0.875rem', cursor: 'help' }} />
-                            </Tooltip>
-                          )}
-                        </Box>
-                      </TableCell>
-                      <TableCell align="center">{pb.single}</TableCell>
-                      <TableCell align="center">{pb.average}</TableCell>
-                      <TableCell align="center">{pb.countryRank?.toLocaleString() || '—'}</TableCell>
-                      <TableCell align="center">{pb.worldRank?.toLocaleString() || '—'}</TableCell>
->>>>>>> main
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -347,6 +343,11 @@ export default function Speedcubing() {
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                             <span className={`cubing-icon event-${pb.eventId}`} style={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
                             <Typography fontWeight={600} sx={{ fontSize: isMobile ? '0.8rem' : '0.875rem' }}>{pb.event}</Typography>
+                            {discontinuedEvents[pb.eventId] && (
+                              <Tooltip title={discontinuedEvents[pb.eventId]} arrow enterTouchDelay={0} leaveTouchDelay={3000}>
+                                <InfoOutlinedIcon sx={{ fontSize: '0.875rem', cursor: 'help' }} />
+                              </Tooltip>
+                            )}
                           </Box>
                         </TableCell>
                         <TableCell align="center">{pb.single}</TableCell>
@@ -390,7 +391,6 @@ export default function Speedcubing() {
                   {formatCompName(compId)}
                 </Typography>
                 <Box sx={styles.tableWrapper}>
-<<<<<<< HEAD
                   <Paper sx={styles.paper}>
                     <Box sx={styles.tableScrollContainer}>
                       <Table sx={styles.table}>
@@ -411,6 +411,11 @@ export default function Speedcubing() {
                                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                     <span className={`cubing-icon event-${eventId}`} style={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
                                     <Typography fontWeight={600} sx={{ fontSize: isMobile ? '0.8rem' : '0.875rem' }}>{eventNames[eventId] || eventId}</Typography>
+                                    {discontinuedEvents[eventId] && (
+                                      <Tooltip title={discontinuedEvents[eventId]} arrow enterTouchDelay={0} leaveTouchDelay={3000}>
+                                        <InfoOutlinedIcon sx={{ fontSize: '0.875rem', cursor: 'help' }} />
+                                      </Tooltip>
+                                    )}
                                   </Box>
                                 </TableCell>
                                 <TableCell>{round.round}</TableCell>
@@ -424,44 +429,6 @@ export default function Speedcubing() {
                       </Table>
                     </Box>
                   </Paper>
-=======
-                  <TableContainer component={Paper} sx={styles.paper}>
-                    <Table sx={styles.table}>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell sx={styles.tableHeader}>Event</TableCell>
-                          <TableCell sx={styles.tableHeader}>Round</TableCell>
-                          <TableCell sx={styles.tableHeader} align="center">Place</TableCell>
-                          <TableCell sx={styles.tableHeader} align="center">Single</TableCell>
-                          <TableCell sx={styles.tableHeader} align="center">Average</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {Object.entries(compResults).flatMap(([eventId, rounds]) =>
-                          rounds.map((round, idx) => (
-                            <TableRow key={`${eventId}-${idx}`} sx={styles.tableRow}>
-                              <TableCell>
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                  <span className={`cubing-icon event-${eventId}`} style={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
-                                  <Typography fontWeight={600} sx={{ fontSize: isMobile ? '0.8rem' : '0.875rem' }}>{eventNames[eventId] || eventId}</Typography>
-                                  {discontinuedEvents[eventId] && (
-                                    <Tooltip title={discontinuedEvents[eventId]} arrow enterTouchDelay={0} leaveTouchDelay={3000}>
-                                      <InfoOutlinedIcon sx={{ fontSize: '0.875rem', cursor: 'help' }} />
-                                    </Tooltip>
-                                  )}
-                                </Box>
-                              </TableCell>
-                              <TableCell>{round.round}</TableCell>
-                              <TableCell align="center">{round.position}</TableCell>
-                              <TableCell align="center">{formatTime(round.best)}</TableCell>
-                              <TableCell align="center">{formatTime(round.average)}</TableCell>
-                            </TableRow>
-                          ))
-                        )}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
->>>>>>> main
                 </Box>
               </Box>
             )
