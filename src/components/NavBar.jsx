@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom'
 import HomeIcon from '@mui/icons-material/Home'
 import InfoIcon from '@mui/icons-material/Info'
 import WorkIcon from '@mui/icons-material/Work'
+import FolderIcon from '@mui/icons-material/Folder'
 import ContactMailIcon from '@mui/icons-material/ContactMail'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import CasinoIcon from '@mui/icons-material/Casino'
@@ -61,6 +62,7 @@ const navItems = [
   { label: 'Home', icon: HomeIcon, path: '/' },
   { label: 'About', icon: InfoIcon, path: '/about' },
   { label: 'Work', icon: WorkIcon, path: '/work' },
+  { label: 'Projects', icon: FolderIcon, path: '/projects' },
   { label: 'Powerlifting', icon: FitnessCenterIcon, path: '/powerlifting' },
   { label: 'Speedcubing', icon: CasinoIcon, path: '/speedcubing' },
   { label: 'Contact', icon: ContactMailIcon, path: '/contact' },
