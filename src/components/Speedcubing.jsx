@@ -311,13 +311,13 @@ export default function Speedcubing() {
             <AccordionDetails>
               <Typography variant="body2" paragraph>
                 Speedcubing is the practice of solving Rubik's Cubes and other twisty puzzles as fast as possible. 
-                I have been involved in the sport for well over a decade, having competed and volunteered in many competitions.
+                Calvin has been involved in the sport for well over a decade, having competed and volunteered in many competitions.
               </Typography>
               <Typography variant="body2" paragraph>
-                My main events are the 3x3, 3x3 One-Handed, and 4x4.
+                Calvin's main events are the 3x3, 3x3 One-Handed, and 4x4.
               </Typography>
               <Typography variant="body2" paragraph>
-                I use the following methods:
+                He uses the following methods:
                 <Box component="ul" sx={{ listStyle: 'none', pl: 0, m: 0, mb: 2 }}>
                   <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
                     <span className="cubing-icon event-333" style={{ fontSize: '1rem' }} />

@@ -109,7 +109,7 @@ export default function About() {
               <li>Bachelor of Science in Computer Science @ Colorado State University, 2018</li>
               <li>Semi-competitive speedcuber</li>
               <li>Actually-competitive powerlifter</li>
-              <li>EDM enthusiast of all kinds since I was 13!</li>
+              <li>EDM enthusiast of all kinds since 13!</li>
               <li>Used to perform Michael Jackson dance covers at local events</li>
               <li>Coffee made via pour-over and taken black</li>
             </Box>
