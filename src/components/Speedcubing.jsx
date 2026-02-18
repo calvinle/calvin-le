@@ -232,6 +232,7 @@ export default function Speedcubing() {
   const [stats, setStats] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [aboutExpanded, setAboutExpanded] = useState(false)
 
   useEffect(() => {
     const statsRef = ref(db, 'speedcubing/wca_data')
@@ -300,11 +301,11 @@ export default function Speedcubing() {
         <Container maxWidth="md" sx={styles.mainContainer}>
           
           {/* About Section - Accordion */}
-          <Accordion sx={styles.accordion} defaultExpanded={false}>
+          <Accordion sx={styles.accordion} expanded={aboutExpanded} onChange={(e, expanded) => setAboutExpanded(expanded)}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Box>
                 <Typography variant="h6" sx={styles.sectionTitle}>About Speedcubing</Typography>
-                <Typography variant="caption" color="text.secondary">Click to expand</Typography>
+                <Typography variant="caption" color="text.secondary">{aboutExpanded ? 'Click to collapse' : 'Click to expand'}</Typography>
               </Box>
             </AccordionSummary>
             <AccordionDetails>

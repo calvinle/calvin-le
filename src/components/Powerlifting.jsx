@@ -254,6 +254,7 @@ export default function Powerlifting() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [unit, setUnit] = useState('lbs')
+  const [aboutExpanded, setAboutExpanded] = useState(false)
 
   const formatWeight = (value) => {
     if (!value || isNaN(value)) return '—'
@@ -321,11 +322,11 @@ export default function Powerlifting() {
         <Container maxWidth="lg" sx={styles.mainContainer}>
 
           {/* About Section - Accordion */}
-          <Accordion sx={styles.accordion} defaultExpanded={false}>
+          <Accordion sx={styles.accordion} expanded={aboutExpanded} onChange={(e, expanded) => setAboutExpanded(expanded)}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Box>
                 <Typography variant="h6" sx={styles.sectionTitle}>Why This Page?</Typography>
-                <Typography variant="caption" color="text.secondary">Click to expand</Typography>
+                <Typography variant="caption" color="text.secondary">{aboutExpanded ? 'Click to collapse' : 'Click to expand'}</Typography>
               </Box>
             </AccordionSummary>
             <AccordionDetails>
