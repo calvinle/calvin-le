@@ -70,7 +70,7 @@ export default function About() {
             component="h2"
             sx={styles.heading}
           >
-            A Little Bit About Me
+            A Little Bit About Calvin
           </Typography>
 
           <Typography
@@ -97,7 +97,7 @@ export default function About() {
             component="h2"
             sx={styles.heading}
           >
-            Some More About Me
+            Some More About Calvin
           </Typography>
 
           <Typography
