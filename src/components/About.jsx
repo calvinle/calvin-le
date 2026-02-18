@@ -77,7 +77,7 @@ export default function About() {
             variant="body1"
             sx={styles.description}
           >
-            Calvin can be described as a worldly person. Born in Southern California, got his degree in Colorado, and currently resides in Kansas City (on the Kansas side). He has travelled the country not only for music and tourism, but also for powerlifting, having competed in multiple states. If you've made it this far, then know this website is currently a WIP.
+            Calvin can be described as a worldly person. Born in Southern California, got his degree in Colorado, and currently resides in Kansas City (on the Kansas side). He has travelled the country not only for music and tourism, but also for powerlifting, having competed in multiple states. He is well-versed in full-stack development, having primarily worked with React for front-end design and Node.js and Java for back-end development. He also enjoys working with Model-View-Controller frameworks and relational databases. Software engineering has taught that with enough time to debug, any problem can not only be solved, but also potentially made simpler and taught to others to learn. Over the last few years, he has developed a strong interest in teaching and leading others, developing both their strengths and weakneses. Mastery in any discipline leads to growth as a person.
           </Typography>
 
           <Typography
@@ -97,6 +97,9 @@ export default function About() {
               <li>Bachelor of Science in Computer Science @ Colorado State University, 2018</li>
               <li>Semi-competitive speedcuber</li>
               <li>Actually-competitive powerlifter</li>
+              <li>EDM enthusiast of all kinds since I was 13!</li>
+              <li>Used to perform Michael Jackson dance covers at local events</li>
+              <li>Coffee made via pour-over and taken black</li>
             </Box>
           </Typography>
         </Paper>

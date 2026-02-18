@@ -95,7 +95,7 @@ export default function Projects() {
   const projects = [
     {
       name: 'Personal Website',
-      description: 'This website you\'re checking out! Built with React, Material-UI, and Firebase. Features responsive design, theme switching, and a clean modern UI.',
+      description: 'This website you\'re checking out! Built with React, Material-UI, and Firebase. Features responsive design and theme switching. Future mini projects will be added here as well.',
       links: [
         { label: 'GitHub', url: 'https://github.com/calvinle/calvin-le', icon: GitHubIcon },
       ],
