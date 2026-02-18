@@ -77,7 +77,19 @@ export default function About() {
             variant="body1"
             sx={styles.description}
           >
-            Calvin can be described as a worldly person. Born in Southern California, got his degree in Colorado, and currently resides in Kansas City (on the Kansas side). He has travelled the country not only for music and tourism, but also for powerlifting, having competed in multiple states. He is well-versed in full-stack development, having primarily worked with React for front-end design and Node.js and Java for back-end development. He also enjoys working with Model-View-Controller frameworks and relational databases. Software engineering has taught that with enough time to debug, any problem can not only be solved, but also potentially made simpler and taught to others to learn. Over the last few years, he has developed a strong interest in teaching and leading others, developing both their strengths and weakneses. Mastery in any discipline leads to growth as a person.
+            Calvin can be described as a worldly person. Born in Southern California, got his degree in Colorado, and currently resides in Kansas City (on the Kansas side). He has travelled the country not only for music and tourism, but also for powerlifting and Rubik's Cube competitions.
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={styles.description}
+          >
+            He is well-versed in full-stack development, having primarily worked with React for front-end design and Node.js and Java for back-end development. He also enjoys working with Model-View-Controller frameworks and relational databases. Software engineering has taught that with enough time to debug, any problem can not only be solved, but also potentially made simpler and serve as a learning opportunity.
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={styles.description}
+          >
+            Over the last few years, he has developed a strong interest in teaching and leading others, developing both their strengths and weaknesses. Mastery in any discipline leads to growth as a person.
           </Typography>
 
           <Typography
