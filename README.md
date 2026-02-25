@@ -76,3 +76,38 @@ Deploy to Firebase:
 npm run build
 firebase deploy
 ```
+
+# Testing Setup
+
+## Dependencies
+Install these packages for best-practice React testing:
+
+```
+npm install --save-dev jest @testing-library/react @testing-library/jest-dom
+```
+
+If you want to simulate user events:
+```
+npm install --save-dev @testing-library/user-event
+```
+
+## Running Tests
+
+Add this to your `package.json` if not present:
+```json
+"scripts": {
+  "test": "jest"
+}
+```
+
+Then run:
+```
+npm test
+```
+
+## Firebase Mocks
+
+The Powerlifting page test mocks Firebase imports. For more advanced Firebase testing, consider using [firebase-mock](https://github.com/soumak77/firebase-mock) or the official Firebase Emulator Suite for integration tests.
+
+---
+Test files are in `src/components/__tests__/`. Each page/component has a basic render test as a starting point.

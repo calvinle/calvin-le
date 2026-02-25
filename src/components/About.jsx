@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box, Container, Paper, Typography, useTheme } from '@mui/material'
 
 /**
@@ -41,7 +42,7 @@ const useStyles = (theme) => ({
   description: {
     fontSize: '1rem',
     lineHeight: 1.8,
-    marginBottom: 2,
+    marginBottom: 0,
   },
 })
 
@@ -100,20 +101,29 @@ export default function About() {
             Some More About Calvin
           </Typography>
 
-          <Typography
-            variant="body1"
-            sx={styles.description}
-          >
-            <Box component="ul" sx={{ textAlign: 'left', display: 'inline-block', lineHeight: 2 }}>
-              <li>Born and raised in the suburbs of Los Angeles, California</li>
-              <li>Bachelor of Science in Computer Science @ Colorado State University, 2018</li>
-              <li>Semi-competitive speedcuber</li>
-              <li>Actually-competitive powerlifter</li>
-              <li>EDM enthusiast of all kinds since 13!</li>
-              <li>Used to perform Michael Jackson dance covers at local events</li>
-              <li>Coffee made via pour-over and taken black</li>
-            </Box>
-          </Typography>
+          <Box component="ul" sx={{ textAlign: 'left', display: 'inline-block', lineHeight: 2, p: 0, m: 0 }}>
+            <Typography component="li" variant="body1" sx={styles.description}>
+              Born and raised in the suburbs of Los Angeles, California
+            </Typography>
+            <Typography component="li" variant="body1" sx={styles.description}>
+              Bachelor of Science in Computer Science @ Colorado State University, 2018
+            </Typography>
+            <Typography component="li" variant="body1" sx={styles.description}>
+              Semi-competitive speedcuber
+            </Typography>
+            <Typography component="li" variant="body1" sx={styles.description}>
+              Actually-competitive powerlifter
+            </Typography>
+            <Typography component="li" variant="body1" sx={styles.description}>
+              EDM enthusiast of all kinds since 13!
+            </Typography>
+            <Typography component="li" variant="body1" sx={styles.description}>
+              Used to perform Michael Jackson dance covers at local events
+            </Typography>
+            <Typography component="li" variant="body1" sx={styles.description}>
+              Coffee made via pour-over and taken black
+            </Typography>
+          </Box>
         </Paper>
       </Container>
     </Box>
