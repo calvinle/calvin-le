@@ -286,8 +286,9 @@ export default function Powerlifting() {
     const unsubscribe = onValue(userDataRef, (snapshot) => {
       if (snapshot.exists()) {
         const rawResponse = snapshot.val()
+        console.log('Powerlifting rawResponse:', rawResponse)
 
-        const athleteData = rawResponse.data?.data?.[0]
+        const athleteData = rawResponse.data?.data?.[0].data
         setAthlete(athleteData || null)
       } else {
         setError('No data found in the database.')
