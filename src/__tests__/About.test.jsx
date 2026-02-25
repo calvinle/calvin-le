@@ -3,9 +3,15 @@ import { render, screen } from '@testing-library/react';
 import About from '../components/About';
 
 describe('About Page', () => {
-  it('renders without crashing', () => {
+  beforeEach(() => {
     render(<About />);
-    // Basic smoke test: check for a known element or text
-    // expect(screen.getByText(/about/i)).toBeInTheDocument();
+  });
+
+  it('renders main heading', () => {
+    expect(screen.getByText(/a little bit about calvin/i));
+  });
+
+  it('renders secondary heading', () => {
+    expect(screen.getByText(/some more about calvin/i));
   });
 });
