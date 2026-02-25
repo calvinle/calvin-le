@@ -5,7 +5,19 @@ import Projects from '../components/Projects';
 describe('Projects Page', () => {
   it('renders without crashing', () => {
     render(<Projects />);
-    // Basic smoke test: check for a known element or text
-    // expect(screen.getByText(/project/i)).toBeInTheDocument();
+    const projectElements = screen.queryAllByText(/project/i);
+    expect(projectElements.length).toBeGreaterThan(0);
+  });
+  it('renders personal website card', () => {
+    render(<Projects />);
+    expect(screen.getByText(/personal website/i));
+  });
+  it('renders powerlifting plate calculator project', () => {
+    render(<Projects />);
+    expect(screen.getByText(/powerlifting plate calculator/i));
+  });
+  it('renders pieHue project', () => {
+    render(<Projects />);
+    expect(screen.getByText(/pihue/i));
   });
 });
