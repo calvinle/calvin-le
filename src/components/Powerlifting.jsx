@@ -288,6 +288,11 @@ export default function Powerlifting() {
         const rawResponse = snapshot.val()
 
         const athleteData = rawResponse.data?.data?.[0].data
+
+        // A check for unexpected Firebase response structure
+        if (!athleteData) {
+          console.warn('Unexpected Firebase response structure:', rawResponse)
+        }
         setAthlete(athleteData || null)
       } else {
         setError('No data found in the database.')
