@@ -313,7 +313,12 @@ export default function Powerlifting() {
   )
 
   // Display error message if data fetching fails
-  if (error) return <Typography color="error" align="center" sx={styles.errorText}>{error}</Typography>
+  if (error) return (
+    <Typography color="error" align="center" sx={styles.errorText}>
+      Cannot display powerlifting data. If viewing on desktop, check the console by pressing F12 and viewing 'Console', and send these errors on the 'Contact' page.<br />
+      {error}
+    </Typography>
+  )
 
   // Filter competitions for 2018 and later, because original data conjoined people
   const competitions = (athlete?.competition_results || [])

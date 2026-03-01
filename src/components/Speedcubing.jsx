@@ -286,7 +286,8 @@ export default function Speedcubing() {
     return (
       <Box sx={styles.container}>
         <Typography color="error" sx={styles.errorText}>
-          Error loading speedcubing data: {error}
+          Cannot display speedcubing data. If viewing on desktop, check the console by pressing F12 and viewing 'Console', and send these errors on the 'Contact' page.<br />
+          {error}
         </Typography>
       </Box>
     )
