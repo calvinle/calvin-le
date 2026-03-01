@@ -234,16 +234,38 @@ export default function Speedcubing() {
   const [error, setError] = useState(null)
   const [aboutExpanded, setAboutExpanded] = useState(false)
 
+  /**
+   * Subscribes to Firebase Realtime Database for speedcubing data
+   * 
+   * On mount:
+   * - Creates a reference to speedcubing db in Firebase
+   * - Sets up a real-time listener that updates speedcubing state on data changes
+   * - Extracts speedcubing stats from response (.data)
+   * - Sets loading to false and handles errors appropriately
+   * 
+   * On unmount:
+   * - Unsubscribes/unmounts Firebase to prevent memory leaks
+   * 
+   * Dependencies: [] (runs once on mount)
+   */
   useEffect(() => {
     const statsRef = ref(db, 'speedcubing/wca_data')
     const unsubscribe = onValue(statsRef, (snapshot) => {
-      const data = snapshot.val()
-      if (data?.data) {
-        setStats(data.data)
+      if (snapshot.exists()){
+        const rawResponse = snapshot.val();
+        const speedcubingData = rawResponse?.data;
+
+        // check for unexpected Firebase response structure
+        if (!speedcubingData) {
+          console.warn('Unexpected Firebase response structure:', rawResponse)
+        }
+        setStats(speedcubingData || null)
+      } else {
+        setError(`No data found in the database.`)
       }
       setLoading(false)
     }, (err) => {
-      setError(err.message)
+      setError(`Firebase Error: ${err.message}`)
       setLoading(false)
     })
 
@@ -309,50 +331,50 @@ export default function Speedcubing() {
               </Box>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography variant="body2" paragraph>
-                Speedcubing is the practice of solving Rubik's Cubes and other twisty puzzles as fast as possible. 
-                Calvin has been involved in the sport for well over a decade, having competed and volunteered in many competitions.
-              </Typography>
-              <Typography variant="body2" paragraph>
-                Calvin's main events are the 3x3, 3x3 One-Handed, and 4x4.
-              </Typography>
-              <Typography variant="body2" paragraph>
-                He uses the following methods:
-                <Box component="ul" sx={{ listStyle: 'none', pl: 0, m: 0, mb: 2 }}>
-                  <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                    <span className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
-                    <Typography variant="body2">3x3: <Link href="https://jperm.net/3x3/cfop" target="_blank" rel="noopener noreferrer">CFOP with 2-look OLL and 1-look PLL</Link></Typography>
+                  <Typography variant="body2" paragraph>
+                    Speedcubing is the practice of solving Rubik's Cubes and other twisty puzzles as fast as possible. 
+                    Calvin has been involved in the sport for well over a decade, having competed and volunteered in many competitions.
+                  </Typography>
+                  <Typography variant="body2" paragraph>
+                    Calvin's main events are the 3x3, 3x3 One-Handed, and 4x4.
+                  </Typography>
+                  <Typography variant="body2" paragraph>
+                    He uses the following methods:
+                  </Typography>
+                  <Box component="ul" sx={{ listStyle: 'none', pl: 0, m: 0, mb: 2 }}>
+                    <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+                      <span className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
+                      <Typography variant="body2">3x3: <Link href="https://jperm.net/3x3/cfop" target="_blank" rel="noopener noreferrer">CFOP with 2-look OLL and 1-look PLL</Link></Typography>
+                    </Box>
+                    <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+                      <span className="cubing-icon event-333oh" style={{ fontSize: '1rem' }} />
+                      <Typography variant="body2">3x3 One-Handed: <Link href="https://www.zzmethod.com/tutorial" target="_blank" rel="noopener noreferrer">ZZ </Link></Typography>
+                    </Box>
+                    <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+                      <span className="cubing-icon event-444" style={{ fontSize: '1rem' }} />
+                      <Typography variant="body2">4x4: <Link href="https://jperm.net/4x4" target="_blank" rel="noopener noreferrer">Yau</Link></Typography>
+                    </Box>
                   </Box>
-                  <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                    <span className="cubing-icon event-333oh" style={{ fontSize: '1rem' }} />
-                    <Typography variant="body2">3x3 One-Handed: <Link href="https://www.zzmethod.com/tutorial" target="_blank" rel="noopener noreferrer">ZZ </Link></Typography>
+                  <Typography variant="body2" paragraph>
+                    The data on this page uses an unofficial API by Robin Engelbrecht, fully endorsed by the World Cube Association. This page also runs a cron job and caches the data in Firebase.
+                  </Typography>
+                  <Typography variant="body2" paragraph>
+                    See below links for more details:
+                  </Typography>
+                  <Box component="ul" sx={{ listStyle: 'none', pl: 0, m: 0, mb: 2 }}>
+                    <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+                      <span className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
+                      <Typography variant="body2"><Link href="https://www.worldcubeassociation.org/" target="_blank" rel="noopener noreferrer">World Cube Association</Link></Typography>
+                    </Box>
+                    <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+                      <span className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
+                      <Typography variant="body2"><Link href="https://docs.worldcubeassociation.org/knowledge_base/wca_data_overview.html" target="_blank" rel="noopener noreferrer">WCA Data Overview</Link></Typography>
+                    </Box>
+                    <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+                      <span className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
+                      <Typography variant="body2"><Link href="https://wca-rest-api.robiningelbrecht.be/" target="_blank" rel="noopener noreferrer">WCA-REST-API Documentation</Link></Typography>
+                    </Box>
                   </Box>
-                  <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                    <span className="cubing-icon event-444" style={{ fontSize: '1rem' }} />
-                    <Typography variant="body2">4x4: <Link href="https://jperm.net/4x4" target="_blank" rel="noopener noreferrer">Yau</Link></Typography>
-                  </Box>
-                </Box>
-              </Typography>
-              <Typography variant="body2" paragraph>
-                The data on this page uses an unofficial API by Robin Engelbrecht, fully endorsed by the World Cube Association. This page also runs a cron job and caches the data in Firebase.
-              </Typography>
-              <Typography variant="body2" paragraph>
-                See below links for more details:
-                <Box component="ul" sx={{ listStyle: 'none', pl: 0, m: 0, mb: 2 }}>
-                  <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                    <span className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
-                    <Typography variant="body2"><Link href="https://www.worldcubeassociation.org/" target="_blank" rel="noopener noreferrer">World Cube Association</Link></Typography>
-                  </Box>
-                  <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                    <span className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
-                    <Typography variant="body2"><Link href="https://docs.worldcubeassociation.org/knowledge_base/wca_data_overview.html" target="_blank" rel="noopener noreferrer">WCA Data Overview</Link></Typography>
-                  </Box>
-                  <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                    <span className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
-                    <Typography variant="body2"><Link href="https://wca-rest-api.robiningelbrecht.be/" target="_blank" rel="noopener noreferrer">WCA-REST-API Documentation</Link></Typography>
-                  </Box>
-                </Box>
-              </Typography>
             </AccordionDetails>
           </Accordion>
 

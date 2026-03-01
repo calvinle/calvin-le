@@ -285,13 +285,12 @@ export default function Powerlifting() {
 
     const unsubscribe = onValue(userDataRef, (snapshot) => {
       if (snapshot.exists()) {
-        const rawResponse = snapshot.val()
+        const rawResponse = snapshot.val();
+        const athleteData = rawResponse.data?.data?.[0].data;
 
-        const athleteData = rawResponse.data?.data?.[0].data
-
-        // A check for unexpected Firebase response structure
+        // check for unexpected Firebase response structure
         if (!athleteData) {
-          console.warn('Unexpected Firebase response structure:', rawResponse)
+          console.warn('Unexpected Firebase response structure/call:', rawResponse)
         }
         setAthlete(athleteData || null)
       } else {
