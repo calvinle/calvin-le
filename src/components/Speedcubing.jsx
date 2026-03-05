@@ -257,7 +257,8 @@ export default function Speedcubing() {
 
         // check for unexpected Firebase response structure
         if (!speedcubingData) {
-          console.warn('Unexpected Firebase response structure:', rawResponse)
+          console.warn('Unexpected Firebase response structure', rawResponse)
+          setError(`Unexpected Firebase response structure/call.`)
         }
         setStats(speedcubingData || null)
       } else {
