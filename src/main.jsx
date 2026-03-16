@@ -1,11 +1,1 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
-import './firebase'
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+throw new Error('main.jsx is no longer used. The app now uses Next.js App Router under the app/ directory.')

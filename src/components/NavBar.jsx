@@ -1,6 +1,9 @@
+'use client'
+
 import { useState } from 'react'
 import { AppBar, Toolbar, Button, IconButton, Box, Menu, MenuItem, useMediaQuery, useTheme } from '@mui/material'
-import { Link, useLocation } from 'react-router-dom'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import HomeIcon from '@mui/icons-material/Home'
 import InfoIcon from '@mui/icons-material/Info'
 import WorkIcon from '@mui/icons-material/Work'
@@ -85,7 +88,7 @@ const navItems = [
  * <NavBar themeName="dark" cycleTheme={() => setTheme(nextTheme)} />
  */
 export default function NavBar({ themeName, cycleTheme }) {
-  const location = useLocation()
+  const pathname = usePathname()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [anchorEl, setAnchorEl] = useState(null)
@@ -133,9 +136,9 @@ export default function NavBar({ themeName, cycleTheme }) {
                 <MenuItem
                   key={item.path}
                   component={Link}
-                  to={item.path}
+                  href={item.path}
                   onClick={handleMenuClose}
-                  selected={location.pathname === item.path}
+                  selected={pathname === item.path}
                   sx={{ gap: 1 }}
                 >
                   <item.icon fontSize="small" />
@@ -147,12 +150,12 @@ export default function NavBar({ themeName, cycleTheme }) {
         ) : (
           <Box sx={styles.navButtons}>
             {navItems.map((item) => {
-              const isActive = location.pathname === item.path
+              const isActive = pathname === item.path
               return (
                 <Button
                   key={item.path}
                   component={Link}
-                  to={item.path}
+                  href={item.path}
                   sx={{
                     ...styles.navButton,
                     borderBottom: isActive ? '2px solid' : '2px solid transparent',

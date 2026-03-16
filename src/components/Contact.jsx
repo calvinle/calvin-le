@@ -81,8 +81,8 @@ const contactItems = [
   {
     icon: EmailIcon,
     title: 'Email',
-    subtitle: 'calvin.md.le@gmail.com',
-    href: 'mailto:calvin.md.le@gmail.com',
+    subtitle: 'calvinle0@proton.me',
+    href: 'mailto:calvinle0@proton.me',
   },
   {
     icon: LinkedInIcon,

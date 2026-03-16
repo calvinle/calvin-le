@@ -8,7 +8,7 @@ import {
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { ref, onValue } from 'firebase/database'
-import { db } from '../firebase'
+import { db } from '../../lib/firebase'
 
 /**
  * Responsive styles for the Powerlifting component.
