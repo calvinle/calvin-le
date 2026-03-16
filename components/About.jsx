@@ -84,7 +84,7 @@ export default function About() {
             variant="body1"
             sx={styles.description}
           >
-            He is well-versed in full-stack development, having primarily worked with React for front-end design and Node.js and Java for back-end development. He also enjoys working with Model-View-Controller frameworks and relational databases. Software engineering has taught that with enough time to debug, any problem can not only be solved, but also potentially made simpler and serve as a learning opportunity.
+            He is well-versed in full-stack development, having primarily worked with React for front-end design and Node.js and Java for back-end development. He also enjoys working with various frameworks including React.JS, Next.JS, Express.JS, and Spring Boot. Software engineering has taught that with enough time to debug, any problem can not only be solved, but also potentially made simpler and serve as a learning opportunity.
           </Typography>
           <Typography
             variant="body1"
@@ -129,3 +129,4 @@ export default function About() {
     </Box>
   )
 }
+

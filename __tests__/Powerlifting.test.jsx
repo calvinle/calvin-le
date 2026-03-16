@@ -88,11 +88,9 @@ jest.mock('../components/Powerlifting', () => () => (
   </div>
 ));
 
-
 describe('Powerlifting Page', () => {
-
   beforeEach(() => {
-      render(<Powerlifting />);
+    render(<Powerlifting />);
   });
 
   describe('personal bests table', () => {
@@ -106,8 +104,8 @@ describe('Powerlifting Page', () => {
       const actualNumberOfHeaders = pbTable.querySelectorAll('thead th');
       const expectedNumberOfHeaders = 5;
       expect(actualNumberOfHeaders.length).toBe(expectedNumberOfHeaders);
+    });
   });
-  })
   
   describe('competition history table', () => {
     it('renders competition history table', () => {
@@ -122,5 +120,5 @@ describe('Powerlifting Page', () => {
       expect(actualNumberOfHeaders.length).toBe(expectedNumberOfHeaders);
     });
   });
-
 });
+

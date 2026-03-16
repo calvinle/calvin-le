@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { ThemeProvider, Box } from '@mui/material'
 import { lightTheme, darkTheme, redTheme } from './theme'
-import NavBar from '../src/components/NavBar'
+import NavBar from './NavBar'
 
 const themes = {
   light: lightTheme,

@@ -138,10 +138,12 @@ The application was migrated from a Vite + React Router single-page app to Next.
 3. A root layout (`app/layout.jsx`) was added to define the document shell and shared providers.
 4. Theme state and theming were moved into a dedicated client wrapper (`components/ThemeWrapper.jsx`) using MUI `ThemeProvider`.
 5. Navigation was updated to use Next routing (`next/link`, `next/navigation`) rather than `react-router-dom`.
-6. Firebase client initialization was moved to `lib/firebase.js` and updated to read `NEXT_PUBLIC_FIREBASE_*` environment variables.
+6. Firebase client initialization was moved to `lib/firebase.js` and updated to read `NEXT_PUBLIC_FIREBASE_*` environment variables. `VITE_FIREBASE_*` variables removed.
 7. Powerlifting and Speedcubing components were re-pointed to the new Firebase module while retaining Realtime Database read logic.
 8. Firebase Hosting configuration was updated to serve the static export output directory (`out/`).
 9. Legacy Vite-era entrypoints/config were deprecated in place, and the build/deploy flow was updated to Next.js static export.
+10. Firebase initializes on client-side only.
+11. Unit Tests handle Next.JS features
 
 ## Testing
 

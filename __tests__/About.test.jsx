@@ -15,3 +15,4 @@ describe('About Page', () => {
     expect(screen.getByText(/some more about calvin/i));
   });
 });
+

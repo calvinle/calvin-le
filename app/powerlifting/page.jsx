@@ -1,6 +1,6 @@
 'use client'
 
-import Powerlifting from '../../src/components/Powerlifting'
+import Powerlifting from '../../components/Powerlifting'
 
 export default function PowerliftingPage() {
   return <Powerlifting />

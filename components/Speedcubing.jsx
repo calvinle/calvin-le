@@ -8,7 +8,7 @@ import {
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { ref, onValue } from 'firebase/database'
-import { db } from '../../lib/firebase'
+import { db } from '../lib/firebase'
 
 /**
  * Responsive styles for the Speedcubing component.
@@ -447,8 +447,8 @@ export default function Speedcubing() {
 
           {stats?.competitionIds?.slice()
             .sort((a, b) => {
-              const yearA = parseInt(a.match(/\d{4}/)?.[0] || '0')
-              const yearB = parseInt(b.match(/\d{4}/)?.[0] || '0')
+              const yearA = parseInt(a.match(/\\d{4}/)?.[0] || '0')
+              const yearB = parseInt(b.match(/\\d{4}/)?.[0] || '0')
               return yearB - yearA
             })
             .slice(0, 5)
@@ -458,7 +458,7 @@ export default function Speedcubing() {
             
             // Format competition name from ID (e.g., "MissouriChampionship2025" -> "Missouri Championship 2025")
             const formatCompName = (id) => {
-              return id.replace(/([A-Z])/g, ' $1').replace(/(\d+)/g, ' $1').trim()
+              return id.replace(/([A-Z])/g, ' $1').replace(/(\\d+)/g, ' $1').trim()
             }
             
             return (
@@ -514,3 +514,4 @@ export default function Speedcubing() {
     </Box>
   )
 }
+

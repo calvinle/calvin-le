@@ -23,3 +23,4 @@ describe('Contact Page', () => {
     expect(screen.getByText(/If you see something wrong with the website, let me know with one of these methods! Screenshots encouraged!/i)).toBeInTheDocument();
   });
 });
+

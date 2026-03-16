@@ -1,6 +1,6 @@
 'use client'
 
-import Speedcubing from '../../src/components/Speedcubing'
+import Speedcubing from '../../components/Speedcubing'
 
 export default function SpeedcubingPage() {
   return <Speedcubing />
