@@ -22,7 +22,7 @@ const useStyles = (theme) => ({
     textAlign: 'center',
     borderRadius: 3,
     backdropFilter: 'blur(10px)',
-    maxWidth: '600px',
+    maxWidth: '1200px',
   },
   content: {
     display: 'flex',
@@ -38,11 +38,13 @@ const useStyles = (theme) => ({
     webkitBackgroundClip: 'text',
     webkitTextFillColor: 'transparent',
     marginBottom: 2,
+    textAlign: 'left',
   },
   description: {
     fontSize: '1rem',
     lineHeight: 1.8,
     marginBottom: 0,
+    textAlign: 'left',
   },
 })
 
@@ -64,7 +66,7 @@ export default function About() {
 
   return (
     <Box sx={styles.container}>
-      <Container maxWidth="sm">
+      <Container maxWidth="lg">
         <Paper elevation={10} sx={styles.paper}>
           <Typography
             variant="h4"
@@ -101,7 +103,7 @@ export default function About() {
             Some More About Calvin
           </Typography>
 
-          <Box component="ul" sx={{ textAlign: 'left', display: 'inline-block', lineHeight: 2, p: 0, m: 0 }}>
+          <Box component="ul" sx={{ textAlign: 'left', lineHeight: 2, p: 0, m: 0 }}>
             <Typography component="li" variant="body1" sx={styles.description}>
               Born and raised in the suburbs of Los Angeles, California
             </Typography>
