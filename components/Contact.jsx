@@ -120,7 +120,7 @@ export default function Contact() {
         <Typography variant="h4" component="h1" sx={styles.heading}>
           Get In Touch
         </Typography>
-        <Typography variant="body1" sx={{ textAlign: 'center', mb: 3 }}>
+        <Typography variant="body1" sx={{ textAlign: 'center', mb: 3, color: theme.palette.text.primary }}>
           If you see something wrong with the website, let me know with one of these methods! Screenshots encouraged!
         </Typography>
         <Box sx={styles.content}>
