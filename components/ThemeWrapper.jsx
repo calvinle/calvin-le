@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ThemeProvider, Box } from '@mui/material'
 import { lightTheme, darkTheme, redTheme } from './theme'
 import NavBar from './NavBar'
@@ -13,13 +13,28 @@ const themes = {
 
 export default function ThemeWrapper({ children }) {
   const [themeName, setThemeName] = useState('light')
+  const [hydrated, setHydrated] = useState(false)
   const theme = themes[themeName] || lightTheme
+
+  // Load theme from localStorage on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('app-theme')
+    if (savedTheme && themes[savedTheme]) {
+      setThemeName(savedTheme)
+    }
+    setHydrated(true)
+  }, [])
 
   const cycleTheme = () => {
     setThemeName(prev => {
-      if (prev === 'light') return 'dark'
-      if (prev === 'dark') return 'red'
-      return 'light'
+      let newTheme
+      if (prev === 'light') newTheme = 'dark'
+      else if (prev === 'dark') newTheme = 'red'
+      else newTheme = 'light'
+      
+      // Save to localStorage
+      localStorage.setItem('app-theme', newTheme)
+      return newTheme
     })
   }
 
