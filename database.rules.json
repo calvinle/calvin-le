@@ -1,12 +1,20 @@
 {
   "rules": {
+    ".read": false,
+    ".write": false,
     "powerlifting": {
       ".read": true,
-      ".write": false
+      ".write": "auth != null",
+      "user_data": {
+        ".validate": "newData.hasChildren(['data', 'lastUpdated'])"
+      }
     },
     "speedcubing": {
       ".read": true,
-      ".write": false
+      ".write": "auth != null",
+      "wca_data": {
+        ".validate": "newData.hasChildren(['data', 'lastUpdated'])"
+      }
     }
   }
 }
