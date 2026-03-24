@@ -102,6 +102,14 @@ export default function Projects() {
       ],
     },
     {
+      name: 'Smart Fitness Tracker (WIP)',
+      description: 'A microservices-based fitness tracking application demonstrating GCP orchestrated and choreographed workflows. Tracks workouts, computes e1RM and fitness scores, detects personal records, and aggregates stats. Built with Golang, TypeScript, React, and GCP services.',
+      links: [
+        { label: 'Live App', url: 'https://smart-fitness-tracker-491117.web.app/', icon: LaunchIcon },
+        { label: 'GitHub', url: 'https://github.com/calvinle/smart-fitness-tracker', icon: GitHubIcon },
+      ],
+    },
+    {
       name: 'Powerlifting Plate Calculator',
       description: 'A calculator tool for powerlifters to quickly determine the plates needed for any given weight on the barbell. Developed in Java and Android Studio.',
       links: [
