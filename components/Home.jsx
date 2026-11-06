@@ -1,5 +1,8 @@
+'use client'
+
 import React from 'react';
-import { Box, Container, Paper, Typography, useTheme } from '@mui/material'
+import { Box, Button, Container, Paper, Typography, useTheme } from '@mui/material'
+import Link from 'next/link'
 import { gradientText } from './sharedStyles'
 
 /**
@@ -65,12 +68,28 @@ const useStyles = (theme) => ({
     fontSize: '1.1rem',
     lineHeight: 1.6,
   },
+  intro: {
+    color: 'text.secondary',
+    lineHeight: 1.6,
+    marginTop: 2,
+  },
+  actions: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 1.5,
+    marginTop: 4,
+  },
+  actionButton: {
+    textTransform: 'none',
+    fontWeight: 600,
+  },
 })
 
 /**
  * Home component - Landing page of the portfolio website.
  * 
- * Displays a profile photo with hover effect and a brief introduction.
+ * Displays a profile photo, a brief introduction, and links to the main sections.
  * Uses theme-aware gradient styling for visual appeal.
  * 
  * @component
@@ -114,6 +133,23 @@ export default function Home() {
           >
             Educator, engineer, powerlifter, and tinkerer of all kinds.
           </Typography>
+          <Typography
+            variant="body1"
+            sx={styles.intro}
+          >
+            Software engineer and technical educator, open to new engineering and developer education roles.
+          </Typography>
+          <Box sx={styles.actions}>
+            <Button component={Link} href="/work" variant="contained" sx={styles.actionButton}>
+              View my work
+            </Button>
+            <Button component={Link} href="/projects" variant="outlined" sx={styles.actionButton}>
+              Projects
+            </Button>
+            <Button component={Link} href="/contact" variant="outlined" sx={styles.actionButton}>
+              Get in touch
+            </Button>
+          </Box>
         </Paper>
       </Container>
     </Box>

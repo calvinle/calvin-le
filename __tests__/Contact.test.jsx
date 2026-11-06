@@ -20,7 +20,8 @@ describe('Contact Page', () => {
         <Contact />
       </ThemeProvider>
     );
-    expect(screen.getByText(/If you see something wrong with the website, let me know with one of these methods! Screenshots encouraged!/i)).toBeInTheDocument();
+    expect(screen.getByText(/Open to engineering and developer education opportunities/i)).toBeInTheDocument();
+    expect(screen.getByText(/Spotted something broken on the site\?/i)).toBeInTheDocument();
   });
 });
 

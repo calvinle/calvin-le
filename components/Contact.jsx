@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import { Box, Container, Paper, Typography, useTheme, Link } from '@mui/material'
 import EmailIcon from '@mui/icons-material/Email'
@@ -118,8 +120,11 @@ export default function Contact() {
         <Typography variant="h4" component="h1" sx={styles.heading}>
           Get In Touch
         </Typography>
-        <Typography variant="body1" sx={{ textAlign: 'center', mb: 3, color: theme.palette.text.primary }}>
-          If you see something wrong with the website, let me know with one of these methods! Screenshots encouraged!
+        <Typography variant="body1" sx={{ textAlign: 'center', mb: 1.5, color: theme.palette.text.primary }}>
+          Open to engineering and developer education opportunities. Email is the fastest way to reach me.
+        </Typography>
+        <Typography variant="body2" sx={{ textAlign: 'center', mb: 3, color: theme.palette.text.secondary }}>
+          Spotted something broken on the site? Let me know - screenshots encouraged!
         </Typography>
         <Box sx={styles.content}>
           {contactItems.map((item) => (

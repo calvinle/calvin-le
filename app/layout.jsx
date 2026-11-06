@@ -3,7 +3,11 @@ import ThemeWrapper from '../components/ThemeWrapper'
 import { themeBackgrounds, THEME_STORAGE_KEY } from '../components/themeConstants'
 
 export const metadata = {
-  title: 'Calvin Le',
+  // Pages set their own title, e.g. 'Projects' becomes 'Projects | Calvin Le'
+  title: {
+    default: 'Calvin Le',
+    template: '%s | Calvin Le',
+  },
   description: 'Portfolio of Calvin Le',
 }
 

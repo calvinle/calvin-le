@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import { Box, Container, Paper, Typography, Card, CardContent, CardActions, Button, Grid, useTheme, useMediaQuery } from '@mui/material'
 import LaunchIcon from '@mui/icons-material/Launch'
