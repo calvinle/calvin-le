@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { AppBar, Toolbar, Button, IconButton, Box, Menu, MenuItem, useMediaQuery, useTheme } from '@mui/material'
+import { AppBar, Toolbar, Button, IconButton, Box, Menu, MenuItem, ListItemIcon, ListItemText, useMediaQuery, useTheme } from '@mui/material'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import HomeIcon from '@mui/icons-material/Home'
@@ -11,9 +11,11 @@ import FolderIcon from '@mui/icons-material/Folder'
 import ContactMailIcon from '@mui/icons-material/ContactMail'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import CasinoIcon from '@mui/icons-material/Casino'
-import Brightness4Icon from '@mui/icons-material/Brightness4'
-import Brightness7Icon from '@mui/icons-material/Brightness7'
+import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness'
+import LightModeIcon from '@mui/icons-material/LightMode'
+import DarkModeIcon from '@mui/icons-material/DarkMode'
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
+import CheckIcon from '@mui/icons-material/Check'
 import MenuIcon from '@mui/icons-material/Menu'
 
 /**
@@ -72,40 +74,46 @@ const navItems = [
 ]
 
 /**
+ * Options for the theme menu. 'system' follows the visitor's OS light/dark setting.
+ */
+const themeOptions = [
+  { value: 'system', label: 'System', icon: SettingsBrightnessIcon },
+  { value: 'light', label: 'Light', icon: LightModeIcon },
+  { value: 'dark', label: 'Dark', icon: DarkModeIcon },
+  { value: 'red', label: 'Red', icon: LocalFireDepartmentIcon },
+]
+
+/**
  * NavBar component - Main navigation bar for the application.
  * 
  * Provides navigation links to all pages with responsive design.
- * Includes a theme toggle button that cycles through light, dark, and red modes.
+ * Includes a theme menu (System, Light, Dark, Red).
  * On mobile, navigation collapses into a hamburger menu.
- * 
+ *
  * @component
  * @param {Object} props - Component props
- * @param {string} props.themeName - Current theme name ('light' | 'dark' | 'red')
- * @param {Function} props.cycleTheme - Callback function to cycle to the next theme
+ * @param {string} props.themePreference - Current preference ('system' | 'light' | 'dark' | 'red')
+ * @param {Function} props.onThemeChange - Called with the newly chosen preference
  * @returns {JSX.Element} The rendered navigation bar component
- * 
+ *
  * @example
- * <NavBar themeName="dark" cycleTheme={() => setTheme(nextTheme)} />
+ * <NavBar themePreference="system" onThemeChange={(value) => setPreference(value)} />
  */
-export default function NavBar({ themeName, cycleTheme }) {
+export default function NavBar({ themePreference, onThemeChange }) {
   const pathname = usePathname()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [anchorEl, setAnchorEl] = useState(null)
   const menuOpen = Boolean(anchorEl)
+  const [themeAnchorEl, setThemeAnchorEl] = useState(null)
+  const themeMenuOpen = Boolean(themeAnchorEl)
 
-  const getThemeIcon = () => {
-    switch (themeName) {
-      case 'dark':
-        return <Brightness7Icon />
-      case 'red':
-        return <LocalFireDepartmentIcon />
-      default:
-        return <Brightness4Icon />
-    }
+  const currentThemeOption = themeOptions.find((option) => option.value === themePreference) || themeOptions[0]
+
+  const handleThemeSelect = (value) => {
+    onThemeChange(value)
+    setThemeAnchorEl(null)
   }
-
-  const nextThemeLabel = { light: 'dark', dark: 'red', red: 'light' }[themeName] || 'dark'
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget)
@@ -181,11 +189,41 @@ export default function NavBar({ themeName, cycleTheme }) {
         )}
         <IconButton
           sx={styles.themeToggle}
-          onClick={cycleTheme}
-          aria-label={`Switch to ${nextThemeLabel} theme`}
+          onClick={(event) => setThemeAnchorEl(event.currentTarget)}
+          aria-label={`Theme: ${currentThemeOption.label}`}
+          aria-controls={themeMenuOpen ? 'theme-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={themeMenuOpen ? 'true' : undefined}
         >
-          {getThemeIcon()}
+          <currentThemeOption.icon />
         </IconButton>
+        <Menu
+          id="theme-menu"
+          anchorEl={themeAnchorEl}
+          open={themeMenuOpen}
+          onClose={() => setThemeAnchorEl(null)}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        >
+          {themeOptions.map((option) => {
+            const isSelected = option.value === themePreference
+            return (
+              <MenuItem
+                key={option.value}
+                role="menuitemradio"
+                aria-checked={isSelected}
+                selected={isSelected}
+                onClick={() => handleThemeSelect(option.value)}
+              >
+                <ListItemIcon>
+                  <option.icon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText>{option.label}</ListItemText>
+                {isSelected && <CheckIcon fontSize="small" sx={{ ml: 2 }} />}
+              </MenuItem>
+            )
+          })}
+        </Menu>
       </Toolbar>
     </AppBar>
   )

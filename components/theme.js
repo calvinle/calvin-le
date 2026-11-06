@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles'
+import { themeBackgrounds } from './themeConstants'
 
 export const lightTheme = createTheme({
   palette: {
@@ -11,7 +12,7 @@ export const lightTheme = createTheme({
       main: '#764ba2',
     },
     background: {
-      default: '#f5f5f5',
+      default: themeBackgrounds.light,
       paper: '#ffffff',
     },
   },
@@ -50,7 +51,7 @@ export const darkTheme = createTheme({
       contrastText: '#B71C1C',
     },
     background: {
-      default: '#0A1929',
+      default: themeBackgrounds.dark,
       paper: '#132F4C',
     },
     surface: {
@@ -119,7 +120,7 @@ export const redTheme = createTheme({
       contrastText: '#1A1A1A',
     },
     background: {
-      default: '#1A0A0A',
+      default: themeBackgrounds.red,
       paper: '#2D1515',
     },
     surface: {
@@ -192,3 +193,8 @@ export const redTheme = createTheme({
   },
 })
 
+export const themes = {
+  light: lightTheme,
+  dark: darkTheme,
+  red: redTheme,
+}

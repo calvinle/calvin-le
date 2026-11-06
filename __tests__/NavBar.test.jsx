@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import NavBar from '../components/NavBar';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
@@ -9,10 +9,10 @@ jest.mock('next/navigation', () => ({
 
 const theme = createTheme();
 
-const renderNavBar = (themeName = 'light') =>
+const renderNavBar = (themePreference = 'system', onThemeChange = () => {}) =>
   render(
     <ThemeProvider theme={theme}>
-      <NavBar themeName={themeName} cycleTheme={() => {}} />
+      <NavBar themePreference={themePreference} onThemeChange={onThemeChange} />
     </ThemeProvider>
   );
 
@@ -28,8 +28,25 @@ describe('NavBar', () => {
     expect(screen.getByRole('link', { name: 'Home' })).not.toHaveAttribute('aria-current');
   });
 
-  it('labels the theme toggle with the next theme', () => {
+  it('labels the theme button with the current preference', () => {
     renderNavBar('dark');
-    expect(screen.getByRole('button', { name: 'Switch to red theme' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Theme: Dark' })).toBeInTheDocument();
+  });
+
+  it('opens a theme menu with the current option checked', () => {
+    renderNavBar('red');
+    fireEvent.click(screen.getByRole('button', { name: 'Theme: Red' }));
+    const options = screen.getAllByRole('menuitemradio');
+    expect(options.map((option) => option.textContent)).toEqual(['System', 'Light', 'Dark', 'Red']);
+    expect(screen.getByRole('menuitemradio', { name: 'Red' })).toHaveAttribute('aria-checked', 'true');
+    expect(screen.getByRole('menuitemradio', { name: 'System' })).toHaveAttribute('aria-checked', 'false');
+  });
+
+  it('reports the chosen theme', () => {
+    const onThemeChange = jest.fn();
+    renderNavBar('system', onThemeChange);
+    fireEvent.click(screen.getByRole('button', { name: 'Theme: System' }));
+    fireEvent.click(screen.getByRole('menuitemradio', { name: 'Light' }));
+    expect(onThemeChange).toHaveBeenCalledWith('light');
   });
 });

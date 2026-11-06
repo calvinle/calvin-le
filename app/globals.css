@@ -15,6 +15,11 @@ body {
   min-height: 100%;
 }
 
+/* Set by the theme init script in layout.jsx until the saved theme is applied */
+.theme-pending body {
+  visibility: hidden;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

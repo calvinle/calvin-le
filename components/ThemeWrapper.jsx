@@ -2,14 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { ThemeProvider, Box } from '@mui/material'
-import { lightTheme, darkTheme, redTheme } from './theme'
+import { themes } from './theme'
+import { THEME_STORAGE_KEY } from './themeConstants'
 import NavBar from './NavBar'
 
-const themes = {
-  light: lightTheme,
-  dark: darkTheme,
-  red: redTheme,
-}
+const isValidPreference = (value) => value === 'system' || Boolean(themes[value])
 
 const styles = {
   skipLink: {
@@ -31,30 +28,39 @@ const styles = {
 }
 
 export default function ThemeWrapper({ children }) {
-  const [themeName, setThemeName] = useState('light')
+  // 'system' follows the OS light/dark setting; otherwise a theme name
+  const [preference, setPreference] = useState('system')
+  const [systemDark, setSystemDark] = useState(false)
   const [hydrated, setHydrated] = useState(false)
-  const theme = themes[themeName] || lightTheme
+  const themeName = preference === 'system' ? (systemDark ? 'dark' : 'light') : preference
+  const theme = themes[themeName]
 
-  // Load theme from localStorage on mount
+  // Load the saved preference and start following the OS setting
   useEffect(() => {
-    const savedTheme = localStorage.getItem('app-theme')
-    if (savedTheme && themes[savedTheme]) {
-      setThemeName(savedTheme)
+    const saved = localStorage.getItem(THEME_STORAGE_KEY)
+    if (isValidPreference(saved)) {
+      setPreference(saved)
     }
+    const media = window.matchMedia('(prefers-color-scheme: dark)')
+    setSystemDark(media.matches)
+    const handleChange = (event) => setSystemDark(event.matches)
+    media.addEventListener('change', handleChange)
     setHydrated(true)
+    return () => media.removeEventListener('change', handleChange)
   }, [])
 
-  const cycleTheme = () => {
-    setThemeName(prev => {
-      let newTheme
-      if (prev === 'light') newTheme = 'dark'
-      else if (prev === 'dark') newTheme = 'red'
-      else newTheme = 'light'
-      
-      // Save to localStorage
-      localStorage.setItem('app-theme', newTheme)
-      return newTheme
-    })
+  // Once the real theme has rendered, sync <html> and reveal the page (see app/layout.jsx)
+  useEffect(() => {
+    if (!hydrated) return
+    const root = document.documentElement
+    root.style.backgroundColor = theme.palette.background.default
+    root.style.colorScheme = theme.palette.mode
+    root.classList.remove('theme-pending')
+  }, [hydrated, theme])
+
+  const changeTheme = (newPreference) => {
+    setPreference(newPreference)
+    localStorage.setItem(THEME_STORAGE_KEY, newPreference)
   }
 
   return (
@@ -64,7 +70,7 @@ export default function ThemeWrapper({ children }) {
         <Box component="a" href="#main-content" sx={styles.skipLink}>
           Skip to main content
         </Box>
-        <NavBar themeName={themeName} cycleTheme={cycleTheme} />
+        <NavBar themePreference={preference} onThemeChange={changeTheme} />
         <Box
           component="main"
           id="main-content"
