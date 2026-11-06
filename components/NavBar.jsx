@@ -171,7 +171,7 @@ export default function NavBar({ themeName, cycleTheme }) {
                     fontWeight: isActive ? 700 : 400,
                   }}
                   startIcon={<item.icon />}
-                  color={isActive ? 'secondary' : 'inherit'}
+                  color="inherit"
                 >
                   {item.label}
                 </Button>

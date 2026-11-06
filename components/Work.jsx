@@ -41,7 +41,7 @@ const useStyles = (theme) => ({
   },
   expertiseTitle: {
     fontWeight: 700,
-    color: theme.palette.mode === 'dark' ? '#90CAF9' : '#667eea',
+    color: theme.palette.primary.main,
     marginBottom: 2,
   },
   categoryTitle: {
@@ -78,7 +78,7 @@ const useStyles = (theme) => ({
   },
   projectName: {
     fontWeight: 700,
-    color: theme.palette.mode === 'dark' ? '#90CAF9' : '#667eea',
+    color: theme.palette.primary.main,
     marginBottom: 1,
     marginTop: 2,
     fontSize: '1rem',
@@ -88,7 +88,7 @@ const useStyles = (theme) => ({
   },
   companyName: {
     fontWeight: 600,
-    color: theme.palette.mode === 'dark' ? '#90CAF9' : '#667eea',
+    color: theme.palette.primary.main,
     marginBottom: 0.5,
   },
   location: {

@@ -4,7 +4,8 @@ export const lightTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#667eea',
+      // Darker than the original #667eea so text meets WCAG AA (4.5:1) on white and #f5f5f5
+      main: '#4f63d2',
     },
     secondary: {
       main: '#764ba2',

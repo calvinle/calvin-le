@@ -56,7 +56,7 @@ const useStyles = (theme) => ({
   },
   projectName: {
     fontWeight: 700,
-    color: theme.palette.mode === 'dark' ? '#90CAF9' : '#667eea',
+    color: theme.palette.primary.main,
     marginBottom: 1,
   },
   projectDescription: {
