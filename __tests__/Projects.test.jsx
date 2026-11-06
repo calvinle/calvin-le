@@ -14,15 +14,20 @@ describe('Projects Page', () => {
   });
 
   it('renders personal website card', () => {
-    expect(screen.getByText(/personal website/i));
+    expect(screen.getByRole('heading', { name: /personal website/i })).toBeInTheDocument();
   });
 
   it('renders powerlifting plate calculator project', () => {
-    expect(screen.getByText(/powerlifting plate calculator/i));
+    expect(screen.getByRole('heading', { name: /powerlifting plate calculator/i })).toBeInTheDocument();
   });
 
   it('renders pieHue project', () => {
-    expect(screen.getByText(/pihue/i));
+    expect(screen.getByRole('heading', { name: /pihue/i })).toBeInTheDocument();
+  });
+
+  it('gives each project link a unique, descriptive name', () => {
+    expect(screen.getByRole('link', { name: /^GitHub\s?: piHue \(opens in new tab\)$/ })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /^Live Demo\s?: piHue \(opens in new tab\)$/ })).toBeInTheDocument();
   });
 });
 

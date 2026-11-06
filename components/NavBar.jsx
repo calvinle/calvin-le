@@ -102,7 +102,10 @@ const themeOptions = [
 export default function NavBar({ themePreference, onThemeChange }) {
   const pathname = usePathname()
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  // Full nav with icons needs ~940px and text-only ~740px, so: hamburger below md,
+  // text-only links from md to lg, icons from lg up. Nothing overflows at any width.
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+  const showNavIcons = useMediaQuery(theme.breakpoints.up('lg'))
   const [anchorEl, setAnchorEl] = useState(null)
   const menuOpen = Boolean(anchorEl)
   const [themeAnchorEl, setThemeAnchorEl] = useState(null)
@@ -178,7 +181,7 @@ export default function NavBar({ themePreference, onThemeChange }) {
                     borderRadius: 0,
                     fontWeight: isActive ? 700 : 400,
                   }}
-                  startIcon={<item.icon />}
+                  startIcon={showNavIcons ? <item.icon /> : undefined}
                   color="inherit"
                 >
                   {item.label}

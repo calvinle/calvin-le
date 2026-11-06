@@ -6,6 +6,7 @@ import EmailIcon from '@mui/icons-material/Email'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import { gradientText } from './sharedStyles'
+import NewTabNotice from './NewTabNotice'
 
 /**
  * Creates theme-aware styles for the Contact component.
@@ -148,6 +149,7 @@ export default function Contact() {
                   {item.subtitle}
                 </Typography>
               </Box>
+              {!item.href.startsWith('mailto') && <NewTabNotice />}
             </Paper>
           ))}
         </Box>

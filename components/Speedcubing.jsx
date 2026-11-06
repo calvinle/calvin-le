@@ -4,14 +4,17 @@ import React, { useEffect, useState } from 'react'
 import { 
   Box, Container, Paper, Typography, Table, TableBody, 
   TableCell, TableHead, TableRow, CircularProgress, 
-  useTheme, useMediaQuery, Link, Tooltip,
+  useTheme, useMediaQuery, Link,
   Accordion, AccordionSummary, AccordionDetails
 } from '@mui/material'
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { ref, onValue } from 'firebase/database'
 import { db } from '../lib/firebase'
 import { visuallyHidden } from './sharedStyles'
+import InfoTooltip from './InfoTooltip'
+import NewTabNotice from './NewTabNotice'
+
+const WCA_PROFILE_URL = 'https://www.worldcubeassociation.org/persons/2010LECA01'
 
 /**
  * Responsive styles for the Speedcubing component.
@@ -51,6 +54,7 @@ const useStyles = (theme, isMobile) => ({
   },
   errorText: {
     mt: 10,
+    px: 3,
   },
   paper: {
     padding: 0,
@@ -279,19 +283,25 @@ export default function Speedcubing() {
   if (loading) {
     return (
       <Box sx={styles.container}>
+        <Typography component="h1" sx={visuallyHidden}>Speedcubing</Typography>
         <Box sx={styles.loadingBox}>
-          <CircularProgress />
+          <CircularProgress aria-label="Loading speedcubing results" />
         </Box>
       </Box>
     )
   }
 
+  // Friendly fallback if data fetching fails; details go to the console for debugging
   if (error) {
+    console.error('Speedcubing data error:', error)
     return (
       <Box sx={styles.container}>
-        <Typography color="error" sx={styles.errorText}>
-          Cannot display speedcubing data. If viewing on desktop, check the console by pressing F12 and viewing 'Console', and send these errors on the 'Contact' page.<br />
-          {error}
+        <Typography component="h1" sx={visuallyHidden}>Speedcubing</Typography>
+        <Typography align="center" role="alert" sx={styles.errorText}>
+          Speedcubing results couldn't be loaded right now. You can see all official results on the{' '}
+          <Link href={WCA_PROFILE_URL} target="_blank" rel="noopener noreferrer">
+            World Cube Association<NewTabNotice />
+          </Link>.
         </Typography>
       </Box>
     )
@@ -350,16 +360,16 @@ export default function Speedcubing() {
                   </Typography>
                   <Box component="ul" sx={{ listStyle: 'none', pl: 0, m: 0, mb: 2 }}>
                     <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                      <span aria-hidden="true" className="cubing-iconevent-333" style={{ fontSize: '1rem' }} />
-                      <Typography variant="body2">3x3: <Link href="https://jperm.net/3x3/cfop" target="_blank" rel="noopener noreferrer">CFOP with 2-look OLL and 1-look PLL</Link></Typography>
+                      <span aria-hidden="true" className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
+                      <Typography variant="body2">3x3: <Link href="https://jperm.net/3x3/cfop" target="_blank" rel="noopener noreferrer">CFOP with 2-look OLL and 1-look PLL<NewTabNotice /></Link></Typography>
                     </Box>
                     <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                      <span aria-hidden="true" className="cubing-iconevent-333oh" style={{ fontSize: '1rem' }} />
-                      <Typography variant="body2">3x3 One-Handed: <Link href="https://www.zzmethod.com/tutorial" target="_blank" rel="noopener noreferrer">ZZ </Link></Typography>
+                      <span aria-hidden="true" className="cubing-icon event-333oh" style={{ fontSize: '1rem' }} />
+                      <Typography variant="body2">3x3 One-Handed: <Link href="https://www.zzmethod.com/tutorial" target="_blank" rel="noopener noreferrer">ZZ <NewTabNotice /></Link></Typography>
                     </Box>
                     <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                      <span aria-hidden="true" className="cubing-iconevent-444" style={{ fontSize: '1rem' }} />
-                      <Typography variant="body2">4x4: <Link href="https://jperm.net/4x4" target="_blank" rel="noopener noreferrer">Yau</Link></Typography>
+                      <span aria-hidden="true" className="cubing-icon event-444" style={{ fontSize: '1rem' }} />
+                      <Typography variant="body2">4x4: <Link href="https://jperm.net/4x4" target="_blank" rel="noopener noreferrer">Yau<NewTabNotice /></Link></Typography>
                     </Box>
                   </Box>
                   <Typography variant="body2" paragraph>
@@ -370,16 +380,16 @@ export default function Speedcubing() {
                   </Typography>
                   <Box component="ul" sx={{ listStyle: 'none', pl: 0, m: 0, mb: 2 }}>
                     <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                      <span aria-hidden="true" className="cubing-iconevent-333" style={{ fontSize: '1rem' }} />
-                      <Typography variant="body2"><Link href="https://www.worldcubeassociation.org/" target="_blank" rel="noopener noreferrer">World Cube Association</Link></Typography>
+                      <span aria-hidden="true" className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
+                      <Typography variant="body2"><Link href="https://www.worldcubeassociation.org/" target="_blank" rel="noopener noreferrer">World Cube Association<NewTabNotice /></Link></Typography>
                     </Box>
                     <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                      <span aria-hidden="true" className="cubing-iconevent-333" style={{ fontSize: '1rem' }} />
-                      <Typography variant="body2"><Link href="https://docs.worldcubeassociation.org/knowledge_base/wca_data_overview.html" target="_blank" rel="noopener noreferrer">WCA Data Overview</Link></Typography>
+                      <span aria-hidden="true" className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
+                      <Typography variant="body2"><Link href="https://docs.worldcubeassociation.org/knowledge_base/wca_data_overview.html" target="_blank" rel="noopener noreferrer">WCA Data Overview<NewTabNotice /></Link></Typography>
                     </Box>
                     <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                      <span aria-hidden="true" className="cubing-iconevent-333" style={{ fontSize: '1rem' }} />
-                      <Typography variant="body2"><Link href="https://wca-rest-api.robiningelbrecht.be/" target="_blank" rel="noopener noreferrer">WCA-REST-API Documentation</Link></Typography>
+                      <span aria-hidden="true" className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
+                      <Typography variant="body2"><Link href="https://wca-rest-api.robiningelbrecht.be/" target="_blank" rel="noopener noreferrer">WCA-REST-API Documentation<NewTabNotice /></Link></Typography>
                     </Box>
                   </Box>
             </AccordionDetails>
@@ -422,12 +432,10 @@ export default function Speedcubing() {
                       <TableRow key={index} sx={styles.tableRow}>
                         <TableCell component="th" scope="row">
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <span aria-hidden="true" className={`cubing-iconevent-${pb.eventId}`} style={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
+                            <span aria-hidden="true" className={`cubing-icon event-${pb.eventId}`} style={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
                             <Typography fontWeight={600} sx={{ fontSize: isMobile ? '0.8rem' : '0.875rem' }}>{pb.event}</Typography>
                             {discontinuedEvents[pb.eventId] && (
-                              <Tooltip title={discontinuedEvents[pb.eventId]} arrow enterTouchDelay={0} leaveTouchDelay={3000}>
-                                <InfoOutlinedIcon sx={{ fontSize: '0.875rem', cursor: 'help' }} />
-                              </Tooltip>
+                              <InfoTooltip label={`About ${pb.event}`} title={discontinuedEvents[pb.eventId]} />
                             )}
                           </Box>
                         </TableCell>
@@ -490,12 +498,10 @@ export default function Speedcubing() {
                               <TableRow key={`${eventId}-${idx}`} sx={styles.tableRow}>
                                 <TableCell>
                                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                    <span aria-hidden="true" className={`cubing-iconevent-${eventId}`} style={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
+                                    <span aria-hidden="true" className={`cubing-icon event-${eventId}`} style={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
                                     <Typography fontWeight={600} sx={{ fontSize: isMobile ? '0.8rem' : '0.875rem' }}>{eventNames[eventId] || eventId}</Typography>
                                     {discontinuedEvents[eventId] && (
-                                      <Tooltip title={discontinuedEvents[eventId]} arrow enterTouchDelay={0} leaveTouchDelay={3000}>
-                                        <InfoOutlinedIcon sx={{ fontSize: '0.875rem', cursor: 'help' }} />
-                                      </Tooltip>
+                                      <InfoTooltip label={`About ${eventNames[eventId] || eventId}`} title={discontinuedEvents[eventId]} />
                                     )}
                                   </Box>
                                 </TableCell>

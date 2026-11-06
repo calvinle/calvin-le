@@ -4,14 +4,17 @@ import React, { useEffect, useState } from 'react'
 import { 
   Box, Container, Paper, Typography, Table, TableBody, 
   TableCell, TableContainer, TableHead, TableRow, CircularProgress, 
-  Divider, useTheme, ToggleButtonGroup, ToggleButton, useMediaQuery, Link, Tooltip,
+  Divider, useTheme, ToggleButtonGroup, ToggleButton, useMediaQuery, Link,
   Accordion, AccordionSummary, AccordionDetails
 } from '@mui/material'
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { ref, onValue } from 'firebase/database'
 import { db } from '../lib/firebase'
 import { visuallyHidden } from './sharedStyles'
+import InfoTooltip from './InfoTooltip'
+import NewTabNotice from './NewTabNotice'
+
+const OPENPOWERLIFTING_PROFILE_URL = 'https://www.openpowerlifting.org/u/calvinle'
 
 /**
  * Responsive styles for the Powerlifting component.
@@ -66,6 +69,12 @@ const useStyles = (theme, isMobile) => ({
   },
   errorText: {
     mt: 10,
+    px: 3,
+  },
+  headerWithInfo: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 0.25,
   },
   paper: {
     padding: 0,
@@ -327,17 +336,26 @@ export default function Powerlifting() {
   // Loading state
   if (loading) return (
     <Box sx={styles.loadingBox}>
-      <CircularProgress thickness={5} size={60} sx={{ color: theme.palette.primary.main }} />
+      <Typography component="h1" sx={visuallyHidden}>Powerlifting</Typography>
+      <CircularProgress thickness={5} size={60} sx={{ color: theme.palette.primary.main }} aria-label="Loading powerlifting results" />
     </Box>
   )
 
-  // Display error message if data fetching fails
-  if (error) return (
-    <Typography color="error" align="center" sx={styles.errorText}>
-      Cannot display powerlifting data. If viewing on desktop, check the console by pressing F12 and viewing 'Console', and send these errors on the 'Contact' page.<br />
-      {error}
-    </Typography>
-  )
+  // Friendly fallback if data fetching fails; details go to the console for debugging
+  if (error) {
+    console.error('Powerlifting data error:', error)
+    return (
+      <Box sx={styles.errorText}>
+        <Typography component="h1" sx={visuallyHidden}>Powerlifting</Typography>
+        <Typography align="center" role="alert">
+          Powerlifting results couldn't be loaded right now. You can see the full meet history on{' '}
+          <Link href={OPENPOWERLIFTING_PROFILE_URL} target="_blank" rel="noopener noreferrer">
+            OpenPowerlifting<NewTabNotice />
+          </Link>.
+        </Typography>
+      </Box>
+    )
+  }
 
   // Filter competitions for 2018 and later, because original data conjoined people
   const competitions = (athlete?.competition_results || [])
@@ -372,7 +390,7 @@ export default function Powerlifting() {
                   <ul>
                     <li>
                       <Typography variant="body2" component="span">
-                        <Link href="https://www.openpowerlifting.org/" target="_blank" rel="noopener noreferrer"><strong>Open</strong>Powerlifting</Link> provides a comprehensive tabled view of all powerlifting results.
+                        <Link href="https://www.openpowerlifting.org/" target="_blank" rel="noopener noreferrer"><strong>Open</strong>Powerlifting<NewTabNotice /></Link> provides a comprehensive tabled view of all powerlifting results.
                       </Typography>
                     </li>
                     <li>
@@ -394,7 +412,7 @@ export default function Powerlifting() {
                 </li>
                 <li>
                   <Typography variant="body1" component="span">
-                    <Link href="https://closepowerlifting.com/" target="_blank" rel="noopener noreferrer"><strong>Close</strong>Powerlifting</Link> serves as a 3rd-party API with a monthly quota
+                    <Link href="https://closepowerlifting.com/" target="_blank" rel="noopener noreferrer"><strong>Close</strong>Powerlifting<NewTabNotice /></Link> serves as a 3rd-party API with a monthly quota
                   </Typography>
                 </li>
                 <li>
@@ -459,17 +477,15 @@ export default function Powerlifting() {
                   <TableCell sx={styles.tableHeader}>Bench</TableCell>
                   <TableCell sx={styles.tableHeader}>Deadlift</TableCell>
                   <TableCell sx={styles.tableHeader}>Total</TableCell>
-                  <Tooltip 
-                    title="Raw lifting uses minimal supportive gear (belt, knee sleeves, wrist wraps). Equipped lifting uses specialized suits and shirts that can add significant weight to lifts."
-                    arrow
-                    enterTouchDelay={0}
-                    leaveTouchDelay={3000}
-                  >
-                    <TableCell sx={{ ...styles.tableHeader, cursor: 'help', display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                  <TableCell sx={styles.tableHeader}>
+                    <Box component="span" sx={styles.headerWithInfo}>
                       Equipped
-                      <InfoOutlinedIcon sx={{ fontSize: '0.875rem' }} />
-                    </TableCell>
-                  </Tooltip>
+                      <InfoTooltip
+                        label="About equipped lifting"
+                        title="Raw lifting uses minimal supportive gear (belt, knee sleeves, wrist wraps). Equipped lifting uses specialized suits and shirts that can add significant weight to lifts."
+                      />
+                    </Box>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -505,17 +521,15 @@ export default function Powerlifting() {
                   <TableCell sx={styles.tableHeader}>Bench</TableCell>
                   <TableCell sx={styles.tableHeader}>Deadlift</TableCell>
                   <TableCell sx={styles.tableHeader}>Total</TableCell>
-                  <Tooltip 
-                    title="DOTS is a formula that calculates relative strength by normalizing your total based on bodyweight, allowing fairer comparison across weight classes."
-                    arrow
-                    enterTouchDelay={0}
-                    leaveTouchDelay={3000}
-                  >
-                    <TableCell sx={{ ...styles.tableHeader, cursor: 'help', display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                  <TableCell sx={styles.tableHeader}>
+                    <Box component="span" sx={styles.headerWithInfo}>
                       DOTS
-                      <InfoOutlinedIcon sx={{ fontSize: '0.875rem' }} />
-                    </TableCell>
-                  </Tooltip>
+                      <InfoTooltip
+                        label="About DOTS"
+                        title="DOTS is a formula that calculates relative strength by normalizing your total based on bodyweight, allowing fairer comparison across weight classes."
+                      />
+                    </Box>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

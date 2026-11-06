@@ -4,7 +4,8 @@ import React from 'react';
 import { Box, Container, Paper, Typography, Card, CardContent, CardActions, Button, Grid, useTheme, useMediaQuery } from '@mui/material'
 import LaunchIcon from '@mui/icons-material/Launch'
 import GitHubIcon from '@mui/icons-material/GitHub'
-import { gradientText } from './sharedStyles'
+import { gradientText, visuallyHidden } from './sharedStyles'
+import NewTabNotice from './NewTabNotice'
 
 /**
  * Creates theme-aware styles for the Projects component.
@@ -168,6 +169,9 @@ export default function Projects() {
                         sx={styles.linkButton}
                       >
                         {link.label}
+                        {/* e.g. "GitHub: piHue (opens in new tab)" for screen readers */}
+                        <Box component="span" sx={visuallyHidden}>: {project.name}</Box>
+                        <NewTabNotice />
                       </Button>
                     ))}
                   </CardActions>
