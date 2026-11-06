@@ -105,6 +105,8 @@ export default function NavBar({ themeName, cycleTheme }) {
     }
   }
 
+  const nextThemeLabel = { light: 'dark', dark: 'red', red: 'light' }[themeName] || 'dark'
+
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget)
   }
@@ -117,15 +119,19 @@ export default function NavBar({ themeName, cycleTheme }) {
     <AppBar sx={styles.appBar}>
       <Toolbar sx={styles.toolbar}>
         {isMobile ? (
-          <>
+          <Box component="nav" aria-label="Main" sx={{ mr: 'auto' }}>
             <IconButton
               color="inherit"
               onClick={handleMenuOpen}
-              sx={{ mr: 'auto' }}
+              aria-label="Open navigation menu"
+              aria-controls={menuOpen ? 'nav-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={menuOpen ? 'true' : undefined}
             >
               <MenuIcon />
             </IconButton>
             <Menu
+              id="nav-menu"
               anchorEl={anchorEl}
               open={menuOpen}
               onClose={handleMenuClose}
@@ -139,6 +145,7 @@ export default function NavBar({ themeName, cycleTheme }) {
                   href={item.path}
                   onClick={handleMenuClose}
                   selected={pathname === item.path}
+                  aria-current={pathname === item.path ? 'page' : undefined}
                   sx={{ gap: 1 }}
                 >
                   <item.icon fontSize="small" />
@@ -146,9 +153,9 @@ export default function NavBar({ themeName, cycleTheme }) {
                 </MenuItem>
               ))}
             </Menu>
-          </>
+          </Box>
         ) : (
-          <Box sx={styles.navButtons}>
+          <Box component="nav" aria-label="Main" sx={styles.navButtons}>
             {navItems.map((item) => {
               const isActive = pathname === item.path
               return (
@@ -156,6 +163,7 @@ export default function NavBar({ themeName, cycleTheme }) {
                   key={item.path}
                   component={Link}
                   href={item.path}
+                  aria-current={isActive ? 'page' : undefined}
                   sx={{
                     ...styles.navButton,
                     borderBottom: isActive ? '2px solid' : '2px solid transparent',
@@ -174,6 +182,7 @@ export default function NavBar({ themeName, cycleTheme }) {
         <IconButton
           sx={styles.themeToggle}
           onClick={cycleTheme}
+          aria-label={`Switch to ${nextThemeLabel} theme`}
         >
           {getThemeIcon()}
         </IconButton>
