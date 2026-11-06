@@ -229,6 +229,21 @@ const lbsToKg = (lbs) => {
 }
 
 /**
+ * Finds the athlete record inside the cached Close Powerlifting response.
+ * The API's nesting changes over time (e.g. data.data vs data.data[0]), so this
+ * unwraps `data` keys and arrays until it reaches an object with competition_results.
+ * @param {Object} rawResponse - Value stored at powerlifting/user_data
+ * @returns {Object|null} Athlete record, or null if none is found
+ */
+const extractAthlete = (rawResponse) => {
+  let node = rawResponse
+  for (let depth = 0; depth < 5 && node && !node.competition_results; depth++) {
+    node = Array.isArray(node) ? node[0] : node.data
+  }
+  return node?.competition_results ? node : null
+}
+
+/**
  * Powerlifting component that displays powerlifting stats and competition history.
  * 
  * Fetches athlete data from Firebase Realtime Database and displays:
@@ -272,7 +287,7 @@ export default function Powerlifting() {
    * On mount:
    * - Creates a reference to powerlifting db in Firebase
    * - Sets up a real-time listener that updates athlete state on data changes
-   * - Extracts athlete data from response (data.data[0])
+   * - Extracts athlete data from response (see extractAthlete)
    * - Sets loading to false and handles errors appropriately
    * 
    * On unmount:
@@ -286,7 +301,7 @@ export default function Powerlifting() {
     const unsubscribe = onValue(userDataRef, (snapshot) => {
       if (snapshot.exists()) {
         const rawResponse = snapshot.val();
-        const athleteData = rawResponse.data?.data?.[0];
+        const athleteData = extractAthlete(rawResponse);
 
         // check for unexpected Firebase response structure
         if (!athleteData) {
@@ -325,6 +340,10 @@ export default function Powerlifting() {
   const competitions = (athlete?.competition_results || [])
     .filter(comp => new Date(comp.date).getFullYear() >= 2018)
     .sort((a, b) => new Date(b.date) - new Date(a.date))
+
+  // personal_best has been both a single object and an array of rows (with equip) across API versions
+  const personalBests = [].concat(athlete?.personal_best || [])
+    .filter(pb => !pb.equip || pb.equip.toLowerCase().includes('raw'))
 
   return (
     <Box sx={styles.outerWrapper}>
@@ -449,13 +468,13 @@ export default function Powerlifting() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {athlete?.personal_best?.filter(pb => pb.equip?.toLowerCase().includes('raw')).map((pb, i) => (
+                {personalBests.map((pb, i) => (
                   <TableRow key={i} hover>
                     <TableCell sx={styles.cellBold}>{formatWeight(pb.squat)}</TableCell>
                     <TableCell sx={styles.cellBold}>{formatWeight(pb.bench)}</TableCell>
                     <TableCell sx={styles.cellBold}>{formatWeight(pb.deadlift)}</TableCell>
                     <TableCell sx={styles.totalCell}>{formatWeight(pb.total)}</TableCell>
-                    <TableCell sx={styles.cell}>{pb.equip}</TableCell>
+                    <TableCell sx={styles.cell}>Raw</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -498,8 +517,8 @@ export default function Powerlifting() {
                 {competitions.map((comp, i) => (
                   <TableRow key={i} hover>
                     <TableCell sx={styles.cell}>
-                      <Typography variant="body2" sx={styles.competitionName}>{comp.competition}</Typography>
-                      <Typography variant="caption" color="text.secondary" sx={styles.competitionDetails}>{comp.date} • {comp.location}</Typography>
+                      <Typography variant="body2" sx={styles.competitionName}>{comp.meet_name ?? comp.competition}</Typography>
+                      <Typography variant="caption" color="text.secondary" sx={styles.competitionDetails}>{comp.date} • {comp.federation ?? comp.location}</Typography>
                     </TableCell>
                     <TableCell sx={styles.cell}>{formatWeight(comp.squat)}</TableCell>
                     <TableCell sx={styles.cell}>{formatWeight(comp.bench)}</TableCell>
