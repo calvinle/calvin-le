@@ -9,6 +9,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { ref, onValue } from 'firebase/database'
 import { db } from '../lib/firebase'
+import { visuallyHidden } from './sharedStyles'
 
 /**
  * Responsive styles for the Powerlifting component.
@@ -349,13 +350,15 @@ export default function Powerlifting() {
     <Box sx={styles.outerWrapper}>
       <Box sx={styles.container}>
         <Container maxWidth="lg" sx={styles.mainContainer}>
+          <Typography component="h1" sx={visuallyHidden}>Powerlifting</Typography>
 
           {/* About Section - Accordion */}
           <Accordion sx={styles.accordion} expanded={aboutExpanded} onChange={(e, expanded) => setAboutExpanded(expanded)}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Box>
-                <Typography variant="h6" sx={styles.sectionTitle}>Why This Page?</Typography>
-                <Typography variant="caption" color="text.secondary">{aboutExpanded ? 'Click to collapse' : 'Click to expand'}</Typography>
+                <Typography variant="h6" component="span" display="block" sx={styles.sectionTitle}>Why This Page?</Typography>
+                {/* Visual hint only; the button already announces expanded/collapsed */}
+                <Typography variant="caption" color="text.secondary" aria-hidden="true">{aboutExpanded ? 'Click to collapse' : 'Click to expand'}</Typography>
               </Box>
             </AccordionSummary>
             <AccordionDetails>
@@ -427,7 +430,7 @@ export default function Powerlifting() {
                 <ToggleButton value="kg">KG</ToggleButton>
               </ToggleButtonGroup>
             )}
-            <Typography variant="h6" sx={styles.sectionTitle}>Personal Bests</Typography>
+            <Typography variant="h6" component="h2" sx={styles.sectionTitle}>Personal Bests</Typography>
             {!isMobile && (
               <ToggleButtonGroup
                 value={unit}
@@ -486,7 +489,7 @@ export default function Powerlifting() {
 
           {/* Competitions History Table */}
           <Box sx={styles.sectionTitleBox}>
-            <Typography variant="h6" sx={styles.sectionTitle}>Competition History</Typography>
+            <Typography variant="h6" component="h2" sx={styles.sectionTitle}>Competition History</Typography>
           </Box>
           <Box sx={styles.tableShadowWrapper}>
           <Box sx={styles.tableScrollWrapper}>

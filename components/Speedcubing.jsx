@@ -9,6 +9,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { ref, onValue } from 'firebase/database'
 import { db } from '../lib/firebase'
+import { visuallyHidden } from './sharedStyles'
 
 /**
  * Responsive styles for the Speedcubing component.
@@ -323,13 +324,15 @@ export default function Speedcubing() {
     <Box sx={styles.outerWrapper}>
       <Box sx={styles.container}>
         <Container maxWidth="md" sx={styles.mainContainer}>
-          
+          <Typography component="h1" sx={visuallyHidden}>Speedcubing</Typography>
+
           {/* About Section - Accordion */}
           <Accordion sx={styles.accordion} expanded={aboutExpanded} onChange={(e, expanded) => setAboutExpanded(expanded)}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Box>
-                <Typography variant="h6" sx={styles.sectionTitle}>About Speedcubing</Typography>
-                <Typography variant="caption" color="text.secondary">{aboutExpanded ? 'Click to collapse' : 'Click to expand'}</Typography>
+                <Typography variant="h6" component="span" display="block" sx={styles.sectionTitle}>About Speedcubing</Typography>
+                {/* Visual hint only; the button already announces expanded/collapsed */}
+                <Typography variant="caption" color="text.secondary" aria-hidden="true">{aboutExpanded ? 'Click to collapse' : 'Click to expand'}</Typography>
               </Box>
             </AccordionSummary>
             <AccordionDetails>
@@ -345,15 +348,15 @@ export default function Speedcubing() {
                   </Typography>
                   <Box component="ul" sx={{ listStyle: 'none', pl: 0, m: 0, mb: 2 }}>
                     <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                      <span className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
+                      <span aria-hidden="true" className="cubing-iconevent-333" style={{ fontSize: '1rem' }} />
                       <Typography variant="body2">3x3: <Link href="https://jperm.net/3x3/cfop" target="_blank" rel="noopener noreferrer">CFOP with 2-look OLL and 1-look PLL</Link></Typography>
                     </Box>
                     <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                      <span className="cubing-icon event-333oh" style={{ fontSize: '1rem' }} />
+                      <span aria-hidden="true" className="cubing-iconevent-333oh" style={{ fontSize: '1rem' }} />
                       <Typography variant="body2">3x3 One-Handed: <Link href="https://www.zzmethod.com/tutorial" target="_blank" rel="noopener noreferrer">ZZ </Link></Typography>
                     </Box>
                     <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                      <span className="cubing-icon event-444" style={{ fontSize: '1rem' }} />
+                      <span aria-hidden="true" className="cubing-iconevent-444" style={{ fontSize: '1rem' }} />
                       <Typography variant="body2">4x4: <Link href="https://jperm.net/4x4" target="_blank" rel="noopener noreferrer">Yau</Link></Typography>
                     </Box>
                   </Box>
@@ -365,15 +368,15 @@ export default function Speedcubing() {
                   </Typography>
                   <Box component="ul" sx={{ listStyle: 'none', pl: 0, m: 0, mb: 2 }}>
                     <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                      <span className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
+                      <span aria-hidden="true" className="cubing-iconevent-333" style={{ fontSize: '1rem' }} />
                       <Typography variant="body2"><Link href="https://www.worldcubeassociation.org/" target="_blank" rel="noopener noreferrer">World Cube Association</Link></Typography>
                     </Box>
                     <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                      <span className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
+                      <span aria-hidden="true" className="cubing-iconevent-333" style={{ fontSize: '1rem' }} />
                       <Typography variant="body2"><Link href="https://docs.worldcubeassociation.org/knowledge_base/wca_data_overview.html" target="_blank" rel="noopener noreferrer">WCA Data Overview</Link></Typography>
                     </Box>
                     <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                      <span className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
+                      <span aria-hidden="true" className="cubing-iconevent-333" style={{ fontSize: '1rem' }} />
                       <Typography variant="body2"><Link href="https://wca-rest-api.robiningelbrecht.be/" target="_blank" rel="noopener noreferrer">WCA-REST-API Documentation</Link></Typography>
                     </Box>
                   </Box>
@@ -388,13 +391,13 @@ export default function Speedcubing() {
             </Paper>
             <Paper sx={styles.statCard}>
               <Typography sx={styles.statValue}>{stats?.medals?.bronze || 0}</Typography>
-              <Typography sx={styles.statLabel}>🥉 Bronze</Typography>
+              <Typography sx={styles.statLabel}><span aria-hidden="true">🥉 </span>Bronze</Typography>
             </Paper>
           </Box>
 
           {/* Personal Bests Table */}
           <Box sx={styles.sectionTitleBox}>
-            <Typography variant="h5" sx={styles.sectionTitle}>
+            <Typography variant="h5" component="h2" sx={styles.sectionTitle}>
               Personal Bests
             </Typography>
           </Box>
@@ -417,7 +420,7 @@ export default function Speedcubing() {
                       <TableRow key={index} sx={styles.tableRow}>
                         <TableCell component="th" scope="row">
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <span className={`cubing-icon event-${pb.eventId}`} style={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
+                            <span aria-hidden="true" className={`cubing-iconevent-${pb.eventId}`} style={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
                             <Typography fontWeight={600} sx={{ fontSize: isMobile ? '0.8rem' : '0.875rem' }}>{pb.event}</Typography>
                             {discontinuedEvents[pb.eventId] && (
                               <Tooltip title={discontinuedEvents[pb.eventId]} arrow enterTouchDelay={0} leaveTouchDelay={3000}>
@@ -440,7 +443,7 @@ export default function Speedcubing() {
 
           {/* Competition History */}
           <Box sx={styles.sectionTitleBox}>
-            <Typography variant="h5" sx={styles.sectionTitle}>
+            <Typography variant="h5" component="h2" sx={styles.sectionTitle}>
               Competition History (Last 5)
             </Typography>
           </Box>
@@ -463,7 +466,7 @@ export default function Speedcubing() {
             
             return (
               <Box key={compId} sx={{ mb: isMobile ? 3 : 4 }}>
-                <Typography variant="h6" sx={{ fontWeight: 600, mb: 2, px: 1, fontSize: isMobile ? '1rem' : '1.25rem', color: theme.palette.mode === 'dark' ? '#fff' : 'inherit' }}>
+                <Typography variant="h6" component="h3" sx={{ fontWeight: 600, mb: 2, px: 1, fontSize: isMobile ? '1rem' : '1.25rem', color: theme.palette.mode === 'dark' ? '#fff' : 'inherit' }}>
                   {formatCompName(compId)}
                 </Typography>
                 <Box sx={styles.tableWrapper}>
@@ -485,7 +488,7 @@ export default function Speedcubing() {
                               <TableRow key={`${eventId}-${idx}`} sx={styles.tableRow}>
                                 <TableCell>
                                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                    <span className={`cubing-icon event-${eventId}`} style={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
+                                    <span aria-hidden="true" className={`cubing-iconevent-${eventId}`} style={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
                                     <Typography fontWeight={600} sx={{ fontSize: isMobile ? '0.8rem' : '0.875rem' }}>{eventNames[eventId] || eventId}</Typography>
                                     {discontinuedEvents[eventId] && (
                                       <Tooltip title={discontinuedEvents[eventId]} arrow enterTouchDelay={0} leaveTouchDelay={3000}>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Container, Paper, Typography, Card, CardContent, CardActions, Button, Grid, useTheme, useMediaQuery } from '@mui/material'
 import LaunchIcon from '@mui/icons-material/Launch'
 import GitHubIcon from '@mui/icons-material/GitHub'
+import { gradientText } from './sharedStyles'
 
 /**
  * Creates theme-aware styles for the Projects component.
@@ -29,12 +30,7 @@ const useStyles = (theme) => ({
   },
   heading: {
     fontWeight: 700,
-    background: theme.palette.mode === 'dark'
-      ? 'linear-gradient(135deg, #90CAF9 0%, #CE93D8 100%)'
-      : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    backgroundClip: 'text',
-    webkitBackgroundClip: 'text',
-    webkitTextFillColor: 'transparent',
+    ...gradientText(theme),
     marginBottom: 4,
     textAlign: 'center',
   },

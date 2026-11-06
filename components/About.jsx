@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Container, Paper, Typography, useTheme } from '@mui/material'
+import { gradientText } from './sharedStyles'
 
 /**
  * Creates theme-aware styles for the About component.
@@ -31,12 +32,7 @@ const useStyles = (theme) => ({
   },
   heading: {
     fontWeight: 700,
-    background: theme.palette.mode === 'dark'
-      ? 'linear-gradient(135deg, #90CAF9 0%, #CE93D8 100%)'
-      : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    backgroundClip: 'text',
-    webkitBackgroundClip: 'text',
-    webkitTextFillColor: 'transparent',
+    ...gradientText(theme),
     marginBottom: 2,
     textAlign: 'left',
   },
@@ -70,7 +66,7 @@ export default function About() {
         <Paper elevation={10} sx={styles.paper}>
           <Typography
             variant="h4"
-            component="h2"
+            component="h1"
             sx={styles.heading}
           >
             A Little Bit About Calvin

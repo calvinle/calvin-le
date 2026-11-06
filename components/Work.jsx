@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Container, Paper, Typography, Stack, useTheme, Divider, Chip, useMediaQuery } from '@mui/material'
+import { visuallyHidden } from './sharedStyles'
 
 /**
  * Creates theme-aware styles for the Work component.
@@ -64,17 +65,6 @@ const useStyles = (theme) => ({
     borderRadius: 3,
     backdropFilter: 'blur(10px)',
     width: '100%',
-  },
-  heading: {
-    fontWeight: 700,
-    background: theme.palette.mode === 'dark'
-      ? 'linear-gradient(135deg, #90CAF9 0%, #CE93D8 100%)'
-      : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    backgroundClip: 'text',
-    webkitBackgroundClip: 'text',
-    webkitTextFillColor: 'transparent',
-    marginBottom: 4,
-    textAlign: 'center',
   },
   projectName: {
     fontWeight: 700,
@@ -164,10 +154,12 @@ export default function Work() {
   /**
    * Work experience data structured with company, location, years, and projects for each role.
    * Each project includes a name and description of responsibilities and achievements.
+   * Emoji are kept separate from the company name so screen readers can skip them.
    */
   const workExperience = [
     {
-      company: '🟧 The Home Depot 🛠',
+      company: 'The Home Depot',
+      emoji: ['🟧', '🛠'],
       location: 'Atlanta, GA',
       years: 'November 2021 - January 2026',
       projects: [
@@ -190,7 +182,8 @@ export default function Work() {
       ]
     },
     {
-      company: '⚕️ Oracle Health 🏥',
+      company: 'Oracle Health',
+      emoji: ['⚕️', '🏥'],
       location: 'Kansas City, MO',
       years: 'February 2019 - November 2021',
       projects: [
@@ -212,6 +205,7 @@ export default function Work() {
 
   return (
     <Box sx={styles.container}>
+      <Typography component="h1" sx={visuallyHidden}>Work Experience</Typography>
       <Container maxWidth="lg">
         <Box sx={{ ...styles.mainLayout, flexDirection: isMobile ? 'column' : 'row' }}>
           {/* Work Experience Section */}
@@ -221,8 +215,10 @@ export default function Work() {
                 <Paper key={jobIndex} elevation={10} sx={styles.paper}>
                   <Box sx={styles.headerRow}>
                     <Box sx={styles.headerLeft}>
-                      <Typography variant="h6" sx={styles.companyName}>
+                      <Typography variant="h6" component="h2" sx={styles.companyName}>
+                        <span aria-hidden="true">{job.emoji[0]} </span>
                         {job.company}
+                        <span aria-hidden="true"> {job.emoji[1]}</span>
                       </Typography>
                     </Box>
                     <Box sx={styles.headerRight}>
@@ -237,7 +233,7 @@ export default function Work() {
 
                   {job.projects.map((project, projectIndex) => (
                     <Box key={projectIndex} sx={{ mb: 3, '&:last-child': { mb: 0 } }}>
-                      <Typography variant="body1" sx={styles.projectName}>
+                      <Typography variant="body1" component="h3" sx={styles.projectName}>
                         {project.name}
                       </Typography>
                       <Typography variant="body2" sx={{ lineHeight: 1.6, mt: 0.5 }}>
@@ -256,12 +252,12 @@ export default function Work() {
           {/* Technical Expertise Section */}
           <Box sx={{ ...styles.expertiseSection, position: isMobile ? 'static' : 'sticky', order: isMobile ? 1 : 3, width: isMobile ? '100%' : 'auto', mb: isMobile ? 3 : 0 }}>
             <Paper elevation={10} sx={styles.expertisePaper}>
-              <Typography variant="h6" sx={styles.expertiseTitle}>
+              <Typography variant="h6" component="h2" sx={styles.expertiseTitle}>
                 Technical Expertise
               </Typography>
               {technicalExpertise.map((category, index) => (
                 <Box key={index} sx={{ mb: 2, '&:last-child': { mb: 0 } }}>
-                  <Typography sx={styles.categoryTitle}>
+                  <Typography component="h3" sx={styles.categoryTitle}>
                     {category.category}
                   </Typography>
                   <Box sx={styles.chipContainer}>

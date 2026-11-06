@@ -1,5 +1,16 @@
 import React from 'react';
 import { Box, Container, Paper, Typography, useTheme } from '@mui/material'
+import { gradientText } from './sharedStyles'
+
+/**
+ * One photo per theme. Only the active one is exposed to screen readers;
+ * the others stay rendered (invisible) so the theme switch can cross-fade.
+ */
+const photos = [
+  { src: '/images/photo-light.jpg', alt: 'Calvin Le smiling outdoors in a dark suit and bow tie', isActive: (theme) => theme.palette.mode === 'light' },
+  { src: '/images/photo-dark.jpg', alt: 'Calvin Le wearing round blue sunglasses and a black t-shirt', isActive: (theme) => theme.palette.mode === 'dark' && theme.palette.primary.main !== '#FF6B6B' },
+  { src: '/images/photo-red.jpg', alt: 'Calvin Le in a grey jacket on a city street at night', isActive: (theme) => theme.palette.primary.main === '#FF6B6B' },
+]
 
 /**
  * Creates theme-aware styles for the Home component.
@@ -47,12 +58,7 @@ const useStyles = (theme) => ({
   },
   heading: {
     fontWeight: 700,
-    background: theme.palette.mode === 'dark'
-      ? 'linear-gradient(135deg, #90CAF9 0%, #CE93D8 100%)'
-      : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    backgroundClip: 'text',
-    webkitBackgroundClip: 'text',
-    webkitTextFillColor: 'transparent',
+    ...gradientText(theme),
     marginBottom: 2,
   },
   description: {
@@ -82,30 +88,18 @@ export default function Home() {
       <Container maxWidth="sm">
         <Paper elevation={10} sx={styles.paper}>
           <Box sx={styles.photoSection}>
-            <img 
-              src="/images/photo-light.jpg"
-              alt="Calvin" 
-              style={{
-                ...styles.photo,
-                opacity: theme.palette.mode === 'light' ? 1 : 0,
-              }}
-            />
-            <img 
-              src="/images/photo-dark.jpg"
-              alt="Calvin" 
-              style={{
-                ...styles.photo,
-                opacity: theme.palette.mode === 'dark' && theme.palette.primary.main !== '#FF6B6B' ? 1 : 0,
-              }}
-            />
-            <img 
-              src="/images/photo-red.jpg"
-              alt="Calvin" 
-              style={{
-                ...styles.photo,
-                opacity: theme.palette.primary.main === '#FF6B6B' ? 1 : 0,
-              }}
-            />
+            {photos.map((photo) => {
+              const active = photo.isActive(theme)
+              return (
+                <img
+                  key={photo.src}
+                  src={photo.src}
+                  alt={active ? photo.alt : ''}
+                  aria-hidden={active ? undefined : 'true'}
+                  style={{ ...styles.photo, opacity: active ? 1 : 0 }}
+                />
+              )
+            })}
           </Box>
           <Typography
             variant="h3"

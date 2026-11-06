@@ -3,6 +3,7 @@ import { Box, Container, Paper, Typography, useTheme, Link } from '@mui/material
 import EmailIcon from '@mui/icons-material/Email'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import GitHubIcon from '@mui/icons-material/GitHub'
+import { gradientText } from './sharedStyles'
 
 /**
  * Creates theme-aware styles for the Contact component.
@@ -27,10 +28,7 @@ const useStyles = (theme) => ({
   },
   heading: {
     fontWeight: 700,
-    background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
-    backgroundClip: 'text',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
+    ...gradientText(theme),
     textAlign: 'center',
     mb: 2,
   },
@@ -138,7 +136,7 @@ export default function Contact() {
                 <item.icon fontSize="large" />
               </Box>
               <Box sx={styles.cardContent}>
-                <Typography variant="h6" sx={styles.cardTitle}>
+                <Typography variant="h6" component="h2" sx={styles.cardTitle}>
                   {item.title}
                 </Typography>
                 <Typography sx={styles.cardSubtitle}>
