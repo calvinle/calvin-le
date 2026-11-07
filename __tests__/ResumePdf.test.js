@@ -7,8 +7,9 @@ import { resume, RESUME_PDF_PATH } from '../components/resumeData';
 
 const pdfPath = path.join(process.cwd(), 'public', RESUME_PDF_PATH);
 
-// Ignore line wrapping differences between the PDF and the data
-const normalize = (text) => text.replace(/-\s*\n\s*/g, '-').replace(/\s+/g, ' ');
+// Ignore all whitespace: the PDF wraps lines at spaces, slashes, and hyphens,
+// which changes spacing in the extracted text but not the words themselves
+const normalize = (text) => text.replace(/\s+/g, '');
 
 describe('Resume PDF', () => {
   let pdfText;
@@ -30,13 +31,18 @@ describe('Resume PDF', () => {
   it('matches the website resume (run `npm run resume:pdf` if this fails)', () => {
     const expected = [
       resume.name,
+      resume.summary,
       ...resume.contact.map((item) => item.label),
-      ...resume.skills.map((skill) => skill.category),
-      ...resume.experience.flatMap((job) => [job.company, ...job.roles.flatMap((role) => [role.title, role.dates])]),
-      ...resume.projects.map((project) => project.name),
+      ...resume.skills.flatMap((skill) => [skill.category, skill.items]),
+      ...resume.experience.flatMap((job) => [
+        job.company,
+        job.location,
+        ...job.roles.flatMap((role) => [role.title, role.dates, ...role.bullets]),
+      ]),
+      ...resume.projects.flatMap((project) => [project.name, project.description]),
       resume.education,
-      ...resume.additional.map((item) => item.title),
+      ...resume.additional.flatMap((item) => [item.title, ...item.bullets]),
     ];
-    expected.forEach((phrase) => expect(pdfText).toContain(phrase));
+    expected.forEach((phrase) => expect(pdfText).toContain(normalize(phrase)));
   });
 });
