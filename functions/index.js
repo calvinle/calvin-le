@@ -126,8 +126,9 @@ exports.fetchWcaSpeedcubingData = onSchedule({
   try {
     logger.info("Fetching speedcubing data from WCA REST API");
 
+    // The API publishes its JSON on the v1 branch (the old master/api/ path was removed in 2026)
     const data = await fetchJson(
-    "https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons/2010LECA01.json",
+    "https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/v1/persons/2010LECA01.json",
     );
 
     const db = getDatabase();
