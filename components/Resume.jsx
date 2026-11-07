@@ -266,6 +266,19 @@ export default function Resume({ hasPdf = false }) {
           <Section title="Education" styles={styles}>
             <Typography sx={styles.body}>{resume.education}</Typography>
           </Section>
+
+          <Section title="Additional" styles={styles}>
+            {resume.additional.map((item) => (
+              <Box key={item.title} sx={styles.project}>
+                <Typography component="h3" sx={styles.projectName}>{item.title}</Typography>
+                <Box component="ul" sx={styles.bullets}>
+                  {item.bullets.map((bullet) => (
+                    <Typography component="li" variant="body2" key={bullet}>{bullet}</Typography>
+                  ))}
+                </Box>
+              </Box>
+            ))}
+          </Section>
         </Paper>
       </Container>
     </Box>

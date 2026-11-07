@@ -23,7 +23,8 @@ describe('Resume Page', () => {
   it('structures sections and roles as headings', () => {
     render(<Resume />);
     const sections = screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent);
-    expect(sections).toEqual(['Summary', 'Technical Skills', 'Experience', 'Projects', 'Education']);
+    expect(sections).toEqual(['Summary', 'Technical Skills', 'Experience', 'Projects', 'Education', 'Additional']);
+    expect(screen.getByRole('heading', { level: 3, name: 'Eagle Scout' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 3, name: 'Snippet Sentry' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 4, name: /Software Engineer II, OrangeMethod/ })).toBeInTheDocument();
   });

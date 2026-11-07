@@ -106,6 +106,15 @@ export const resume = {
     },
   ],
   education: 'Colorado State University, Bachelor of Computer Science, 2018',
+  additional: [
+    {
+      title: 'Eagle Scout',
+      bullets: [
+        'Eagle Project - Funded and coordinated $1,100 for construction of local park kiosk, assigning tasks to volunteers and providing tools and instruction',
+        '40 Merit Badges earned',
+      ],
+    },
+  ],
 }
 
 export const RESUME_PDF_PATH = '/CalvinLe_Resume.pdf'
