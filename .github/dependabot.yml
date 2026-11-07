@@ -1,0 +1,30 @@
+# Dependabot version updates: opens pull requests to keep dependencies current, so
+# security fixes arrive as reviewable PRs (CI runs tests, build, and the audit gate on each).
+# Minor and patch updates are grouped into one PR per project to keep the noise down;
+# major versions get their own PR because they can need code changes.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      website-minor-and-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: npm
+    directory: /functions
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      functions-minor-and-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

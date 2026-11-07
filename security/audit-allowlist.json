@@ -1,0 +1,12 @@
+{
+  "_comment": "High/critical advisories accepted after review. Each entry must say why it is unreachable and when to recheck. Remove entries as soon as an upgrade fixes them.",
+  "advisories": [
+    {
+      "id": "GHSA-m9gg-hp2v-232j",
+      "package": "@grpc/grpc-js",
+      "project": "website",
+      "reason": "Server-side getAuthContext issue. grpc-js is pinned by firebase > @firebase/firestore; the site uses Realtime Database only and grpc/Firestore are not in the browser bundle (verified 2026-11-07).",
+      "recheck": "When firebase updates @firebase/firestore's @grpc/grpc-js pin"
+    }
+  ]
+}
