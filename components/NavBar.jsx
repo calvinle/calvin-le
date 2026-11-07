@@ -8,6 +8,7 @@ import HomeIcon from '@mui/icons-material/Home'
 import InfoIcon from '@mui/icons-material/Info'
 import WorkIcon from '@mui/icons-material/Work'
 import FolderIcon from '@mui/icons-material/Folder'
+import DescriptionIcon from '@mui/icons-material/Description'
 import ContactMailIcon from '@mui/icons-material/ContactMail'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import CasinoIcon from '@mui/icons-material/Casino'
@@ -68,6 +69,7 @@ const navItems = [
   { label: 'About', icon: InfoIcon, path: '/about' },
   { label: 'Work', icon: WorkIcon, path: '/work' },
   { label: 'Projects', icon: FolderIcon, path: '/projects' },
+  { label: 'Resume', icon: DescriptionIcon, path: '/resume' },
   { label: 'Powerlifting', icon: FitnessCenterIcon, path: '/powerlifting' },
   { label: 'Speedcubing', icon: CasinoIcon, path: '/speedcubing' },
   { label: 'Contact', icon: ContactMailIcon, path: '/contact' },
@@ -102,7 +104,7 @@ const themeOptions = [
 export default function NavBar({ themePreference, onThemeChange }) {
   const pathname = usePathname()
   const theme = useTheme()
-  // Full nav with icons needs ~940px and text-only ~740px, so: hamburger below md,
+  // Full nav with icons needs ~1060px and text-only ~820px, so: hamburger below md,
   // text-only links from md to lg, icons from lg up. Nothing overflows at any width.
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const showNavIcons = useMediaQuery(theme.breakpoints.up('lg'))

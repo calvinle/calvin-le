@@ -122,6 +122,14 @@ export default function Projects() {
    */
   const projects = [
     {
+      name: 'words2macros',
+      tech: ['Python', 'AWS Lambda', 'API Gateway', 'Amazon Bedrock', 'AWS SAM'],
+      description: 'A serverless API that turns plain-language meal descriptions into macronutrients. An LLM parses food items through Bedrock structured outputs while USDA data supplies every nutrient value, and Pydantic models validate each payload before it reaches the calculations.',
+      links: [
+        { label: 'GitHub', url: 'https://github.com/calvinle/words2macros', icon: GitHubIcon },
+      ],
+    },
+    {
       name: 'Personal Website',
       status: 'live',
       tech: ['Next.js', 'React', 'Material UI', 'Firebase'],

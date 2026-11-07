@@ -11,6 +11,7 @@ import Powerlifting from '../components/Powerlifting';
 import Speedcubing from '../components/Speedcubing';
 import Contact from '../components/Contact';
 import NotFound from '../components/NotFound';
+import Resume from '../components/Resume';
 
 expect.extend(toHaveNoViolations);
 
@@ -71,6 +72,7 @@ describe('Automated accessibility checks (axe)', () => {
     ['About', About],
     ['Work', Work],
     ['Projects', Projects],
+    ['Resume', () => <Resume hasPdf />],
     ['Powerlifting', Powerlifting],
     ['Speedcubing', Speedcubing],
     ['Contact', Contact],

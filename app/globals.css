@@ -32,6 +32,33 @@ body {
   }
 }
 
+/* Printing (e.g. the Resume page): drop site chrome and force dark-on-white,
+   since the dark and red themes use light text that would print invisibly */
+@media print {
+  header.MuiAppBar-root,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+
+  main {
+    padding-top: 0 !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  a {
+    text-decoration: none !important;
+  }
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

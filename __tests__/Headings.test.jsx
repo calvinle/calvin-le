@@ -7,6 +7,7 @@ import About from '../components/About';
 import Work from '../components/Work';
 import Projects from '../components/Projects';
 import Contact from '../components/Contact';
+import Resume from '../components/Resume';
 
 const renderWithTheme = (ui, theme = lightTheme) =>
   render(<ThemeProvider theme={theme}>{ui}</ThemeProvider>);
@@ -17,6 +18,7 @@ describe('Page headings', () => {
     ['About', About, 'A Little Bit About Calvin'],
     ['Work', Work, 'Work Experience'],
     ['Projects', Projects, 'Projects'],
+    ['Resume', Resume, 'Calvin Le'],
     ['Contact', Contact, 'Get In Touch'],
   ])('%s has exactly one h1', (_, Page, title) => {
     renderWithTheme(<Page />);

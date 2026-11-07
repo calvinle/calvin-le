@@ -126,30 +126,31 @@ export default function Work() {
   const styles = useStyles(theme)
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
+  // Kept in line with the Technical Skills section of the resume (components/resumeData.js)
   const technicalExpertise = [
     {
-      category: 'Programming Languages',
-      skills: ['Java', 'JavaScript', 'Python', 'Ruby on Rails', 'SQL/Relational Databases', 'React', 'Spring Boot']
+      category: 'Languages',
+      skills: ['Java', 'JavaScript', 'TypeScript', 'Python', 'Go', 'Ruby', 'SQL', 'HTML/CSS']
     },
     {
-      category: 'Unit Testing',
-      skills: ['JUnit', 'Jest', 'pytest', `RSpec`]
+      category: 'Frameworks and Testing',
+      skills: ['React', 'Spring Boot', 'Ruby on Rails', 'Pydantic', 'JUnit', 'Jest', 'pytest', 'RSpec', 'Ruff']
     },
     {
-      category: 'Tools and Infrastructure',
-      skills: ['GitHub', 'GitHub Actions', 'Jenkins', 'Google Cloud Platform', 'Firebase'],
+      category: 'Cloud and DevOps',
+      skills: ['AWS Lambda', 'API Gateway', 'AWS SAM', 'CloudWatch', 'Google Cloud Run', 'Pub/Sub', 'Cloud Tasks', 'Firebase', 'Docker', 'GitHub Actions', 'Jenkins'],
     },
     {
-      category: 'Prompt Engineering',
-      skills: ['GitHub Copilot', 'Glean']
+      category: 'AI Engineering',
+      skills: ['Amazon Bedrock', 'Structured Outputs', 'Prompt Engineering', 'GitHub Copilot', 'Glean']
     },
     {
       category: 'Engineering Practices',
-      skills: ['Scrum/Agile', 'Version Control', 'Test-Driven Development', 'Documentation', 'Code Reviews']
+      skills: ['Microservices', 'Serverless', 'Event-Driven Architecture', 'REST APIs', 'Test-Driven Development', 'Code Reviews', 'Agile/Scrum', 'Observability', 'Version Control', 'Documentation']
     },
     {
       category: 'Technical Leadership',
-      skills: ['Mentorship', 'Technical Instruction', 'Onboarding', 'Cross-team Collaboration', 'Project Ownership']
+      skills: ['Mentorship', 'Technical Instruction', 'Onboarding', 'Curriculum Design', 'Cross-team Collaboration', 'Project Ownership']
     }
   ]
 
@@ -159,6 +160,22 @@ export default function Work() {
    * Emoji are kept separate from the company name so screen readers can skip them.
    */
   const workExperience = [
+    {
+      company: 'Snippet Sentry',
+      emoji: ['🛡️', '💬'],
+      location: 'Kansas City, MO (Remote)',
+      years: 'April 2026 - July 2026',
+      projects: [
+        {
+          name: 'Signal Compliance Archiving',
+          description: 'Extended the compliance archiving platform to Signal alongside WhatsApp, iMessage, and SMS, capturing 10+ message types and activities (replies, edits, media, reactions, deletions, read receipts) for audit and regulatory recordkeeping'
+        },
+        {
+          name: 'Cross-Channel Identity Resolution',
+          description: 'Built TypeScript decryption and synchronization logic to retrieve Signal contacts and group-conversation metadata, keeping identity resolution and audit trails consistent across channels'
+        }
+      ]
+    },
     {
       company: 'The Home Depot',
       emoji: ['🟧', '🛠'],
