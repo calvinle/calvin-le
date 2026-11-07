@@ -31,6 +31,40 @@ admin.initializeApp();
 setGlobalOptions({maxInstances: 10});
 
 /**
+ * Hardened GET for third-party JSON APIs.
+ * - maxRedirects 0: never forward the Authorization header to another host
+ * - timeout and size limits: a slow or oversized response can't hang or bloat the function
+ * @param {string} url - URL to fetch
+ * @param {Object} headers - Request headers
+ * @return {Promise<Object>} Parsed response body
+ */
+async function fetchJson(url, headers = {}) {
+  const response = await axios.get(url, {
+    headers,
+    timeout: 15000,
+    maxRedirects: 0,
+    maxContentLength: 5 * 1024 * 1024,
+    responseType: "json",
+  });
+  return response.data;
+}
+
+/**
+ * Turns an error into a log-safe summary. Axios errors carry the full request
+ * config, including the Authorization header, so they must never be logged or
+ * rethrown as-is.
+ * @param {Error} error - Any error
+ * @return {{message: string, status: (number|undefined), code: (string|undefined)}}
+ */
+function safeError(error) {
+  return {
+    message: error.message,
+    status: error.response ? error.response.status : undefined,
+    code: error.code,
+  };
+}
+
+/**
  * Scheduled function that runs once a month to fetch powerlifting data
  * from Close Powerlifting API and store it in Firebase Realtime Database.
  * Runs at 2:00 AM UTC on the 1st of each month.
@@ -52,28 +86,25 @@ exports.fetchClosePowerliftingData = onSchedule({
 
     logger.info("Fetching powerlifting data from Close Powerlifting API");
 
-    const response = await axios.get(
+    const data = await fetchJson(
     "https://closepowerlifting.com/api/users/calvinle",
-    {
-      headers: {
-      "Authorization": `Bearer ${apiKey}`,
-      },
-    }
+    {"Authorization": `Bearer ${apiKey}`},
     );
 
     const db = admin.database();
     const timestamp = new Date().toISOString();
 
     await db.ref("powerlifting/user_data").set({
-    data: response.data,
+    data,
     lastUpdated: timestamp,
     });
 
     logger.info("Successfully fetched and stored powerlifting data");
-    
   } catch (error) {
-    logger.error("Error fetching powerlifting data", error);
-    throw error; 
+    const details = safeError(error);
+    logger.error("Error fetching powerlifting data", details);
+    // Rethrow a clean error so the runtime's own error logging can't include the API key
+    throw new Error(`Powerlifting fetch failed: ${details.message}`);
   }
 });
 /* eslint-enable indent */
@@ -94,23 +125,23 @@ exports.fetchWcaSpeedcubingData = onSchedule({
   try {
     logger.info("Fetching speedcubing data from WCA REST API");
 
-    const response = await axios.get(
-    "https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons/2010LECA01.json"
+    const data = await fetchJson(
+    "https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons/2010LECA01.json",
     );
 
     const db = admin.database();
     const timestamp = new Date().toISOString();
 
     await db.ref("speedcubing/wca_data").set({
-    data: response.data,
+    data,
     lastUpdated: timestamp,
     });
 
     logger.info("Successfully fetched and stored WCA speedcubing data");
-    
   } catch (error) {
-    logger.error("Error fetching WCA speedcubing data", error);
-    throw error; 
+    const details = safeError(error);
+    logger.error("Error fetching WCA speedcubing data", details);
+    throw new Error(`Speedcubing fetch failed: ${details.message}`);
   }
 });
 /* eslint-enable indent */
