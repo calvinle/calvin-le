@@ -3,12 +3,23 @@ import ThemeWrapper from '../components/ThemeWrapper'
 import { themeBackgrounds, THEME_STORAGE_KEY } from '../components/themeConstants'
 
 export const metadata = {
+  // Used to turn relative URLs (like the link preview image) into absolute ones
+  metadataBase: new URL('https://calvinle.io'),
   // Pages set their own title, e.g. 'Projects' becomes 'Projects | Calvin Le'
   title: {
     default: 'Calvin Le',
     template: '%s | Calvin Le',
   },
   description: 'Portfolio of Calvin Le',
+  // Link previews; the image comes from app/opengraph-image.jsx
+  openGraph: {
+    siteName: 'Calvin Le',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+  },
 }
 
 /**
