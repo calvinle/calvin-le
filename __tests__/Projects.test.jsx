@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import Projects from '../components/Projects';
 
 describe('Projects Page', () => {
@@ -23,6 +23,18 @@ describe('Projects Page', () => {
 
   it('renders pieHue project', () => {
     expect(screen.getByRole('heading', { name: /pihue/i })).toBeInTheDocument();
+  });
+
+  it('shows status badges only where a status is set', () => {
+    expect(screen.getByText('Live')).toBeInTheDocument();
+    expect(screen.getByText('In progress')).toBeInTheDocument();
+    expect(screen.getAllByText(/^(Live|In progress)$/)).toHaveLength(2);
+  });
+
+  it('lists each project tech stack as a labeled list', () => {
+    const piHueTech = screen.getByRole('list', { name: 'Technologies used in piHue' });
+    expect(within(piHueTech).getAllByRole('listitem').map((item) => item.textContent))
+      .toEqual(['Python', 'Raspberry Pi', 'Philips Hue API']);
   });
 
   it('gives each project link a unique, descriptive name', () => {
