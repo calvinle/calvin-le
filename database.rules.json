@@ -4,17 +4,11 @@
     ".write": false,
     "powerlifting": {
       ".read": true,
-      ".write": "auth != null",
-      "user_data": {
-        ".validate": "newData.hasChildren(['data', 'lastUpdated'])"
-      }
+      ".write": false
     },
     "speedcubing": {
       ".read": true,
-      ".write": "auth != null",
-      "wca_data": {
-        ".validate": "newData.hasChildren(['data', 'lastUpdated'])"
-      }
+      ".write": false
     }
   }
 }
