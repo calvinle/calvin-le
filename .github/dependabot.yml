@@ -13,6 +13,12 @@ updates:
     groups:
       website-minor-and-patch:
         update-types: [minor, patch]
+    ignore:
+      # MUI 5 -> 9 spans several breaking releases (e.g. the Grid API used on the
+      # Projects page) and needs a planned migration. Minor/patch updates still flow.
+      # Remove this once the site is migrated.
+      - dependency-name: "@mui/*"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: npm
     directory: /functions
