@@ -5,6 +5,7 @@ import { ThemeProvider, Box } from '@mui/material'
 import { themes } from './theme'
 import { THEME_STORAGE_KEY } from './themeConstants'
 import NavBar from './NavBar'
+import Footer from './Footer'
 
 const isValidPreference = (value) => value === 'system' || Boolean(themes[value])
 
@@ -65,7 +66,7 @@ export default function ThemeWrapper({ children }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
+      <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
         {/* Hidden until focused, lets keyboard users jump past the nav */}
         <Box component="a" href="#main-content" sx={styles.skipLink}>
           Skip to main content
@@ -75,10 +76,11 @@ export default function ThemeWrapper({ children }) {
           component="main"
           id="main-content"
           tabIndex={-1}
-          sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', paddingTop: '64px', '&:focus': { outline: 'none' } }}
+          sx={{ display: 'flex', flexDirection: 'column', flex: 1, paddingTop: '64px', '&:focus': { outline: 'none' } }}
         >
           {children}
         </Box>
+        <Footer />
       </Box>
     </ThemeProvider>
   )

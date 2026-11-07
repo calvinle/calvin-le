@@ -2,11 +2,9 @@
 
 import React from 'react';
 import { Box, Container, Paper, Typography, useTheme, Link } from '@mui/material'
-import EmailIcon from '@mui/icons-material/Email'
-import LinkedInIcon from '@mui/icons-material/LinkedIn'
-import GitHubIcon from '@mui/icons-material/GitHub'
 import { gradientText } from './sharedStyles'
 import NewTabNotice from './NewTabNotice'
+import { contactItems, isExternal } from './contactItems'
 
 /**
  * Creates theme-aware styles for the Contact component.
@@ -76,30 +74,6 @@ const useStyles = (theme) => ({
 })
 
 /**
- * Contact information items with links.
- */
-const contactItems = [
-  {
-    icon: EmailIcon,
-    title: 'Email',
-    subtitle: 'calvinle0@proton.me',
-    href: 'mailto:calvinle0@proton.me',
-  },
-  {
-    icon: LinkedInIcon,
-    title: 'LinkedIn',
-    subtitle: 'linkedin.com/in/calvinle97',
-    href: 'https://www.linkedin.com/in/calvinle97',
-  },
-  {
-    icon: GitHubIcon,
-    title: 'GitHub',
-    subtitle: 'github.com/calvinle',
-    href: 'https://github.com/calvinle',
-  },
-]
-
-/**
  * Contact component - Contact information page.
  * 
  * Displays contact methods including email, LinkedIn, and GitHub
@@ -133,8 +107,8 @@ export default function Contact() {
               key={item.title}
               component={Link}
               href={item.href}
-              target={item.href.startsWith('mailto') ? undefined : '_blank'}
-              rel={item.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+              target={isExternal(item.href) ? '_blank' : undefined}
+              rel={isExternal(item.href) ? 'noopener noreferrer' : undefined}
               elevation={6}
               sx={styles.contactCard}
             >
@@ -149,7 +123,7 @@ export default function Contact() {
                   {item.subtitle}
                 </Typography>
               </Box>
-              {!item.href.startsWith('mailto') && <NewTabNotice />}
+              {isExternal(item.href) && <NewTabNotice />}
             </Paper>
           ))}
         </Box>
