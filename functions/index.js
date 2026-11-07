@@ -15,7 +15,6 @@ const { logger } = require("firebase-functions");
 const {initializeApp} = require("firebase-admin/app");
 const {getDatabase} = require("firebase-admin/database");
 const axios = require("axios");
-require("dotenv").config({path: __dirname + "/.env.local"});
 
 initializeApp();
 
