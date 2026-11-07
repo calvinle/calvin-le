@@ -12,11 +12,12 @@ const { onSchedule } = require("firebase-functions/v2/scheduler");
 const { defineSecret } = require("firebase-functions/params");
 const closePowerliftingApiKey = defineSecret("CLOSEPOWERLIFTING_API_KEY");
 const { logger } = require("firebase-functions");
-const admin = require("firebase-admin");
+const {initializeApp} = require("firebase-admin/app");
+const {getDatabase} = require("firebase-admin/database");
 const axios = require("axios");
 require("dotenv").config({path: __dirname + "/.env.local"});
 
-admin.initializeApp();
+initializeApp();
 
 // For cost control, you can set the maximum number of containers that can be
 // running at the same time. This helps mitigate the impact of unexpected
@@ -91,7 +92,7 @@ exports.fetchClosePowerliftingData = onSchedule({
     {"Authorization": `Bearer ${apiKey}`},
     );
 
-    const db = admin.database();
+    const db = getDatabase();
     const timestamp = new Date().toISOString();
 
     await db.ref("powerlifting/user_data").set({
@@ -129,7 +130,7 @@ exports.fetchWcaSpeedcubingData = onSchedule({
     "https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons/2010LECA01.json",
     );
 
-    const db = admin.database();
+    const db = getDatabase();
     const timestamp = new Date().toISOString();
 
     await db.ref("speedcubing/wca_data").set({
