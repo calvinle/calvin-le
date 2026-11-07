@@ -10,9 +10,9 @@ import { gradientText } from './sharedStyles'
  * the others stay rendered (invisible) so the theme switch can cross-fade.
  */
 const photos = [
-  { src: '/images/photo-light.jpg', alt: 'Calvin Le smiling outdoors in a dark suit and bow tie', isActive: (theme) => theme.palette.mode === 'light' },
-  { src: '/images/photo-dark.jpg', alt: 'Calvin Le wearing round blue sunglasses and a black t-shirt', isActive: (theme) => theme.palette.mode === 'dark' && theme.palette.primary.main !== '#FF6B6B' },
-  { src: '/images/photo-red.jpg', alt: 'Calvin Le in a grey jacket on a city street at night', isActive: (theme) => theme.palette.primary.main === '#FF6B6B' },
+  { src: '/images/photo-light.webp', alt: 'Calvin Le smiling outdoors in a dark suit and bow tie', isActive: (theme) => theme.palette.mode === 'light' },
+  { src: '/images/photo-dark.webp', alt: 'Calvin Le wearing round blue sunglasses and a black t-shirt', isActive: (theme) => theme.palette.mode === 'dark' && theme.palette.primary.main !== '#FF6B6B' },
+  { src: '/images/photo-red.webp', alt: 'Calvin Le in a grey jacket on a city street at night', isActive: (theme) => theme.palette.primary.main === '#FF6B6B' },
 ]
 
 /**
@@ -142,6 +142,9 @@ export default function Home() {
           <Box sx={styles.actions}>
             <Button component={Link} href="/work" variant="contained" sx={styles.actionButton}>
               View my work
+            </Button>
+            <Button component={Link} href="/resume" variant="outlined" sx={styles.actionButton}>
+              Resume
             </Button>
             <Button component={Link} href="/projects" variant="outlined" sx={styles.actionButton}>
               Projects
