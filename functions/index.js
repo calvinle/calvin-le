@@ -70,8 +70,6 @@ function safeError(error) {
  * from Close Powerlifting API and store it in Firebase Realtime Database.
  * Runs at 2:00 AM UTC on the 1st of each month.
  */
-/* eslint-disable indent */
-/* eslint-disable max-len */
 exports.fetchClosePowerliftingData = onSchedule({
   schedule: "0 0 * * *",         // Every night at midnight UTC
   secrets: [closePowerliftingApiKey],
@@ -108,16 +106,12 @@ exports.fetchClosePowerliftingData = onSchedule({
     throw new Error(`Powerlifting fetch failed: ${details.message}`);
   }
 });
-/* eslint-enable indent */
-/* eslint-enable max-len */
 
 /**
  * Scheduled function that runs once a day to fetch speedcubing data
  * from WCA REST API and store it in Firebase Realtime Database.
  * Runs at 3:00 AM UTC daily.
  */
-/* eslint-disable indent */
-/* eslint-disable max-len */
 exports.fetchWcaSpeedcubingData = onSchedule({
   schedule: "0 3 * * *",         // Every day at 3:00 AM UTC
   timeoutSeconds: 60,
@@ -146,5 +140,3 @@ exports.fetchWcaSpeedcubingData = onSchedule({
     throw new Error(`Speedcubing fetch failed: ${details.message}`);
   }
 });
-/* eslint-enable indent */
-/* eslint-enable max-len */
