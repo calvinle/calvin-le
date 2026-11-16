@@ -3,7 +3,7 @@
 import React from 'react';
 import { Box, Button, Container, Paper, Typography, useTheme } from '@mui/material'
 import Link from 'next/link'
-import { gradientText } from './sharedStyles'
+import { gradientText, pageBackground } from './sharedStyles'
 
 /**
  * One photo per theme. Only the active one is exposed to screen readers;
@@ -25,9 +25,7 @@ const useStyles = (theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
-    backgroundImage: theme.palette.mode === 'dark'
-      ? 'linear-gradient(135deg, rgba(144, 202, 249, 0.05) 0%, rgba(30, 58, 95, 0.15) 100%)'
-      : 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)',
+    backgroundImage: pageBackground(theme),
     padding: 3,
   },
   paper: {
@@ -43,8 +41,7 @@ const useStyles = (theme) => ({
     position: 'relative',
     width: 200,
     height: 200,
-    margin: '0 auto',
-    marginBottom: 4,
+    marginX: 'auto',
   },
   photo: {
     position: 'absolute',
@@ -136,7 +133,7 @@ export default function Home() {
             variant="body1"
             sx={styles.intro}
           >
-            Software engineer and technical educator, open to new engineering and developer education roles.
+            Currently open to software engineering and developer education roles.
           </Typography>
           <Box sx={styles.actions}>
             <Button component={Link} href="/work" variant="contained" sx={styles.actionButton}>

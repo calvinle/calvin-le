@@ -4,7 +4,7 @@
  */
 export const resume = {
   name: 'Calvin Le',
-  headline: ['Software Engineer', 'Full-Stack', 'Cloud-Native (GCP)', 'Engineering Enablement'],
+  headline: ['Software Engineer', 'Full-Stack', 'Cloud Native (AWS, GCP)', 'Engineering Enablement'],
   contact: [
     { label: 'calvinle0@proton.me', href: 'mailto:calvinle0@proton.me' },
     { label: 'linkedin.com/in/calvinle97', href: 'https://www.linkedin.com/in/calvinle97' },
@@ -99,19 +99,19 @@ export const resume = {
         'Built a workout logger and stats aggregator as containerized Cloud Run microservices, using Workflows for orchestration, Pub/Sub for event-driven choreography, and Cloud Tasks for asynchronous processing.',
     },
     {
-      name: 'calvinle.io',
+      name: 'Personal Portfolio',
       tech: 'Firebase',
       description:
         'Built and deployed a personal portfolio site that retrieves and persists competition data through the ClosePowerlifting API.',
     },
   ],
-  education: 'Colorado State University, Bachelor of Computer Science, 2018',
+  education: 'Colorado State University, Bachelor of Science in Computer Science, 2018',
   additional: [
     {
       title: 'Eagle Scout',
       bullets: [
         'Eagle Project - Funded and coordinated $1,100 for construction of local park kiosk, assigning tasks to volunteers and providing tools and instruction',
-        '40 Merit Badges earned',
+        'Earned 40 merit badges',
       ],
     },
   ],

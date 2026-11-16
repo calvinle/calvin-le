@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Box, Container, Paper, Typography, useTheme, Link } from '@mui/material'
-import { gradientText } from './sharedStyles'
+import { gradientText, pageBackground } from './sharedStyles'
 import NewTabNotice from './NewTabNotice'
 import { contactItems, isExternal } from './contactItems'
 
@@ -17,7 +17,7 @@ const useStyles = (theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
-    backgroundImage: `linear-gradient(135deg, ${theme.palette.primary.main}10 0%, ${theme.palette.secondary.main}15 100%)`,
+    backgroundImage: pageBackground(theme),
     padding: 3,
   },
   content: {

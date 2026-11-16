@@ -8,11 +8,11 @@ describe('About Page', () => {
   });
 
   it('renders main heading', () => {
-    expect(screen.getByText(/a little bit about calvin/i));
+    expect(screen.getByRole('heading', { level: 1, name: 'About Me' })).toBeInTheDocument();
   });
 
   it('renders secondary heading', () => {
-    expect(screen.getByText(/some more about calvin/i));
+    expect(screen.getByRole('heading', { level: 2, name: 'Quick Facts' })).toBeInTheDocument();
   });
 });
 

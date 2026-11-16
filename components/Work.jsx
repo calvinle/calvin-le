@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { Box, Container, Paper, Typography, Stack, useTheme, Divider, Chip, useMediaQuery } from '@mui/material'
-import { visuallyHidden } from './sharedStyles'
+import { pageBackground, metaText } from './sharedStyles'
+import PageHeader from './PageHeader'
 
 /**
  * Creates theme-aware styles for the Work component.
@@ -16,9 +17,7 @@ const useStyles = (theme) => ({
     alignItems: 'center',
     justifyContent: 'flex-start',
     flex: 1,
-    backgroundImage: theme.palette.mode === 'dark'
-      ? 'linear-gradient(135deg, rgba(144, 202, 249, 0.05) 0%, rgba(30, 58, 95, 0.15) 100%)'
-      : 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)',
+    backgroundImage: pageBackground(theme),
     padding: 3,
     gap: 3,
   },
@@ -48,9 +47,8 @@ const useStyles = (theme) => ({
     marginBottom: 2,
   },
   categoryTitle: {
+    ...metaText,
     fontWeight: 600,
-    fontSize: '0.85rem',
-    color: 'text.secondary',
     marginBottom: 1,
   },
   chipContainer: {
@@ -84,14 +82,10 @@ const useStyles = (theme) => ({
     marginBottom: 0.5,
   },
   location: {
-    color: 'text.secondary',
-    fontSize: '0.9rem',
-    marginBottom: 2,
+    ...metaText,
   },
   years: {
-    color: 'text.secondary',
-    fontSize: '0.9rem',
-    fontStyle: 'italic',
+    ...metaText,
   },
   headerRow: {
     display: 'flex',
@@ -104,7 +98,6 @@ const useStyles = (theme) => ({
     flex: 1,
   },
   headerRight: {
-    textAlign: 'right',
     marginTop: { xs: 1, sm: 0 },
     textAlign: { xs: 'left', sm: 'right' },
   },
@@ -133,11 +126,11 @@ export default function Work() {
       skills: ['Java', 'JavaScript', 'TypeScript', 'Python', 'Go', 'Ruby', 'SQL', 'HTML/CSS']
     },
     {
-      category: 'Frameworks and Testing',
+      category: 'Frameworks & Testing',
       skills: ['React', 'Spring Boot', 'Ruby on Rails', 'Pydantic', 'JUnit', 'Jest', 'pytest', 'RSpec', 'Ruff']
     },
     {
-      category: 'Cloud and DevOps',
+      category: 'Cloud & DevOps',
       skills: ['AWS Lambda', 'API Gateway', 'AWS SAM', 'CloudWatch', 'Google Cloud Run', 'Pub/Sub', 'Cloud Tasks', 'Firebase', 'Docker', 'GitHub Actions', 'Jenkins'],
     },
     {
@@ -145,11 +138,11 @@ export default function Work() {
       skills: ['Amazon Bedrock', 'Structured Outputs', 'Prompt Engineering', 'GitHub Copilot', 'Glean']
     },
     {
-      category: 'Engineering Practices',
+      category: 'Practices',
       skills: ['Microservices', 'Serverless', 'Event-Driven Architecture', 'REST APIs', 'Test-Driven Development', 'Code Reviews', 'Agile/Scrum', 'Observability', 'Version Control', 'Documentation']
     },
     {
-      category: 'Technical Leadership',
+      category: 'Enablement & Leadership',
       skills: ['Mentorship', 'Technical Instruction', 'Onboarding', 'Curriculum Design', 'Cross-team Collaboration', 'Project Ownership']
     }
   ]
@@ -157,66 +150,62 @@ export default function Work() {
   /**
    * Work experience data structured with company, location, years, and projects for each role.
    * Each project includes a name and description of responsibilities and achievements.
-   * Emoji are kept separate from the company name so screen readers can skip them.
    */
   const workExperience = [
     {
       company: 'Snippet Sentry',
-      emoji: ['🛡️', '💬'],
       location: 'Kansas City, MO (Remote)',
       years: 'April 2026 - July 2026',
       projects: [
         {
           name: 'Signal Compliance Archiving',
-          description: 'Extended the compliance archiving platform to Signal alongside WhatsApp, iMessage, and SMS, capturing 10+ message types and activities (replies, edits, media, reactions, deletions, read receipts) for audit and regulatory recordkeeping'
+          description: 'Extended the compliance archiving platform to Signal, alongside WhatsApp, iMessage, and SMS, capturing 10+ message types and activities (replies, edits, media, reactions, deletions, read receipts) for audit and regulatory recordkeeping.'
         },
         {
           name: 'Cross-Channel Identity Resolution',
-          description: 'Built TypeScript decryption and synchronization logic to retrieve Signal contacts and group-conversation metadata, keeping identity resolution and audit trails consistent across channels'
+          description: 'Built TypeScript decryption and synchronization logic to retrieve Signal contacts and group-conversation metadata, keeping identity resolution and audit trails consistent across channels.'
         }
       ]
     },
     {
       company: 'The Home Depot',
-      emoji: ['🟧', '🛠'],
-      location: 'Atlanta, GA',
+      location: 'Atlanta, GA (Remote)',
       years: 'November 2021 - January 2026',
       projects: [
         {
           name: 'OrangeMethod Apprenticeship',
-          description: 'Developing software engineers with industry knowledge and technical skills in 18-weeks, pipelining to summer internship and full-time roles'
+          description: 'Taught early-career software engineers industry knowledge and technical skills in an 18-week program that led to internship and full-time roles.'
         },
         {
           name: 'OrangeMethod Returnship',
-          description: 'Aiding software engineers returning from extended leave, providing mentorship and technical training to facilitate successful reintegration into the workforce'
+          description: 'Mentored and trained software engineers returning from extended leave, helping them successfully re-enter the workforce.'
         },
         {
           name: 'GenAI SDLC Pilot Teaching',
-          description: 'AI-assisted debugging and unit testing demonstration for senior software engineers and managers'
+          description: 'Demonstrated AI-assisted debugging and unit testing to senior software engineers and managers.'
         },
         {
           name: 'Quality Initiative',
-          description: 'Partnered with cross-functional teams to assess testing environments and code health tooling for unified observability'
+          description: 'Partnered with cross-functional teams to assess testing environments and code-health tooling for unified observability.'
         }
       ]
     },
     {
       company: 'Oracle Health',
-      emoji: ['⚕️', '🏥'],
       location: 'Kansas City, MO',
       years: 'February 2019 - November 2021',
       projects: [
         {
           name: 'DevAcademy',
-          description: 'Staff instructor for training program to develop entry-level software engineers with weekly pull request evaluations and technical mentorship'
+          description: 'Served as staff instructor for a training program for entry-level software engineers, giving weekly pull request reviews and technical mentorship.'
         },
         {
           name: 'Academy Analytics',
-          description: 'Observability dashboard to track training program metrics and performance'
+          description: 'Built an observability dashboard that tracks training program metrics and performance.'
         },
         {
           name: 'OPENLink',
-          description: 'Healthcare system interoperability, parsing industry formats (HL7, FHIR, JSON, XML)'
+          description: 'Built healthcare system interoperability features that parse industry formats (HL7, FHIR, JSON, XML).'
         }
       ]
     }
@@ -224,8 +213,11 @@ export default function Work() {
 
   return (
     <Box sx={styles.container}>
-      <Typography component="h1" sx={visuallyHidden}>Work Experience</Typography>
       <Container maxWidth="lg">
+        <PageHeader
+          title="Work Experience"
+          intro="Software engineering and technical education roles, most recent first."
+        />
         <Box sx={{ ...styles.mainLayout, flexDirection: isMobile ? 'column' : 'row' }}>
           {/* Work Experience Section */}
           <Box sx={{ ...styles.workSection, order: isMobile ? 2 : 1 }}>
@@ -235,9 +227,7 @@ export default function Work() {
                   <Box sx={styles.headerRow}>
                     <Box sx={styles.headerLeft}>
                       <Typography variant="h6" component="h2" sx={styles.companyName}>
-                        <span aria-hidden="true">{job.emoji[0]} </span>
                         {job.company}
-                        <span aria-hidden="true"> {job.emoji[1]}</span>
                       </Typography>
                     </Box>
                     <Box sx={styles.headerRight}>

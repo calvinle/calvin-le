@@ -6,7 +6,10 @@ import LaunchIcon from '@mui/icons-material/Launch'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import ConstructionIcon from '@mui/icons-material/Construction'
-import { gradientText, visuallyHidden } from './sharedStyles'
+import TaskAltIcon from '@mui/icons-material/TaskAlt'
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
+import { visuallyHidden, pageBackground } from './sharedStyles'
+import PageHeader from './PageHeader'
 import NewTabNotice from './NewTabNotice'
 
 /**
@@ -16,6 +19,7 @@ import NewTabNotice from './NewTabNotice'
 const statusBadges = {
   'live': { label: 'Live', icon: <CheckCircleIcon color="success" /> },
   'in-progress': { label: 'In progress', icon: <ConstructionIcon color="warning" /> },
+  'complete': { label: 'Complete', icon: <TaskAltIcon color="action" /> },
 }
 
 /**
@@ -30,9 +34,7 @@ const useStyles = (theme) => ({
     alignItems: 'center',
     justifyContent: 'flex-start',
     flex: 1,
-    backgroundImage: theme.palette.mode === 'dark'
-      ? 'linear-gradient(135deg, rgba(144, 202, 249, 0.05) 0%, rgba(30, 58, 95, 0.15) 100%)'
-      : 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)',
+    backgroundImage: pageBackground(theme),
     padding: 3,
   },
   paper: {
@@ -41,12 +43,6 @@ const useStyles = (theme) => ({
     backdropFilter: 'blur(10px)',
     width: '100%',
     maxWidth: '1200px',
-  },
-  heading: {
-    fontWeight: 700,
-    ...gradientText(theme),
-    marginBottom: 4,
-    textAlign: 'center',
   },
   projectCard: {
     height: '100%',
@@ -118,22 +114,23 @@ export default function Projects() {
 
   /**
    * Projects data with name, description, optional status, tech stack, and links.
-   * status: 'live' | 'in-progress' | undefined (no badge shown)
+   * status: 'live' | 'in-progress' | 'complete'
    */
   const projects = [
     {
       name: 'words2macros',
+      status: 'complete',
       tech: ['Python', 'AWS Lambda', 'API Gateway', 'Amazon Bedrock', 'AWS SAM'],
-      description: 'A serverless API that turns plain-language meal descriptions into macronutrients. An LLM parses food items through Bedrock structured outputs while USDA data supplies every nutrient value, and Pydantic models validate each payload before it reaches the calculations.',
+      description: 'A serverless API that turns plain-language meal descriptions into macronutrients. An LLM on Bedrock parses the food items, USDA data supplies every nutrient value, and Pydantic validates each payload before any math runs.',
       links: [
         { label: 'GitHub', url: 'https://github.com/calvinle/words2macros', icon: GitHubIcon },
       ],
     },
     {
-      name: 'Personal Website',
+      name: 'Personal Portfolio',
       status: 'live',
       tech: ['Next.js', 'React', 'Material UI', 'Firebase'],
-      description: 'This website you\'re checking out! Features responsive design, theme switching, and accessibility built in. Future mini projects will be added here as well.',
+      description: 'The site you\'re on now. Built with responsive design, light and dark themes, and accessibility in mind, plus live powerlifting and speedcubing stats.',
       links: [
         { label: 'GitHub', url: 'https://github.com/calvinle/calvin-le', icon: GitHubIcon },
       ],
@@ -142,26 +139,28 @@ export default function Projects() {
       name: 'Smart Fitness Tracker',
       status: 'in-progress',
       tech: ['Go', 'TypeScript', 'React', 'Google Cloud'],
-      description: 'A microservices-based fitness tracking application demonstrating GCP orchestrated and choreographed workflows. Tracks workouts, computes e1RM and fitness scores, detects personal records, and aggregates stats. Built with Golang, TypeScript, React, and GCP services.',
+      description: 'A microservices-based fitness tracker that demonstrates orchestrated and choreographed workflows on Google Cloud. It logs workouts, computes e1RM and fitness scores, detects personal records, and aggregates stats.',
       links: [
-        { label: 'Live App', url: 'https://smart-fitness-tracker-491117.web.app/', icon: LaunchIcon },
+        { label: 'Live app', url: 'https://smart-fitness-tracker-491117.web.app/', icon: LaunchIcon },
         { label: 'GitHub', url: 'https://github.com/calvinle/smart-fitness-tracker', icon: GitHubIcon },
       ],
     },
     {
       name: 'Powerlifting Plate Calculator',
+      status: 'complete',
       tech: ['Java', 'Android'],
-      description: 'A calculator tool for powerlifters to quickly determine the plates needed for any given weight on the barbell. Developed in Java and Android Studio.',
+      description: 'An Android app that tells powerlifters which plates to load on the barbell for any target weight.',
       links: [
         { label: 'GitHub', url: 'https://github.com/calvinle/Powerlifting-Plate-Calculator', icon: GitHubIcon },
       ],
     },
     {
       name: 'piHue',
+      status: 'complete',
       tech: ['Python', 'Raspberry Pi', 'Philips Hue API'],
-      description: 'A Raspberry Pi project that controls Philips Hue smart lights based on sensor input and user preferences. Developed in Python and uses the Philips Hue API.',
+      description: 'A Raspberry Pi project that controls Philips Hue smart lights based on sensor input and user preferences.',
       links: [
-        { label: 'Live Demo', url: 'https://www.youtube.com/watch?v=jSCjfSZUzp8', icon: LaunchIcon },
+        { label: 'Demo video', url: 'https://www.youtube.com/watch?v=jSCjfSZUzp8', icon: PlayCircleOutlineIcon },
         { label: 'GitHub', url: 'https://github.com/calvinle/piHue', icon: GitHubIcon },
       ],
     },
@@ -171,13 +170,10 @@ export default function Projects() {
     <Box sx={styles.container}>
       <Container maxWidth="lg">
         <Paper elevation={10} sx={styles.paper}>
-          <Typography
-            variant="h4"
-            component="h1"
-            sx={styles.heading}
-          >
-            Projects
-          </Typography>
+          <PageHeader
+            title="Projects"
+            intro="Things I've built for work, for fun, and to learn something new."
+          />
 
           <Grid container spacing={3}>
             {projects.map((project, index) => (

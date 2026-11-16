@@ -15,7 +15,7 @@ const renderWithTheme = (ui, theme = lightTheme) =>
 describe('Page headings', () => {
   it.each([
     ['Home', Home, 'Calvin Le'],
-    ['About', About, 'A Little Bit About Calvin'],
+    ['About', About, 'About Me'],
     ['Work', Work, 'Work Experience'],
     ['Projects', Projects, 'Projects'],
     ['Resume', Resume, 'Calvin Le'],
@@ -27,7 +27,7 @@ describe('Page headings', () => {
     expect(h1s[0]).toHaveTextContent(title);
   });
 
-  it('Work company headings exclude decorative emoji from the accessible name', () => {
+  it('Work company names are h2 headings', () => {
     renderWithTheme(<Work />);
     expect(screen.getByRole('heading', { level: 2, name: 'The Home Depot' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 2, name: 'Oracle Health' })).toBeInTheDocument();

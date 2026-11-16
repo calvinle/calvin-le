@@ -7,14 +7,12 @@ describe('Projects Page', () => {
     render(<Projects />);
   });
 
-  it('renders without crashing', () => {
-    const actualNumberOfProject = screen.queryAllByText(/project/i);
-    const expectedNumberOfProject = 3;
-    expect(actualNumberOfProject.length).toBe(expectedNumberOfProject);
+  it('renders a card for each project', () => {
+    expect(screen.getAllByRole('heading', { level: 2 })).toHaveLength(5);
   });
 
-  it('renders personal website card', () => {
-    expect(screen.getByRole('heading', { name: /personal website/i })).toBeInTheDocument();
+  it('renders personal portfolio card', () => {
+    expect(screen.getByRole('heading', { name: /personal portfolio/i })).toBeInTheDocument();
   });
 
   it('renders powerlifting plate calculator project', () => {
@@ -25,10 +23,10 @@ describe('Projects Page', () => {
     expect(screen.getByRole('heading', { name: /pihue/i })).toBeInTheDocument();
   });
 
-  it('shows status badges only where a status is set', () => {
+  it('shows a status badge on every project', () => {
     expect(screen.getByText('Live')).toBeInTheDocument();
     expect(screen.getByText('In progress')).toBeInTheDocument();
-    expect(screen.getAllByText(/^(Live|In progress)$/)).toHaveLength(2);
+    expect(screen.getAllByText('Complete')).toHaveLength(3);
   });
 
   it('lists each project tech stack as a labeled list', () => {
@@ -39,7 +37,7 @@ describe('Projects Page', () => {
 
   it('gives each project link a unique, descriptive name', () => {
     expect(screen.getByRole('link', { name: /^GitHub\s?: piHue \(opens in new tab\)$/ })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /^Live Demo\s?: piHue \(opens in new tab\)$/ })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /^Demo video\s?: piHue \(opens in new tab\)$/ })).toBeInTheDocument();
   });
 });
 

@@ -127,7 +127,7 @@ resume.projects.forEach((project) => {
 sectionHeading('Education')
 doc.font(FONT.regular).fontSize(BODY_SIZE).text(resume.education, MARGIN, doc.y, { width: CONTENT_WIDTH })
 
-sectionHeading('Additional')
+sectionHeading('Leadership & Service')
 resume.additional.forEach((item) => {
   keepWithNext(40)
   doc.font(FONT.boldItalic).fontSize(BODY_SIZE).text(item.title, MARGIN, doc.y)

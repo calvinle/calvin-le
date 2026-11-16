@@ -4,7 +4,7 @@ import React from 'react';
 import { Box, Button, Container, Divider, Link, Paper, Typography, useTheme } from '@mui/material'
 import DownloadIcon from '@mui/icons-material/Download'
 import PrintIcon from '@mui/icons-material/Print'
-import { gradientText } from './sharedStyles'
+import { gradientText, pageBackground } from './sharedStyles'
 import { resume, RESUME_PDF_PATH } from './resumeData'
 
 /**
@@ -18,7 +18,7 @@ const useStyles = (theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     flex: 1,
-    backgroundImage: `linear-gradient(135deg, ${theme.palette.primary.main}10 0%, ${theme.palette.secondary.main}15 100%)`,
+    backgroundImage: pageBackground(theme),
     padding: 3,
   },
   paper: {
@@ -144,7 +144,7 @@ const useStyles = (theme) => ({
  * One titled resume section with a divider above it.
  */
 function Section({ title, styles, children }) {
-  const headingId = `resume-${title.toLowerCase().replace(/\s+/g, '-')}`
+  const headingId = `resume-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
   return (
     <Box component="section" aria-labelledby={headingId}>
       <Divider sx={styles.divider} />
@@ -267,7 +267,7 @@ export default function Resume({ hasPdf = false }) {
             <Typography sx={styles.body}>{resume.education}</Typography>
           </Section>
 
-          <Section title="Additional" styles={styles}>
+          <Section title="Leadership & Service" styles={styles}>
             {resume.additional.map((item) => (
               <Box key={item.title} sx={styles.project}>
                 <Typography component="h3" sx={styles.projectName}>{item.title}</Typography>

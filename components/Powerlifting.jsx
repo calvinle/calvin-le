@@ -10,7 +10,7 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { ref, onValue } from 'firebase/database'
 import { db } from '../lib/firebase'
-import { visuallyHidden } from './sharedStyles'
+import { visuallyHidden, pageBackground, sectionHeading, gradientText } from './sharedStyles'
 import InfoTooltip from './InfoTooltip'
 import NewTabNotice from './NewTabNotice'
 
@@ -30,7 +30,7 @@ const useStyles = (theme, isMobile) => ({
     paddingY: 6,
     gap: 4,
     flex: 1,
-    backgroundImage: `linear-gradient(135deg, ${theme.palette.primary.main}10 0%, ${theme.palette.secondary.main}15 100%)`,
+    backgroundImage: pageBackground(theme),
     overflowX: isMobile ? 'hidden' : 'auto',
     minWidth: isMobile ? 'auto' : 'fit-content',
     width: '100%',
@@ -48,7 +48,7 @@ const useStyles = (theme, isMobile) => ({
     px: isMobile ? 2 : 3,
   },
   tableShadowWrapper: {
-    borderRadius: '24px',
+    borderRadius: 3,
     boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)',
     mb: 5,
   },
@@ -56,7 +56,7 @@ const useStyles = (theme, isMobile) => ({
     overflowX: 'auto',
     width: '100%',
     WebkitOverflowScrolling: 'touch',
-    borderRadius: '24px',
+    borderRadius: 3,
   },
   tableContainer: {
     overflowX: 'auto',
@@ -78,20 +78,10 @@ const useStyles = (theme, isMobile) => ({
   },
   paper: {
     padding: 0,
-    borderRadius: '24px',
-    backdropFilter: 'blur(10px)',
-    overflow: 'hidden',
-    minWidth: isMobile ? 'auto' : '800px',
-    width: '100%',
-  },
-  aboutPaper: {
-    padding: 3,
     borderRadius: 3,
     backdropFilter: 'blur(10px)',
     overflow: 'hidden',
-    mb: 5,
-    minWidth: 'auto',
-    maxWidth: '100%',
+    minWidth: isMobile ? 'auto' : '800px',
     width: '100%',
   },
   accordion: {
@@ -110,32 +100,11 @@ const useStyles = (theme, isMobile) => ({
   },
   table: {
     minWidth: '800px',
-    borderRadius: '24px',
-    overflow: 'hidden',
-    '& tbody tr:last-child': {
-      '& td:first-of-type': {
-        borderBottomLeftRadius: '24px',
-      },
-      '& td:last-of-type': {
-        borderBottomRightRadius: '24px',
-      },
-    },
-    '& tbody tr:last-child:hover': {
-      borderBottomLeftRadius: '24px',
-      borderBottomRightRadius: '24px',
+    '& tbody tr:last-child td': {
+      borderBottom: 0,
     },
   },
-  heading: {
-    fontWeight: 800,
-    background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    mb: 1,
-  },
-  sectionTitle: {
-    fontWeight: 700,
-    color: theme.palette.mode === 'dark' ? '#fff' : 'inherit',
-  },
+  sectionTitle: sectionHeading,
   sectionHeader: {
     display: 'flex',
     flexDirection: isMobile ? 'column' : 'row',

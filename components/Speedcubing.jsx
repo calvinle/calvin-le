@@ -10,7 +10,7 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { ref, onValue } from 'firebase/database'
 import { db } from '../lib/firebase'
-import { visuallyHidden } from './sharedStyles'
+import { visuallyHidden, pageBackground, sectionHeading, gradientText } from './sharedStyles'
 import InfoTooltip from './InfoTooltip'
 import NewTabNotice from './NewTabNotice'
 
@@ -31,7 +31,7 @@ const useStyles = (theme, isMobile) => ({
     paddingX: isMobile ? 0 : 0,
     gap: isMobile ? 2 : 4,
     flex: 1,
-    backgroundImage: `linear-gradient(135deg, ${theme.palette.primary.main}10 0%, ${theme.palette.secondary.main}15 100%)`,
+    backgroundImage: pageBackground(theme),
     overflowX: isMobile ? 'hidden' : 'auto',
     width: '100%',
   },
@@ -75,18 +75,6 @@ const useStyles = (theme, isMobile) => ({
   tableWrapper: {
     width: '100%',
   },
-  aboutPaper: {
-    padding: isMobile ? 2 : 3,
-    borderRadius: 3,
-    backdropFilter: 'blur(10px)',
-    overflow: 'hidden',
-    mb: isMobile ? 3 : 5,
-    minWidth: 'auto',
-    maxWidth: '100%',
-    width: '100%',
-    wordBreak: 'break-word',
-    overflowWrap: 'break-word',
-  },
   accordion: {
     borderRadius: '12px !important',
     backdropFilter: 'blur(10px)',
@@ -104,24 +92,29 @@ const useStyles = (theme, isMobile) => ({
   table: {
     minWidth: isMobile ? 500 : 800,
   },
-  heading: {
-    fontWeight: 800,
-    fontSize: isMobile ? '1.75rem' : '3rem',
-    background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    mb: 1,
-  },
-  sectionTitle: {
-    fontWeight: 700,
-    color: theme.palette.mode === 'dark' ? '#fff' : 'inherit',
-  },
+  sectionTitle: sectionHeading,
   sectionTitleBox: {
     display: 'flex',
     justifyContent: isMobile ? 'center' : 'flex-start',
     mt: 4,
     mb: 2,
     px: 1,
+  },
+  competitionTitle: {
+    fontWeight: 600,
+    color: 'text.primary',
+    fontSize: '1rem',
+    mb: 1.5,
+    px: 1,
+  },
+  eventName: {
+    fontWeight: 600,
+    fontSize: isMobile ? '0.8rem' : '0.875rem',
+  },
+  eventCell: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 1,
   },
   tableHeader: {
     fontWeight: 700,
@@ -154,9 +147,7 @@ const useStyles = (theme, isMobile) => ({
   statValue: {
     fontWeight: 800,
     fontSize: isMobile ? '1.5rem' : '2rem',
-    background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
+    ...gradientText(theme),
   },
   statLabel: {
     fontWeight: 600,
@@ -409,7 +400,7 @@ export default function Speedcubing() {
 
           {/* Personal Bests Table */}
           <Box sx={styles.sectionTitleBox}>
-            <Typography variant="h5" component="h2" sx={styles.sectionTitle}>
+            <Typography variant="h6" component="h2" sx={styles.sectionTitle}>
               Personal Bests
             </Typography>
           </Box>
@@ -431,9 +422,9 @@ export default function Speedcubing() {
                     {personalBests.map((pb, index) => (
                       <TableRow key={index} sx={styles.tableRow}>
                         <TableCell component="th" scope="row">
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          <Box sx={styles.eventCell}>
                             <span aria-hidden="true" className={`cubing-icon event-${pb.eventId}`} style={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
-                            <Typography fontWeight={600} sx={{ fontSize: isMobile ? '0.8rem' : '0.875rem' }}>{pb.event}</Typography>
+                            <Typography sx={styles.eventName}>{pb.event}</Typography>
                             {discontinuedEvents[pb.eventId] && (
                               <InfoTooltip label={`About ${pb.event}`} title={discontinuedEvents[pb.eventId]} />
                             )}
@@ -453,15 +444,15 @@ export default function Speedcubing() {
 
           {/* Competition History */}
           <Box sx={styles.sectionTitleBox}>
-            <Typography variant="h5" component="h2" sx={styles.sectionTitle}>
+            <Typography variant="h6" component="h2" sx={styles.sectionTitle}>
               Competition History (Last 5)
             </Typography>
           </Box>
 
           {stats?.competitionIds?.slice()
             .sort((a, b) => {
-              const yearA = parseInt(a.match(/\\d{4}/)?.[0] || '0')
-              const yearB = parseInt(b.match(/\\d{4}/)?.[0] || '0')
+              const yearA = parseInt(a.match(/\d{4}/)?.[0] || '0')
+              const yearB = parseInt(b.match(/\d{4}/)?.[0] || '0')
               return yearB - yearA
             })
             .slice(0, 5)
@@ -471,12 +462,12 @@ export default function Speedcubing() {
             
             // Format competition name from ID (e.g., "MissouriChampionship2025" -> "Missouri Championship 2025")
             const formatCompName = (id) => {
-              return id.replace(/([A-Z])/g, ' $1').replace(/(\\d+)/g, ' $1').trim()
+              return id.replace(/([A-Z])/g, ' $1').replace(/(\d+)/g, ' $1').trim()
             }
             
             return (
               <Box key={compId} sx={{ mb: isMobile ? 3 : 4 }}>
-                <Typography variant="h6" component="h3" sx={{ fontWeight: 600, mb: 2, px: 1, fontSize: isMobile ? '1rem' : '1.25rem', color: theme.palette.mode === 'dark' ? '#fff' : 'inherit' }}>
+                <Typography variant="h6" component="h3" sx={styles.competitionTitle}>
                   {formatCompName(compId)}
                 </Typography>
                 <Box sx={styles.tableWrapper}>
@@ -497,9 +488,9 @@ export default function Speedcubing() {
                             rounds.map((round, idx) => (
                               <TableRow key={`${eventId}-${idx}`} sx={styles.tableRow}>
                                 <TableCell>
-                                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                  <Box sx={styles.eventCell}>
                                     <span aria-hidden="true" className={`cubing-icon event-${eventId}`} style={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
-                                    <Typography fontWeight={600} sx={{ fontSize: isMobile ? '0.8rem' : '0.875rem' }}>{eventNames[eventId] || eventId}</Typography>
+                                    <Typography sx={styles.eventName}>{eventNames[eventId] || eventId}</Typography>
                                     {discontinuedEvents[eventId] && (
                                       <InfoTooltip label={`About ${eventNames[eventId] || eventId}`} title={discontinuedEvents[eventId]} />
                                     )}

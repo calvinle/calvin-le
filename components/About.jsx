@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { Box, Container, Paper, Typography, useTheme } from '@mui/material'
-import { gradientText } from './sharedStyles'
+import { pageBackground, prose, sectionHeading } from './sharedStyles'
+import PageHeader from './PageHeader'
 
 /**
  * Creates theme-aware styles for the About component.
@@ -15,42 +16,50 @@ const useStyles = (theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
-    backgroundImage: theme.palette.mode === 'dark'
-      ? 'linear-gradient(135deg, rgba(144, 202, 249, 0.05) 0%, rgba(30, 58, 95, 0.15) 100%)'
-      : 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)',
+    backgroundImage: pageBackground(theme),
     padding: 3,
   },
   paper: {
-    padding: 6,
-    textAlign: 'center',
+    padding: { xs: 3, sm: 6 },
     borderRadius: 3,
     backdropFilter: 'blur(10px)',
-    maxWidth: '1200px',
   },
-  content: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
+  paragraph: {
+    ...prose,
   },
-  heading: {
-    fontWeight: 700,
-    ...gradientText(theme),
-    marginBottom: 2,
-    textAlign: 'left',
+  sectionTitle: {
+    ...sectionHeading,
+    marginTop: 4,
+    marginBottom: 1.5,
   },
-  description: {
-    fontSize: '1rem',
-    lineHeight: 1.8,
-    marginBottom: 0,
-    textAlign: 'left',
+  factList: {
+    margin: 0,
+    paddingLeft: 3,
+    '& li': {
+      lineHeight: 1.7,
+      marginBottom: 0.5,
+    },
   },
 })
+
+/**
+ * Short personal facts shown as a bulleted list.
+ */
+const quickFacts = [
+  'Born and raised in the suburbs of Los Angeles, California',
+  'Bachelor of Science in Computer Science, Colorado State University, 2018',
+  'Semi-competitive speedcuber',
+  'Actually-competitive powerlifter',
+  'EDM enthusiast of all kinds since age 13',
+  'Used to perform Michael Jackson dance covers at local events',
+  'Coffee made via pour-over and taken black',
+]
 
 /**
  * About component - Personal information page.
  * 
  * Displays biographical information and background details.
- * Features a centered card layout with themed gradient styling.
+ * Uses a readable single-column card layout.
  * 
  * @component
  * @returns {JSX.Element} The rendered About page component
@@ -64,69 +73,33 @@ export default function About() {
 
   return (
     <Box sx={styles.container}>
-      <Container maxWidth="lg">
+      <Container maxWidth="md">
         <Paper elevation={10} sx={styles.paper}>
-          <Typography
-            variant="h4"
-            component="h1"
-            sx={styles.heading}
-          >
-            A Little Bit About Calvin
+          <PageHeader title="About Me" align="left" sx={{ marginBottom: 3 }} />
+
+          <Typography variant="body1" sx={styles.paragraph}>
+            I was born in Southern California, earned my degree in Colorado, and now live in Kansas City (on the Kansas side). I've traveled across the country for music festivals and sightseeing, and for powerlifting meets and Rubik's Cube competitions.
+          </Typography>
+          <Typography variant="body1" sx={styles.paragraph}>
+            I'm a full-stack developer who has mostly worked with React on the front end and Node.js and Java on the back end, using frameworks like Next.js, Express, and Spring Boot. Software engineering has taught me that, given enough time to debug, almost any problem can be solved, often made simpler, and turned into a chance to learn.
+          </Typography>
+          <Typography variant="body1" sx={styles.paragraph}>
+            Over the last few years, I've found a real passion for teaching and leading others, helping people build on their strengths and work through their weaknesses. I believe working toward mastery in any discipline is how we grow as people.
           </Typography>
 
-          <Typography
-            variant="body1"
-            sx={styles.description}
-          >
-            Calvin can be described as a worldly person. Born in Southern California, got his degree in Colorado, and currently resides in Kansas City (on the Kansas side). He has travelled the country not only for music and tourism, but also for powerlifting and Rubik's Cube competitions.
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={styles.description}
-          >
-            He is well-versed in full-stack development, having primarily worked with React for front-end design and Node.js and Java for back-end development. He also enjoys working with various frameworks including React.JS, Next.JS, Express.JS, and Spring Boot. Software engineering has taught that with enough time to debug, any problem can not only be solved, but also potentially made simpler and serve as a learning opportunity.
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={styles.description}
-          >
-            Over the last few years, he has developed a strong interest in teaching and leading others, developing both their strengths and weaknesses. Mastery in any discipline leads to growth as a person.
+          <Typography variant="h6" component="h2" sx={styles.sectionTitle}>
+            Quick Facts
           </Typography>
 
-          <Typography
-            variant="h4"
-            component="h2"
-            sx={styles.heading}
-          >
-            Some More About Calvin
-          </Typography>
-
-          <Box component="ul" sx={{ textAlign: 'left', lineHeight: 2, p: 0, m: 0 }}>
-            <Typography component="li" variant="body1" sx={styles.description}>
-              Born and raised in the suburbs of Los Angeles, California
-            </Typography>
-            <Typography component="li" variant="body1" sx={styles.description}>
-              Bachelor of Science in Computer Science @ Colorado State University, 2018
-            </Typography>
-            <Typography component="li" variant="body1" sx={styles.description}>
-              Semi-competitive speedcuber
-            </Typography>
-            <Typography component="li" variant="body1" sx={styles.description}>
-              Actually-competitive powerlifter
-            </Typography>
-            <Typography component="li" variant="body1" sx={styles.description}>
-              EDM enthusiast of all kinds since 13!
-            </Typography>
-            <Typography component="li" variant="body1" sx={styles.description}>
-              Used to perform Michael Jackson dance covers at local events
-            </Typography>
-            <Typography component="li" variant="body1" sx={styles.description}>
-              Coffee made via pour-over and taken black
-            </Typography>
+          <Box component="ul" sx={styles.factList}>
+            {quickFacts.map((fact) => (
+              <Typography component="li" variant="body1" key={fact}>
+                {fact}
+              </Typography>
+            ))}
           </Box>
         </Paper>
       </Container>
     </Box>
   )
 }
-

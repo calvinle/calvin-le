@@ -3,7 +3,7 @@
 import React from 'react';
 import { Box, Button, Container, Paper, Typography, useTheme } from '@mui/material'
 import Link from 'next/link'
-import { gradientText } from './sharedStyles'
+import { gradientText, pageBackground } from './sharedStyles'
 
 /**
  * Creates theme-aware styles for the NotFound component.
@@ -16,7 +16,7 @@ const useStyles = (theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
-    backgroundImage: `linear-gradient(135deg, ${theme.palette.primary.main}10 0%, ${theme.palette.secondary.main}15 100%)`,
+    backgroundImage: pageBackground(theme),
     padding: 3,
   },
   paper: {
