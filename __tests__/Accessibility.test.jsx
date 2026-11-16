@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import { onValue } from 'firebase/database';
 import ThemeWrapper from '../components/ThemeWrapper';
@@ -15,7 +15,7 @@ import Resume from '../components/Resume';
 
 expect.extend(toHaveNoViolations);
 
-jest.mock('next/navigation', () => ({ usePathname: () => '/' }));
+jest.mock('next/navigation', () => ({ usePathname: () => '/', useRouter: () => ({ push: jest.fn() }) }));
 // Next's Link schedules async prefetch updates that trigger act() warnings in jsdom;
 // for accessibility purposes it's just an <a href>, so render exactly that.
 jest.mock('next/link', () => {
@@ -80,5 +80,12 @@ describe('Automated accessibility checks (axe)', () => {
   ])('%s page has no detectable violations', async (_, Page) => {
     const { container } = render(<ThemeWrapper><Page /></ThemeWrapper>);
     expect(await axe(container)).toHaveNoViolations();
+  });
+
+  it('command palette has no detectable violations when open', async () => {
+    render(<ThemeWrapper><Home /></ThemeWrapper>);
+    fireEvent.click(screen.getByRole('button', { name: /search or jump to/i }));
+    // The palette renders in a portal on <body>, outside the render container
+    expect(await axe(document.body)).toHaveNoViolations();
   });
 });

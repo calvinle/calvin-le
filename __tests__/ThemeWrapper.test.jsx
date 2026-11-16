@@ -1,10 +1,11 @@
 import React from 'react';
-import { render, screen, act } from '@testing-library/react';
+import { render, screen, act, fireEvent } from '@testing-library/react';
 import ThemeWrapper from '../components/ThemeWrapper';
 import { themeBackgrounds } from '../components/themeConstants';
 
 jest.mock('next/navigation', () => ({
   usePathname: () => '/',
+  useRouter: () => ({ push: jest.fn() }),
 }));
 
 let systemDark;
@@ -28,11 +29,17 @@ beforeEach(() => {
 
 const renderWrapper = () => render(<ThemeWrapper><p>content</p></ThemeWrapper>);
 
+// The theme choice lives in the command palette, marked with aria-checked
+const checkedTheme = () => {
+  fireEvent.click(screen.getByRole('button', { name: /search or jump to/i }));
+  return screen.getAllByRole('option').find((option) => option.getAttribute('aria-checked') === 'true');
+};
+
 describe('ThemeWrapper', () => {
   it('follows the OS dark setting when nothing is saved', () => {
     systemDark = true;
     renderWrapper();
-    expect(screen.getByRole('button', { name: 'Theme: System' })).toBeInTheDocument();
+    expect(checkedTheme()).toHaveAccessibleName('System theme');
     expect(document.documentElement.style.backgroundColor).toBe(hexToRgb(themeBackgrounds.dark));
   });
 
@@ -47,7 +54,7 @@ describe('ThemeWrapper', () => {
     systemDark = true;
     localStorage.setItem('app-theme', 'red');
     renderWrapper();
-    expect(screen.getByRole('button', { name: 'Theme: Red' })).toBeInTheDocument();
+    expect(checkedTheme()).toHaveAccessibleName('Red theme');
     expect(document.documentElement.style.backgroundColor).toBe(hexToRgb(themeBackgrounds.red));
   });
 

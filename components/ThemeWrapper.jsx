@@ -76,7 +76,7 @@ export default function ThemeWrapper({ children }) {
           component="main"
           id="main-content"
           tabIndex={-1}
-          sx={{ display: 'flex', flexDirection: 'column', flex: 1, paddingTop: '64px', '&:focus': { outline: 'none' } }}
+          sx={{ display: 'flex', flexDirection: 'column', flex: 1, paddingTop: '56px', '&:focus': { outline: 'none' } }}
         >
           {children}
         </Box>

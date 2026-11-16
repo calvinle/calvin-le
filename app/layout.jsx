@@ -1,4 +1,5 @@
 import './globals.css'
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v16-appRouter'
 import ThemeWrapper from '../components/ThemeWrapper'
 import { themeBackgrounds, THEME_STORAGE_KEY } from '../components/themeConstants'
 
@@ -59,7 +60,11 @@ export default function RootLayout({ children }) {
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       </head>
       <body>
-        <ThemeWrapper>{children}</ThemeWrapper>
+        {/* Collects MUI's (Emotion) styles during server rendering and puts them in
+            <head>, so the server HTML matches what React expects when it hydrates */}
+        <AppRouterCacheProvider>
+          <ThemeWrapper>{children}</ThemeWrapper>
+        </AppRouterCacheProvider>
       </body>
     </html>
   )
