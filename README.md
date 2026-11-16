@@ -93,7 +93,7 @@ app/                      # Next.js App Router routes + root layout
 
 components/               # Shared app-wide components (Next-era)
 ├── ThemeWrapper.jsx      # Client wrapper: theme state + MUI ThemeProvider + NavBar
-└── theme.js              # MUI theme definitions (light/dark/red)
+└── theme.js              # MUI theme definitions (light/dark)
 
 lib/                      # Shared libraries/utilities (Next-era)
 └── firebase.js           # Firebase client initialization (NEXT_PUBLIC_FIREBASE_*)

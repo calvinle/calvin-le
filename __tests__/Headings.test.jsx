@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from '@mui/material/styles';
-import { lightTheme, redTheme } from '../components/theme';
+import { lightTheme, darkTheme } from '../components/theme';
 import Home from '../components/Home';
 import About from '../components/About';
 import Work from '../components/Work';
@@ -36,9 +36,9 @@ describe('Page headings', () => {
 
 describe('Home photo', () => {
   it('exposes only the active theme photo to assistive tech', () => {
-    renderWithTheme(<Home />, redTheme);
+    renderWithTheme(<Home />, darkTheme);
     const images = screen.getAllByRole('img');
     expect(images).toHaveLength(1);
-    expect(images[0]).toHaveAccessibleName(/grey jacket/i);
+    expect(images[0]).toHaveAccessibleName(/sunglasses/i);
   });
 });

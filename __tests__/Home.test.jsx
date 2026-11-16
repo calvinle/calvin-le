@@ -18,7 +18,7 @@ describe('Home Page', () => {
   it('uses the optimized WebP photos', () => {
     const { container } = render(<Home />);
     container.querySelectorAll('img').forEach((img) => {
-      expect(img.getAttribute('src')).toMatch(/^\/images\/photo-(light|dark|red)\.webp$/);
+      expect(img.getAttribute('src')).toMatch(/^\/images\/photo-(light|dark)\.webp$/);
     });
   });
 });

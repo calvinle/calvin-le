@@ -51,11 +51,17 @@ describe('ThemeWrapper', () => {
   });
 
   it('uses a saved theme over the OS setting', () => {
-    systemDark = true;
+    localStorage.setItem('app-theme', 'dark');
+    renderWrapper();
+    expect(checkedTheme()).toHaveAccessibleName('Dark theme');
+    expect(document.documentElement.style.backgroundColor).toBe(hexToRgb(themeBackgrounds.dark));
+  });
+
+  it('falls back to the OS setting when the saved theme no longer exists', () => {
     localStorage.setItem('app-theme', 'red');
     renderWrapper();
-    expect(checkedTheme()).toHaveAccessibleName('Red theme');
-    expect(document.documentElement.style.backgroundColor).toBe(hexToRgb(themeBackgrounds.red));
+    expect(checkedTheme()).toHaveAccessibleName('System theme');
+    expect(document.documentElement.style.backgroundColor).toBe(hexToRgb(themeBackgrounds.light));
   });
 
   it('reveals the page once the theme is applied', () => {

@@ -103,7 +103,7 @@ const styles = {
  *
  * @component
  * @param {Object} props - Component props
- * @param {string} props.themePreference - Current preference ('system' | 'light' | 'dark' | 'red')
+ * @param {string} props.themePreference - Current preference ('system' | 'light' | 'dark')
  * @param {Function} props.onThemeChange - Called with the newly chosen preference
  * @returns {JSX.Element} The rendered navigation bar component
  *

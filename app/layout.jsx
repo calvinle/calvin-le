@@ -25,7 +25,7 @@ export const metadata = {
 
 /**
  * Runs before first paint. The static HTML is rendered in the light theme, so for
- * visitors whose theme is dark or red, paint the matching background and hide the
+ * visitors on the dark theme, paint the matching background and hide the
  * content until React applies the real theme (ThemeWrapper removes 'theme-pending').
  * The timeout guarantees the page is revealed even if the app script fails to load.
  */

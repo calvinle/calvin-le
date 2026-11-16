@@ -11,8 +11,7 @@ import { gradientText } from './sharedStyles'
  */
 const photos = [
   { src: '/images/photo-light.webp', alt: 'Calvin Le smiling outdoors in a dark suit and bow tie', isActive: (theme) => theme.palette.mode === 'light' },
-  { src: '/images/photo-dark.webp', alt: 'Calvin Le wearing round blue sunglasses and a black t-shirt', isActive: (theme) => theme.palette.mode === 'dark' && theme.palette.primary.main !== '#FF6B6B' },
-  { src: '/images/photo-red.webp', alt: 'Calvin Le in a grey jacket on a city street at night', isActive: (theme) => theme.palette.primary.main === '#FF6B6B' },
+  { src: '/images/photo-dark.webp', alt: 'Calvin Le wearing round blue sunglasses and a black t-shirt', isActive: (theme) => theme.palette.mode === 'dark' },
 ]
 
 /**

@@ -113,7 +113,7 @@ const styles = {
  * @param {Object} props - Component props
  * @param {boolean} props.open - Whether the palette is showing
  * @param {Function} props.onOpenChange - Called with the new open state
- * @param {string} props.themePreference - Current preference ('system' | 'light' | 'dark' | 'red')
+ * @param {string} props.themePreference - Current preference ('system' | 'light' | 'dark')
  * @param {Function} props.onThemeChange - Called with the newly chosen preference
  * @returns {JSX.Element} The rendered palette
  */

@@ -9,7 +9,6 @@ import CasinoIcon from '@mui/icons-material/Casino'
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
-import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
 
 /**
  * Site pages. Used by the header breadcrumb, the command palette and the footer.
@@ -32,5 +31,4 @@ export const themeOptions = [
   { value: 'system', label: 'System', icon: SettingsBrightnessIcon },
   { value: 'light', label: 'Light', icon: LightModeIcon },
   { value: 'dark', label: 'Dark', icon: DarkModeIcon },
-  { value: 'red', label: 'Red', icon: LocalFireDepartmentIcon },
 ]

@@ -59,7 +59,7 @@ describe('NavBar', () => {
     expect(within(dialog).getByText('Pages')).toBeInTheDocument();
     expect(within(dialog).getByText('Theme')).toBeInTheDocument();
     expect(within(dialog).getByText('Links')).toBeInTheDocument();
-    expect(within(dialog).getAllByRole('option')).toHaveLength(8 + 4 + 3);
+    expect(within(dialog).getAllByRole('option')).toHaveLength(8 + 3 + 3);
   });
 
   it('filters items as you type', () => {
@@ -85,10 +85,10 @@ describe('NavBar', () => {
   });
 
   it('marks the current page and the active theme', () => {
-    renderNavBar('red');
+    renderNavBar('dark');
     openPalette();
     expect(screen.getByRole('option', { name: /^Work/ })).toHaveAttribute('aria-current', 'page');
-    expect(screen.getByRole('option', { name: 'Red theme' })).toHaveAttribute('aria-checked', 'true');
+    expect(screen.getByRole('option', { name: 'Dark theme' })).toHaveAttribute('aria-checked', 'true');
     expect(screen.getByRole('option', { name: 'System theme' })).toHaveAttribute('aria-checked', 'false');
   });
 
