@@ -16,15 +16,6 @@ export const lightTheme = createTheme({
       paper: '#ffffff',
     },
   },
-  components: {
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          backgroundColor: '#D32F2F',
-        },
-      },
-    },
-  },
   typography: {
     fontFamily:
       '-apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Roboto\", \"Oxygen\", \"Ubuntu\", \"Cantarell\", \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\", sans-serif',
