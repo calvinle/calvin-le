@@ -12,6 +12,7 @@ import { ref, onValue } from 'firebase/database'
 import { db } from '../lib/firebase'
 import { visuallyHidden, pageBackground, sectionHeading, gradientText } from './sharedStyles'
 import InfoTooltip from './InfoTooltip'
+import PageHeader from './PageHeader'
 import NewTabNotice from './NewTabNotice'
 
 const OPENPOWERLIFTING_PROFILE_URL = 'https://www.openpowerlifting.org/u/calvinle'
@@ -126,7 +127,8 @@ const useStyles = (theme, isMobile) => ({
       px: 2,
       py: 0.5,
       fontWeight: 600,
-      fontSize: '0.75rem',
+      fontSize: '0.875rem',
+      textTransform: 'none',
       '&.Mui-selected': {
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.mode === 'light' ? '#fff' : theme.palette.primary.contrastText,
@@ -210,6 +212,18 @@ const lbsToKg = (lbs) => {
 }
 
 /**
+ * Formats an ISO date (e.g. "2023-05-06") as "May 6, 2023".
+ * Parsed as UTC so the day doesn't shift in western time zones.
+ * @param {string} isoDate - Date string from the API
+ * @returns {string} Readable date, or the original value if it can't be parsed
+ */
+const formatDate = (isoDate) => {
+  const date = new Date(isoDate)
+  if (Number.isNaN(date.getTime())) return isoDate
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
+}
+
+/**
  * Finds the athlete record inside the cached Close Powerlifting response.
  * The API's nesting changes over time (e.g. data.data vs data.data[0]), so this
  * unwraps `data` keys and arrays until it reaches an object with competition_results.
@@ -250,12 +264,11 @@ export default function Powerlifting() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [unit, setUnit] = useState('lbs')
-  const [aboutExpanded, setAboutExpanded] = useState(false)
 
   const formatWeight = (value) => {
     if (!value || isNaN(value)) return '—'
     if (unit === 'kg') return `${lbsToKg(value)} kg`
-    return `${value} lbs`
+    return `${value} lb`
   }
 
   const handleUnitChange = (event, newUnit) => {
@@ -339,66 +352,59 @@ export default function Powerlifting() {
     <Box sx={styles.outerWrapper}>
       <Box sx={styles.container}>
         <Container maxWidth="lg" sx={styles.mainContainer}>
-          <Typography component="h1" sx={visuallyHidden}>Powerlifting</Typography>
+
+          <PageHeader
+            title="Powerlifting"
+            intro="My raw personal bests and competition history since 2018."
+          />
 
           {/* About Section - Accordion */}
-          <Accordion sx={styles.accordion} expanded={aboutExpanded} onChange={(e, expanded) => setAboutExpanded(expanded)}>
+          <Accordion sx={styles.accordion}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Box>
-                <Typography variant="h6" component="span" display="block" sx={styles.sectionTitle}>Why This Page?</Typography>
-                {/* Visual hint only; the button already announces expanded/collapsed */}
-                <Typography variant="caption" color="text.secondary" aria-hidden="true">{aboutExpanded ? 'Click to collapse' : 'Click to expand'}</Typography>
-              </Box>
+              <Typography variant="h6" component="span" sx={styles.sectionTitle}>About This Data</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Box component="ul" sx={styles.bulletList}>
                 <li>
-                  <Typography variant="body1" component="span">
-                    Powerlifting has multiple federations, each with its own rules and standards, resulting in a lack of formal unified data
+                  <Typography variant="body2" component="span">
+                    Powerlifting has many federations, each with its own rules and standards, so there's no single official source of results.
                   </Typography>
                   <ul>
                     <li>
                       <Typography variant="body2" component="span">
-                        <Link href="https://www.openpowerlifting.org/" target="_blank" rel="noopener noreferrer"><strong>Open</strong>Powerlifting<NewTabNotice /></Link> provides a comprehensive tabled view of all powerlifting results.
+                        <Link href="https://www.openpowerlifting.org/" target="_blank" rel="noopener noreferrer"><strong>Open</strong>Powerlifting<NewTabNotice /></Link> collects results from across federations into one searchable table.
                       </Typography>
                     </li>
                     <li>
                       <Typography variant="body2" component="span">
-                        However, they don't provide an API, as they prioritize maintaining the integrity of public data
+                        It doesn't offer an API, to protect the integrity of its public data...
                       </Typography>
                     </li>
                     <li>
                       <Typography variant="body2" component="span">
-                        ...But there is a 150MB CSV file for download!
+                        ...but there is a 150 MB CSV file you can download!
                       </Typography>
                     </li>
                     <li>
                       <Typography variant="body2" component="span">
-                        Also, it is literally being managed by 8 people
+                        And it's maintained by just 8 volunteers.
                       </Typography>
                     </li>
                   </ul>
                 </li>
                 <li>
-                  <Typography variant="body1" component="span">
-                    <Link href="https://closepowerlifting.com/" target="_blank" rel="noopener noreferrer"><strong>Close</strong>Powerlifting<NewTabNotice /></Link> serves as a 3rd-party API with a monthly quota
+                  <Typography variant="body2" component="span">
+                    <Link href="https://closepowerlifting.com/" target="_blank" rel="noopener noreferrer"><strong>Close</strong>Powerlifting<NewTabNotice /></Link> is a third-party API for that data, with a monthly request limit.
                   </Typography>
                 </li>
                 <li>
-                  <Typography variant="body1" component="span">
-                    Combined with Firebase cron jobs and other automation tools, this page will update and cache weekly
+                  <Typography variant="body2" component="span">
+                    A scheduled Firebase job fetches and caches my results weekly, so this page updates within about two weeks of a meet.
                   </Typography>
-                  <ul>
-                    <li>
-                      <Typography variant="body2" component="span">
-                        In a practical sense, this means this will update within two weeks of a competition
-                      </Typography>
-                    </li>
-                  </ul>
                 </li>
                 <li>
-                  <Typography variant="body1" component="span">
-                    My data on OpenPowerlifting is conjoined with another Calvin Le(s?) who competed years before I did, so I have to filter that Calvin's results out
+                  <Typography variant="body2" component="span">
+                    My OpenPowerlifting profile is merged with another Calvin Le (or two) who competed before I did, so this page filters out results before 2018.
                   </Typography>
                 </li>
               </Box>
@@ -412,11 +418,12 @@ export default function Powerlifting() {
                 value={unit}
                 exclusive
                 onChange={handleUnitChange}
+                aria-label="Weight unit"
                 size="small"
                 sx={styles.toggleButtonGroup}
               >
-                <ToggleButton value="lbs">LBS</ToggleButton>
-                <ToggleButton value="kg">KG</ToggleButton>
+                <ToggleButton value="lbs">lb</ToggleButton>
+                <ToggleButton value="kg">kg</ToggleButton>
               </ToggleButtonGroup>
             )}
             <Typography variant="h6" component="h2" sx={styles.sectionTitle}>Personal Bests</Typography>
@@ -425,11 +432,12 @@ export default function Powerlifting() {
                 value={unit}
                 exclusive
                 onChange={handleUnitChange}
+                aria-label="Weight unit"
                 size="small"
                 sx={styles.toggleButtonGroup}
               >
-                <ToggleButton value="lbs">LBS</ToggleButton>
-                <ToggleButton value="kg">KG</ToggleButton>
+                <ToggleButton value="lbs">lb</ToggleButton>
+                <ToggleButton value="kg">kg</ToggleButton>
               </ToggleButtonGroup>
             )}
           </Box>
@@ -448,9 +456,9 @@ export default function Powerlifting() {
                   <TableCell sx={styles.tableHeader}>Total</TableCell>
                   <TableCell sx={styles.tableHeader}>
                     <Box component="span" sx={styles.headerWithInfo}>
-                      Equipped
+                      Equipment
                       <InfoTooltip
-                        label="About equipped lifting"
+                        label="About equipment"
                         title="Raw lifting uses minimal supportive gear (belt, knee sleeves, wrist wraps). Equipped lifting uses specialized suits and shirts that can add significant weight to lifts."
                       />
                     </Box>
@@ -506,7 +514,7 @@ export default function Powerlifting() {
                   <TableRow key={i} hover>
                     <TableCell sx={styles.cell}>
                       <Typography variant="body2" sx={styles.competitionName}>{comp.meet_name ?? comp.competition}</Typography>
-                      <Typography variant="caption" color="text.secondary" sx={styles.competitionDetails}>{comp.date} • {comp.federation ?? comp.location}</Typography>
+                      <Typography variant="caption" color="text.secondary" sx={styles.competitionDetails}>{formatDate(comp.date)} • {comp.federation ?? comp.location}</Typography>
                     </TableCell>
                     <TableCell sx={styles.cell}>{formatWeight(comp.squat)}</TableCell>
                     <TableCell sx={styles.cell}>{formatWeight(comp.bench)}</TableCell>

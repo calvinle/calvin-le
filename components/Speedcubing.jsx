@@ -10,7 +10,8 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { ref, onValue } from 'firebase/database'
 import { db } from '../lib/firebase'
-import { visuallyHidden, pageBackground, sectionHeading, gradientText } from './sharedStyles'
+import { visuallyHidden, pageBackground, sectionHeading, gradientText, metaText } from './sharedStyles'
+import PageHeader from './PageHeader'
 import InfoTooltip from './InfoTooltip'
 import NewTabNotice from './NewTabNotice'
 
@@ -99,6 +100,31 @@ const useStyles = (theme, isMobile) => ({
     mt: 4,
     mb: 2,
     px: 1,
+  },
+  aboutText: {
+    lineHeight: 1.7,
+    mb: 1.5,
+  },
+  methodList: {
+    listStyle: 'none',
+    pl: 0,
+    m: 0,
+    mb: 2,
+  },
+  methodItem: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 1,
+    mb: 0.5,
+  },
+  linkList: {
+    pl: 3,
+    m: 0,
+    '& li': { mb: 0.5 },
+  },
+  sectionCaption: {
+    ...metaText,
+    textAlign: isMobile ? 'center' : 'left',
   },
   competitionTitle: {
     fontWeight: 600,
@@ -230,7 +256,6 @@ export default function Speedcubing() {
   const [stats, setStats] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [aboutExpanded, setAboutExpanded] = useState(false)
 
   /**
    * Subscribes to Firebase Realtime Database for speedcubing data
@@ -327,62 +352,55 @@ export default function Speedcubing() {
     <Box sx={styles.outerWrapper}>
       <Box sx={styles.container}>
         <Container maxWidth="md" sx={styles.mainContainer}>
-          <Typography component="h1" sx={visuallyHidden}>Speedcubing</Typography>
+
+          <PageHeader
+            title="Speedcubing"
+            intro="My official World Cube Association results and recent competitions."
+          />
 
           {/* About Section - Accordion */}
-          <Accordion sx={styles.accordion} expanded={aboutExpanded} onChange={(e, expanded) => setAboutExpanded(expanded)}>
+          <Accordion sx={styles.accordion}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Box>
-                <Typography variant="h6" component="span" display="block" sx={styles.sectionTitle}>About Speedcubing</Typography>
-                {/* Visual hint only; the button already announces expanded/collapsed */}
-                <Typography variant="caption" color="text.secondary" aria-hidden="true">{aboutExpanded ? 'Click to collapse' : 'Click to expand'}</Typography>
-              </Box>
+              <Typography variant="h6" component="span" sx={styles.sectionTitle}>About Speedcubing</Typography>
             </AccordionSummary>
             <AccordionDetails>
-                  <Typography variant="body2" paragraph>
-                    Speedcubing is the practice of solving Rubik's Cubes and other twisty puzzles as fast as possible. 
-                    Calvin has been involved in the sport for well over a decade, having competed and volunteered in many competitions.
-                  </Typography>
-                  <Typography variant="body2" paragraph>
-                    Calvin's main events are the 3x3, 3x3 One-Handed, and 4x4.
-                  </Typography>
-                  <Typography variant="body2" paragraph>
-                    He uses the following methods:
-                  </Typography>
-                  <Box component="ul" sx={{ listStyle: 'none', pl: 0, m: 0, mb: 2 }}>
-                    <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                      <span aria-hidden="true" className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
-                      <Typography variant="body2">3x3: <Link href="https://jperm.net/3x3/cfop" target="_blank" rel="noopener noreferrer">CFOP with 2-look OLL and 1-look PLL<NewTabNotice /></Link></Typography>
-                    </Box>
-                    <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                      <span aria-hidden="true" className="cubing-icon event-333oh" style={{ fontSize: '1rem' }} />
-                      <Typography variant="body2">3x3 One-Handed: <Link href="https://www.zzmethod.com/tutorial" target="_blank" rel="noopener noreferrer">ZZ <NewTabNotice /></Link></Typography>
-                    </Box>
-                    <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                      <span aria-hidden="true" className="cubing-icon event-444" style={{ fontSize: '1rem' }} />
-                      <Typography variant="body2">4x4: <Link href="https://jperm.net/4x4" target="_blank" rel="noopener noreferrer">Yau<NewTabNotice /></Link></Typography>
-                    </Box>
-                  </Box>
-                  <Typography variant="body2" paragraph>
-                    The data on this page uses an unofficial API by Robin Engelbrecht, fully endorsed by the World Cube Association. This page also runs a cron job and caches the data in Firebase.
-                  </Typography>
-                  <Typography variant="body2" paragraph>
-                    See below links for more details:
-                  </Typography>
-                  <Box component="ul" sx={{ listStyle: 'none', pl: 0, m: 0, mb: 2 }}>
-                    <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                      <span aria-hidden="true" className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
-                      <Typography variant="body2"><Link href="https://www.worldcubeassociation.org/" target="_blank" rel="noopener noreferrer">World Cube Association<NewTabNotice /></Link></Typography>
-                    </Box>
-                    <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                      <span aria-hidden="true" className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
-                      <Typography variant="body2"><Link href="https://docs.worldcubeassociation.org/knowledge_base/wca_data_overview.html" target="_blank" rel="noopener noreferrer">WCA Data Overview<NewTabNotice /></Link></Typography>
-                    </Box>
-                    <Box component="li" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                      <span aria-hidden="true" className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
-                      <Typography variant="body2"><Link href="https://wca-rest-api.robiningelbrecht.be/" target="_blank" rel="noopener noreferrer">WCA-REST-API Documentation<NewTabNotice /></Link></Typography>
-                    </Box>
-                  </Box>
+              <Typography variant="body2" sx={styles.aboutText}>
+                Speedcubing is the sport of solving Rubik's Cubes and other twisty puzzles as fast as possible. I've been part of it for well over a decade, competing in and volunteering at many competitions.
+              </Typography>
+              <Typography variant="body2" sx={styles.aboutText}>
+                My main events are 3x3, 3x3 One-Handed, and 4x4, using these methods:
+              </Typography>
+              <Box component="ul" sx={styles.methodList}>
+                <Box component="li" sx={styles.methodItem}>
+                  <span aria-hidden="true" className="cubing-icon event-333" style={{ fontSize: '1rem' }} />
+                  <Typography variant="body2">3x3: <Link href="https://jperm.net/3x3/cfop" target="_blank" rel="noopener noreferrer">CFOP with 2-look OLL and 1-look PLL<NewTabNotice /></Link></Typography>
+                </Box>
+                <Box component="li" sx={styles.methodItem}>
+                  <span aria-hidden="true" className="cubing-icon event-333oh" style={{ fontSize: '1rem' }} />
+                  <Typography variant="body2">3x3 One-Handed: <Link href="https://www.zzmethod.com/tutorial" target="_blank" rel="noopener noreferrer">ZZ<NewTabNotice /></Link></Typography>
+                </Box>
+                <Box component="li" sx={styles.methodItem}>
+                  <span aria-hidden="true" className="cubing-icon event-444" style={{ fontSize: '1rem' }} />
+                  <Typography variant="body2">4x4: <Link href="https://jperm.net/4x4" target="_blank" rel="noopener noreferrer">Yau<NewTabNotice /></Link></Typography>
+                </Box>
+              </Box>
+              <Typography variant="body2" sx={styles.aboutText}>
+                The results on this page come from an unofficial API by Robin Engelbrecht, fully endorsed by the World Cube Association. A scheduled job fetches the data and caches it in Firebase.
+              </Typography>
+              <Typography variant="body2" sx={styles.aboutText}>
+                Learn more:
+              </Typography>
+              <Box component="ul" sx={styles.linkList}>
+                <li>
+                  <Typography variant="body2"><Link href="https://www.worldcubeassociation.org/" target="_blank" rel="noopener noreferrer">World Cube Association<NewTabNotice /></Link></Typography>
+                </li>
+                <li>
+                  <Typography variant="body2"><Link href="https://docs.worldcubeassociation.org/knowledge_base/wca_data_overview.html" target="_blank" rel="noopener noreferrer">WCA Data Overview<NewTabNotice /></Link></Typography>
+                </li>
+                <li>
+                  <Typography variant="body2"><Link href="https://wca-rest-api.robiningelbrecht.be/" target="_blank" rel="noopener noreferrer">WCA REST API Documentation<NewTabNotice /></Link></Typography>
+                </li>
+              </Box>
             </AccordionDetails>
           </Accordion>
 
@@ -444,9 +462,14 @@ export default function Speedcubing() {
 
           {/* Competition History */}
           <Box sx={styles.sectionTitleBox}>
-            <Typography variant="h6" component="h2" sx={styles.sectionTitle}>
-              Competition History (Last 5)
-            </Typography>
+            <Box>
+              <Typography variant="h6" component="h2" sx={styles.sectionTitle}>
+                Recent Competitions
+              </Typography>
+              <Typography variant="body2" sx={styles.sectionCaption}>
+                My last 5 competitions
+              </Typography>
+            </Box>
           </Box>
 
           {stats?.competitionIds?.slice()

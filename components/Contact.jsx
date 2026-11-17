@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { Box, Container, Paper, Typography, useTheme, Link } from '@mui/material'
-import { gradientText, pageBackground } from './sharedStyles'
+import { pageBackground, metaText } from './sharedStyles'
+import PageHeader from './PageHeader'
 import NewTabNotice from './NewTabNotice'
 import { contactItems, isExternal } from './contactItems'
 
@@ -26,12 +27,12 @@ const useStyles = (theme) => ({
     gap: 3,
     width: '100%',
     maxWidth: '500px',
+    marginX: 'auto',
   },
-  heading: {
-    fontWeight: 700,
-    ...gradientText(theme),
+  note: {
+    ...metaText,
     textAlign: 'center',
-    mb: 2,
+    mb: 4,
   },
   contactCard: {
     display: 'flex',
@@ -92,13 +93,12 @@ export default function Contact() {
   return (
     <Box sx={styles.container}>
       <Container maxWidth="sm">
-        <Typography variant="h4" component="h1" sx={styles.heading}>
-          Get In Touch
-        </Typography>
-        <Typography variant="body1" sx={{ textAlign: 'center', mb: 1.5, color: theme.palette.text.primary }}>
-          Open to engineering and developer education opportunities. Email is the fastest way to reach me.
-        </Typography>
-        <Typography variant="body2" sx={{ textAlign: 'center', mb: 3, color: theme.palette.text.secondary }}>
+        <PageHeader
+          title="Get In Touch"
+          intro="Open to engineering and developer education opportunities. Email is the fastest way to reach me."
+          sx={{ marginBottom: 2 }}
+        />
+        <Typography variant="body2" sx={styles.note}>
           Spotted something broken on the site? Let me know - screenshots encouraged!
         </Typography>
         <Box sx={styles.content}>

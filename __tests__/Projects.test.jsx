@@ -24,9 +24,9 @@ describe('Projects Page', () => {
   });
 
   it('shows a status badge on every project', () => {
-    expect(screen.getByText('Live')).toBeInTheDocument();
+    expect(screen.getAllByText('Live')).toHaveLength(2);
     expect(screen.getByText('In progress')).toBeInTheDocument();
-    expect(screen.getAllByText('Complete')).toHaveLength(3);
+    expect(screen.getAllByText('Complete')).toHaveLength(2);
   });
 
   it('lists each project tech stack as a labeled list', () => {
@@ -37,6 +37,7 @@ describe('Projects Page', () => {
 
   it('gives each project link a unique, descriptive name', () => {
     expect(screen.getByRole('link', { name: /^GitHub\s?: piHue \(opens in new tab\)$/ })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /^Live app\s?: words2macros \(opens in new tab\)$/ })).toHaveAttribute('href', 'https://d3oosb3wyilt9u.cloudfront.net/');
     expect(screen.getByRole('link', { name: /^Demo video\s?: piHue \(opens in new tab\)$/ })).toBeInTheDocument();
   });
 });

@@ -69,7 +69,7 @@ export default function NotFound() {
           {/* Decorative; the h1 below carries the meaning */}
           <Typography aria-hidden="true" sx={styles.code}>404</Typography>
           <Typography variant="h4" component="h1" sx={styles.heading}>
-            Page not found
+            Page Not Found
           </Typography>
           <Typography variant="body1" sx={styles.description}>
             This page doesn't exist or may have moved. Try one of these instead:

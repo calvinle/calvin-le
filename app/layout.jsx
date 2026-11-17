@@ -11,7 +11,7 @@ export const metadata = {
     default: 'Calvin Le',
     template: '%s | Calvin Le',
   },
-  description: 'Portfolio of Calvin Le',
+  description: 'Calvin Le is a software engineer and technical educator. See his work, projects, resume, and powerlifting and speedcubing results.',
   // Link previews; the image comes from app/opengraph-image.jsx
   openGraph: {
     siteName: 'Calvin Le',
